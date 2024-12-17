@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/icons/cys_logo.jpeg" />
+    <!-- bootstrap css cdn -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <!-- Include Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!-- dashboard2 css -->
+    <link rel="stylesheet" href="/public/styless.css" />
+  </head>
+  <body>
+    <!-- header -->
+    <header
+      class="header position-sticky px-2 pt-2 pb-0"
+      id="header__"
+    ></header>
+
+    <!-- Main -->
+    <main class="main">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- sidebar -->
+          <div
+            class="col-xl-2 col-lg-2 d-none d-lg-block p-2"
+            id="sidebar__"
+          ></div>
+
+          <!-- heading, footer and content -->
+          <div class="col p-2">
+            <div class="content-container rounded px-md-3 px-2">
+              <!-- heading -->
+              <div
+                class="d-flex gap-2 align-items-center rounded mb-2"
+                id="heading__"
+              ></div>
+
+              <!-- main content -->
+              <div class="content mb-3">
+                <!-- report section -->
+                <section class="report_section">
+                  <!-- Navigation Buttons -->
+                  <div
+                    class="d-flex justify-content-between align-items-center button-section"
+                    id="report-id"
+                  >
+                    <button class="btn btn-secondary backButton fw-bold">
+                      <i class="fas fa-arrow-left"></i> Back
+                    </button>
+                    <h5 class="m-0">Total reports 3</h5>
+                  </div>
+
+                  <div class="content-section" id="report">
+                    <!-- Reports Table -->
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-striped">
+                        <!-- Report Heading -->
+                        <thead class="thead-dark">
+                          <tr>
+                            <th>Name</th>
+                            <th>Report Description</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+
+                        <!-- Report Data -->
+                        <tbody id="reportTableBody">
+                          <!-- Report Row 1 -->
+                          <tr>
+                            <td>John Doe</td>
+                            <td>
+                              This report discusses the findings of the recent
+                              survey conducted on student satisfaction.
+                            </td>
+                            <td>2024-12-01</td>
+                            <td>
+                              <button class="btn btn-info btn-sm mb-2 fw-bold">
+                                <i class="fas fa-eye"></i>
+                              </button>
+                              <button
+                                class="btn btn-danger btn-sm mb-2 fw-bold"
+                                onclick="showDeletePopup()"
+                              >
+                                <i class="fas fa-trash-alt"></i>
+                              </button>
+                            </td>
+                          </tr>
+
+                          <!-- Report Row 2 -->
+                          <tr>
+                            <td>Jane Smith</td>
+                            <td>
+                              An analysis of the impact of online learning on
+                              student performance.
+                            </td>
+                            <td>2024-11-28</td>
+                            <td>
+                              <button class="btn btn-info btn-sm mb-2 fw-bold">
+                                <i class="fas fa-eye"></i>
+                              </button>
+                              <button
+                                class="btn btn-danger btn-sm mb-2 fw-bold"
+                                onclick="showDeletePopup()"
+                              >
+                                <i class="fas fa-trash-alt"></i>
+                              </button>
+                            </td>
+                          </tr>
+
+                          <!-- Report Row 3 -->
+                          <tr>
+                            <td>Emily Brown</td>
+                            <td>
+                              A comprehensive review of the curriculum changes
+                              in the last academic year.
+                            </td>
+                            <td>2024-11-20</td>
+                            <td>
+                              <button class="btn btn-info btn-sm mb-2 fw-bold">
+                                <i class="fas fa-eye"></i>
+                              </button>
+                              <button
+                                class="btn btn-danger btn-sm mb-2 fw-bold"
+                                onclick="showDeletePopup()"
+                              >
+                                <i class="fas fa-trash-alt"></i>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </section>
+              </div>
+
+              <!-- footer -->
+              <div
+                class="footer d-flex rounded align-items-center"
+                id="footer__"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Delete Confirmation Popup -->
+    <div class="delete-popup-overlay" id="deletePopup"></div>
+
+    <!-- bootstrap js cdn -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- js file -->
+    <script src="/public/script.js"></script>
+  </body>
+</html>

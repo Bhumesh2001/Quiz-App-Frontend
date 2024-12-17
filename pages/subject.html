@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/icons/cys_logo.jpeg" />
+    <!-- bootstrap css cdn -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <!-- Include Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!-- dashboard2 css -->
+    <link rel="stylesheet" href="/public/styless.css" />
+  </head>
+  <body>
+    <!-- header -->
+    <header
+      class="header position-sticky px-2 pt-2 pb-0"
+      id="header__"
+    ></header>
+
+    <!-- Main -->
+    <main class="main">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- sidebar -->
+          <div
+            class="col-xl-2 col-lg-2 d-none d-lg-block p-2"
+            id="sidebar__"
+          ></div>
+
+          <!-- heading, footer and content -->
+          <div class="col p-2">
+            <div class="content-container rounded px-md-3 px-2">
+              <!-- heading -->
+              <div
+                class="d-flex gap-2 align-items-center rounded mb-2"
+                id="heading__"
+              ></div>
+
+              <!-- main content -->
+              <div class="content mb-3">
+                <!-- subject section -->
+                <section class="subject_section">
+                  <!-- button section -->
+                  <div
+                    class="d-flex justify-content-between align-items-center pb-2 button-section"
+                    id="subject-id"
+                  >
+                    <!-- back btn -->
+                    <button
+                      class="btn btn-secondary fw-bold backButton"
+                      data-id="subject_createSubject"
+                    >
+                      <i class="fas fa-arrow-left"></i> Back
+                    </button>
+
+                    <!-- create btn -->
+                    <button
+                      class="btn btn-primary fw-bold createButton"
+                      id="createSubjectButton"
+                      data-id="subject_createSubject"
+                      data-class="classId_subjectId_categoryId_chapterId_userId"
+                    >
+                      <i class="fas fa-plus"></i>
+                      Create Subject
+                    </button>
+                  </div>
+
+                  <div class="content-section" id="subject">
+                    <!-- show subject -->
+                    <div
+                      class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3 mb-3"
+                      id="subjectContainer"
+                    >
+                      <!-- Subject 1 -->
+                      <div class="col">
+                        <div class="card subject-card h-100">
+                          <img
+                            src="/images/subject/mathematic.webp"
+                            class="card-img-top"
+                            alt="Mathematics"
+                          />
+                          <div class="card-body text-center">
+                            <h5 class="card-title">Mathematics</h5>
+                            <div class="d-flex justify-content-center gap-2">
+                              <button
+                                class="btn btn-warning btn-sm fw-bold createButton"
+                                data-edit-id="6"
+                                id="createEditSubject1"
+                                data-id="subject"
+                                data-form-id="create"
+                                data-title="Edit Subject"
+                              >
+                                <i class="fas fa-edit"></i>
+                              </button>
+                              <button
+                                class="btn btn-danger btn-sm fw-bold"
+                                onclick="showDeletePopup()"
+                              >
+                                <i class="fas fa-trash-alt"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Subject 2 -->
+                      <div class="col">
+                        <div class="card subject-card h-100">
+                          <img
+                            src="/images/subject/schience.webp"
+                            class="card-img-top"
+                            alt="Science"
+                          />
+                          <div class="card-body text-center">
+                            <h5 class="card-title">Science</h5>
+                            <div class="d-flex justify-content-center gap-2">
+                              <button
+                                class="btn btn-warning btn-sm fw-bold createButton"
+                                id="createEditSubject2"
+                                data-id="subject"
+                                data-form-id="create"
+                                data-title="Edit Subject"
+                              >
+                                <i class="fas fa-edit"></i>
+                              </button>
+                              <button
+                                class="btn btn-danger btn-sm fw-bold"
+                                onclick="showDeletePopup()"
+                              >
+                                <i class="fas fa-trash-alt"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Subject 3 -->
+                      <div class="col">
+                        <div class="card subject-card h-100">
+                          <img
+                            src="/images/subject/history.webp"
+                            class="card-img-top"
+                            alt="History"
+                          />
+                          <div class="card-body text-center">
+                            <h5 class="card-title">History</h5>
+                            <div class="d-flex justify-content-center gap-2">
+                              <button
+                                class="btn btn-warning btn-sm fw-bold createButton"
+                                id="createEditSubject3"
+                                data-id="subject"
+                                data-form-id="create"
+                                data-title="Edit Subject"
+                              >
+                                <i class="fas fa-edit"></i>
+                              </button>
+                              <button
+                                class="btn btn-danger btn-sm fw-bold"
+                                onclick="showDeletePopup()"
+                              >
+                                <i class="fas fa-trash-alt"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Subject 4 -->
+                      <div class="col">
+                        <div class="card subject-card h-100">
+                          <img
+                            src="/images/subject/geography.webp"
+                            class="card-img-top"
+                            alt="History"
+                          />
+                          <div class="card-body text-center">
+                            <h5 class="card-title">Geography</h5>
+                            <div class="d-flex justify-content-center gap-2">
+                              <button
+                                class="btn btn-warning btn-sm fw-bold createButton"
+                                id="createEditSubject4"
+                                data-id="subject"
+                                data-form-id="create"
+                                data-title="Edit Subject"
+                              >
+                                <i class="fas fa-edit"></i>
+                              </button>
+                              <button
+                                class="btn btn-danger btn-sm fw-bold"
+                                onclick="showDeletePopup()"
+                              >
+                                <i class="fas fa-trash-alt"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                <!-- create subject -->
+                <div
+                  class="form-container_ px-4 pb-4 d-none"
+                  id="createSubject"
+                >
+                  <!-- heading part -->
+                  <div class="form-header text-center mb-4">
+                    <h1 class="mb-0" id="form-title">Create Subject</h1>
+                  </div>
+
+                  <!-- form part -->
+                  <form
+                    id="dynamicForm"
+                    class="row g-3"
+                    enctype="multipart/form-data"
+                  >
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="classId" class="form-label">Class</label
+                        ><select
+                          class="form-select"
+                          name="classId"
+                          id="classId"
+                          autocomplete="off"
+                          required
+                        >
+                          <option value="select a class">Select a class</option>
+                          <option value="class1">Class1</option>
+                          <option value="class2">Class2</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="name" class="form-label">Subject</label
+                        ><input
+                          type="text"
+                          placeholder="Enter subject"
+                          class="form-control"
+                          name="name"
+                          id="name"
+                          autocomplete="off"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="description" class="form-label"
+                          >Description</label
+                        ><textarea
+                          placeholder="Write description"
+                          class="form-control"
+                          rows="4"
+                          name="description"
+                          id="description"
+                          autocomplete="off"
+                        ></textarea>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="status" class="form-label">Status</label
+                        ><select
+                          class="form-select"
+                          name="status"
+                          id="status"
+                          autocomplete="off"
+                        >
+                          <option value="Active">Active</option>
+                          <option value="Inactive">Inactive</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="image" class="form-label">Image</label
+                        ><input
+                          type="file"
+                          placeholder=""
+                          class="form-control"
+                          name="imageUrl"
+                          autocomplete="on"
+                          accept="image/*"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </form>
+
+                  <!-- button part = -->
+                  <div class="text-center">
+                    <!-- submit button -->
+                    <button
+                      id="submitBtn"
+                      type="button"
+                      class="btn btn-primary submit-btn w-100"
+                      data-title="Create Subject"
+                    >
+                      Submit
+                    </button>
+
+                    <!-- loadin button -->
+                    <button
+                      class="btn btn-primary w-100 d-none"
+                      type="button"
+                      id="loading-btn"
+                      disabled=""
+                    >
+                      <span
+                        class="spinner-border spinner-border-sm"
+                        aria-hidden="true"
+                      ></span>
+                      <span class="visually-hidden" role="status"
+                        >Loading...</span
+                      >
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- footer -->
+              <div
+                class="footer d-flex rounded align-items-center"
+                id="footer__"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Delete Confirmation Popup -->
+    <div class="delete-popup-overlay" id="deletePopup"></div>
+
+    <!-- bootstrap js cdn -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- js file -->
+    <script src="/public/script.js"></script>
+  </body>
+</html>

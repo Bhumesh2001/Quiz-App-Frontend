@@ -1,0 +1,546 @@
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f1f2f3;
+  font-family: Arial, sans-serif;
+}
+
+/* Header Styles */
+.header {
+  top: 0;
+  z-index: 1030;
+  width: 100%;
+  background-color: #f1f2f3;
+  box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+}
+
+#class,
+#subject,
+#chapter,
+#quiz,
+#user,
+#report,
+#category,
+#question {
+  background-color: #ffffff;
+  padding: 10px 20px 10px 20px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.button-section {
+  background-color: #ffffff;
+  padding: 20px 20px 0px 20px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+/* Sidebar Styles */
+.sidebar-container {
+  height: calc(100vh - 80px);
+  overflow-y: auto;
+  position: fixed;
+  width: 16%;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.sidebar-container div {
+  cursor: pointer; /* Indicates the div is clickable */
+  background-color: #ffffff; /* Light background for better visibility */
+  /* border: 2px solid #e0e0e0;  */
+  border-radius: 8px; /* Smooth rounded corners */
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+  transition: all 0.3s ease; /* Smooth transitions for hover effects */
+  padding: 10px; /* Comfortable padding */
+  display: flex; /* Aligns items neatly */
+  align-items: center; /* Vertical alignment of icons and text */
+  gap: 10px; /* Space between icon and text */
+}
+
+/* Hover Effect */
+.sidebar-container div:hover {
+  background-color: #f5f5f5; /* Soft hover background */
+  /* border-color: #0d89ff;  */
+  /* box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); */
+  transform: translateY(-2px); /* Slight lift effect */
+}
+
+/* Icon Styles */
+.sidebar-container div i {
+  font-size: 20px; /* Icon size for visibility */
+  color: #6c757d; /* Neutral color for icons */
+}
+
+/* Hover Icon Effect */
+.sidebar-container div:hover i {
+  color: #0d89ff; /* Change icon color on hover to match border */
+}
+
+/* Text Link Styles */
+.sidebar-container div a {
+  color: #333333; /* Text color for better readability */
+  font-weight: 500; /* Semi-bold text */
+  text-decoration: none; /* No underline for links */
+  transition: color 0.3s ease; /* Smooth text color transition */
+}
+
+/* Hover Text Effect */
+.sidebar-container div:hover a {
+  color: #0d89ff; /* Highlight text on hover */
+}
+
+/* Active (clicked) state */
+.sidebar-container div.active {
+  background-color: #f5f5f5; /* Same background as hover for active state */
+  /* border-color: #0d89ff;  */
+  /* box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); */
+}
+
+/* Active Icon Color */
+.sidebar-container div.active i {
+  color: #0d89ff; /* Gold icon for active state */
+}
+
+/* Active Text Color */
+.sidebar-container div.active a {
+  color: #0d89ff; /* Gold text for active state */
+}
+
+/* Navbar Styles */
+.navbar {
+  background-color: #fff;
+  height: 55px;
+}
+
+/* Button Styles */
+.button {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.dark-light-btn {
+  background-color: gray;
+  color: #000;
+  padding: 6px; /* Smaller padding */
+  width: 35px; /* Set fixed width */
+  height: 35px; /* Set fixed height */
+  font-size: 16px; /* Reduce icon size */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%; /* Ensures circular shape */
+}
+
+/* General Styles for Circular Buttons */
+.profile-btn {
+  width: 35px; /* Fixed width for a circular shape */
+  height: 35px; /* Fixed height for a circular shape */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%; /* Makes the button circular */
+  overflow: hidden; /* Ensures the image fits perfectly */
+  padding: 0; /* Removes extra padding for a clean fit */
+}
+
+/* Profile Image */
+.profile-img {
+  width: 100%; /* Ensure the image fills the button */
+  height: 100%; /* Maintain aspect ratio */
+  object-fit: cover; /* Ensures the image looks good inside the circle */
+  border-radius: 50%; /* Keeps the image circular */
+}
+
+.fa-house {
+  cursor: pointer;
+}
+
+/* Card Styles */
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #fff;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.card img {
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-title {
+  font-size: 1rem;
+  text-align: center;
+}
+
+.quiz-card {
+  background-color: #ffffff;
+  color: black;
+  border-left: 5px solid #0d6efd;
+  border-radius: 8px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.chapter-card {
+  background-color: #ffffff;
+  color: black;
+  border-left: 5px solid #0dc8ed;
+  border-radius: 8px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.report-card {
+  background-color: #ffffff;
+  color: black;
+  border-left: 5px solid #dc3545;
+  border-radius: 8px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.user-card {
+  background-color: #ffffff;
+  color: black;
+  border-left: 5px solid #198754;
+  border-radius: 8px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+canvas {
+  padding: 15px;
+  background-color: #ffffff;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-icon {
+  font-size: calc(1.5rem + 1vw); /* Adjust size based on viewport */
+  width: auto; /* Let the width adjust based on content */
+  height: auto; /* Maintain aspect ratio */
+  display: inline-block; /* Ensures the icon scales nicely */
+  text-align: center; /* Center align if needed */
+  color: #333; /* Icon color */
+}
+
+.fa-question-circle {
+  color: #0d6efd;
+}
+
+.fa-book {
+  color: #0dc8ed;
+}
+
+.fa-chart-line {
+  color: #dc3545;
+}
+
+.fa-users {
+  color: #198754;
+}
+
+#user_card_container{
+  max-height: 480px;
+}
+
+.new-users, .user-analytics{
+  height: 424px;
+}
+
+#user_cards_container{
+  overflow: hidden;
+}
+
+/* New User Styles */
+.user_card_ {
+  background-color: #ffffff; /* White card background */
+  border-radius: 10px; /* Smooth corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px 20px; /* Comfortable padding */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /*_card_h effects */
+  height: 70px;
+}
+
+.user_card_:hover {
+  transform: translateY(-5px); /* Slight lift effect on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.user_card_ img {
+  border-radius: 50%; /* Circular images */
+  width: 50px;
+  height: 50px;
+  object-fit: cover; /* Ensures images fit well */
+  border: 2px solid #007bff; /* Blue_card_r for images */
+}
+
+.user_card_ h6 {
+  margin: 0;
+  color: #333333; /* Dark text for better readability */
+  font-weight: 600; /* Sem_card_ for emphasis */
+}
+
+.user_card_ p {
+  margin: 0;
+  color: #6c757d; /* Muted color for secondary text */
+  font-size: 0.9rem;
+}
+
+.date-div {
+  color: #007bff; /* Blue date text */
+  font-weight: 500; /* Slightly bold */
+}
+
+.user-card_ {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 15px;
+  transition: box-shadow 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.user-card_:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.user-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+/* Text Styles */
+h4 {
+  color: #333;
+}
+
+.date {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Table Styles */
+.table {
+  margin-top: 20px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.table th {
+  background-color: #007bff;
+  color: white;
+  text-transform: uppercase;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f8f9fa;
+  transition: background-color 0.3s;
+}
+
+.table td img {
+  max-height: 50px;
+  object-fit: cover;
+  margin: 0 auto;
+}
+
+/* Badge Styles */
+.badge {
+  font-size: 0.9rem;
+  padding: 0.5em 0.8em;
+}
+
+/* Buttons */
+.btn-custom {
+  background-color: #0d6efd;
+  color: #fff;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.btn-custom:hover {
+  background-color: #084298;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .table {
+    font-size: 14px;
+  }
+}
+
+/* create form css */
+.form-container_ {
+  max-width: 100%;
+  margin: auto;
+  background-color: #ffffff;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.form-header h1 {
+  font-size: 1.8rem;
+  color: #333333;
+}
+.submit-btn {
+  background: linear-gradient(to right, #007bff, #0056b3);
+  border: none;
+}
+.submit-btn:hover {
+  background: linear-gradient(to right, #0056b3, #003f7d);
+}
+
+/* Overlay for popup */
+.delete-popup-overlay {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent background */
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Popup box styling */
+.delete-popup {
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  animation: slideUp 0.4s ease-out;
+}
+
+/* Popup heading */
+.delete-popup h2 {
+  font-size: 24px;
+  color: #e74c3c; /* Red color for delete confirmation */
+  margin-bottom: 15px;
+}
+
+/* Popup paragraph */
+.delete-popup p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+/* Buttons container */
+.buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+/* Cancel button */
+.cancel-btn {
+  background-color: #f5f5f5;
+  border: 2px solid #ccc;
+  color: #333;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.cancel-btn:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.05);
+}
+
+/* Confirm button */
+.confirm-btn {
+  background-color: #e74c3c;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.confirm-btn:hover {
+  background-color: #c0392b;
+  transform: scale(1.05);
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Slide-up animation */
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .delete-popup {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .delete-popup h2 {
+    font-size: 20px;
+  }
+
+  .delete-popup p {
+    font-size: 14px;
+  }
+
+  .buttons_ {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cancel-btn,
+  .confirm-btn {
+    width: 100%;
+    padding: 12px;
+  }
+}
