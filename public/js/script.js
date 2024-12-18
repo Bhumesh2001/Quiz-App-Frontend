@@ -10,6 +10,7 @@ const createButtons = document.querySelectorAll('.createButton');
 const buttons = document.querySelectorAll('.button-section');
 const buttonClickMap = new Map();
 const baseUrl = 'https://quiz-app-backend-bi9c.onrender.com';
+const frontendBaseUrl = "https://cys-app.netlify.app"
 let token;
 
 // Load sidebar, header, heading and footer
@@ -161,7 +162,7 @@ function getTokenFromCookie() {
     if (tokenCookie) {
         return tokenCookie.split('=')[1]; // Extract the token value
     };
-    window.location.href = `${baseUrl}/index.html`;
+    window.location.href = `${frontendBaseUrl}/index.html`;
 };
 
 // Function to populate dropdown dynamically

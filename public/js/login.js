@@ -1,5 +1,5 @@
 // baseUrl
-const baseUrl = 'https://quiz-app-backend-bi9c.onrender.com';
+const baseUrl = 'https://cys-app.netlify.app';
 
 getTokenFromCookie();
 
