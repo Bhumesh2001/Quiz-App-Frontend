@@ -1,5 +1,5 @@
 // baseUrl
-const baseUrl = 'https://cys-app.netlify.app';
+const baseUrl = 'https://quiz-app-backend-bi9c.onrender.com';
 
 // submit login form
 document.getElementById('loginForm').addEventListener('submit', async function (event) {
