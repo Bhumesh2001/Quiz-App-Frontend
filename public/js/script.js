@@ -161,7 +161,7 @@ function getTokenFromCookie() {
     if (tokenCookie) {
         return tokenCookie.split('=')[1]; // Extract the token value
     };
-    window.location.href = 'http://127.0.0.1:5500/index.html';
+    window.location.href = `${baseUrl}/index.html`;
 };
 
 // Function to populate dropdown dynamically

@@ -1,3 +1,8 @@
+// baseUrl
+const baseUrl = 'https://quiz-app-backend-bi9c.onrender.com';
+
+getTokenFromCookie();
+
 // submit login form
 document.getElementById('loginForm').addEventListener('submit', async function (event) {
     event.preventDefault();
@@ -16,7 +21,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
         return;
     };
 
-    const apiUrl = 'https://quiz-app-backend-bi9c.onrender.com/api/auth/login';
+    const apiUrl = `${baseUrl}/api/auth/login`;
 
     try {
         const response = await fetch(apiUrl, {
@@ -61,6 +66,17 @@ function setTokenCookie(token) {
     document.cookie = `${cookieName}=${token}; path=/; expires=${expiryDate.toUTCString()}; Secure; SameSite=Strict`;
 
     console.log('Token stored in cookie');
+};
+
+// get token from cookie function
+function getTokenFromCookie() {
+    const cookies = document.cookie.split('; ');
+    const tokenCookie = cookies.find((cookie) => cookie.startsWith('admin_token='));
+
+    if (tokenCookie) {
+        window.location.href = `${baseUrl}/pages/index.html`;
+    }
+    window.location.href = `${baseUrl}/index.html`;
 };
 
 // Toggle password visibility
