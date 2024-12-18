@@ -1,8 +1,6 @@
 // baseUrl
 const baseUrl = 'https://cys-app.netlify.app';
 
-getTokenFromCookie();
-
 // submit login form
 document.getElementById('loginForm').addEventListener('submit', async function (event) {
     event.preventDefault();
@@ -64,19 +62,6 @@ function setTokenCookie(token) {
     const expiryDate = new Date();
     expiryDate.setDate(expiryDate.getDate() + expiryDays);
     document.cookie = `${cookieName}=${token}; path=/; expires=${expiryDate.toUTCString()}; Secure; SameSite=Strict`;
-
-    console.log('Token stored in cookie');
-};
-
-// get token from cookie function
-function getTokenFromCookie() {
-    const cookies = document.cookie.split('; ');
-    const tokenCookie = cookies.find((cookie) => cookie.startsWith('admin_token='));
-
-    if (tokenCookie) {
-        window.location.href = `${baseUrl}/pages/index.html`;
-    }
-    window.location.href = `${baseUrl}/index.html`;
 };
 
 // Toggle password visibility
