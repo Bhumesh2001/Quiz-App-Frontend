@@ -10,7 +10,7 @@ const createButtons = document.querySelectorAll('.createButton');
 const buttons = document.querySelectorAll('.button-section');
 const buttonClickMap = new Map();
 const baseUrl = 'https://quiz-app-backend-bi9c.onrender.com';
-const token = "";
+let token;
 
 // Load sidebar, header, heading and footer
 loadComponent('sidebar__', '/components/sidebar.html');
@@ -18,6 +18,9 @@ loadComponent('header__', '/components/header.html');
 loadComponent('footer__', '/components/footer.html');
 loadComponent('heading__', '/components/heading.html');
 // loadComponent('deletePopup', '/components/popup.html');
+
+// get token 
+token = getTokenFromCookie();
 
 // Add click event listeners to each card
 cards.forEach(card => {
@@ -149,6 +152,17 @@ createButtons.forEach(function (createButton) {
         };
     });
 });
+
+// get token from cookie function
+function getTokenFromCookie() {
+    const cookies = document.cookie.split('; ');
+    const tokenCookie = cookies.find((cookie) => cookie.startsWith('admin_token='));
+
+    if (tokenCookie) {
+        return tokenCookie.split('=')[1]; // Extract the token value
+    };
+    window.location.href = 'http://127.0.0.1:5500/index.html';
+};
 
 // Function to populate dropdown dynamically
 function populateDropdown(dropdown, data, placeholder) {
@@ -628,7 +642,7 @@ async function postData(url, token = '', body) {
         // get data endpoints
         const getDataEndpoints = [
             { url: `${baseUrl}/api/dashboard/stats`, handler: loadDashboardCardData, id: "dashboard-card-container" },
-            { url: `${baseUrl}/api/dashboard/new-users`, handler: loadNewUsersData, id: "user_cards_container" },
+            // { url: `${baseUrl}/api/dashboard/new-users`, handler: loadNewUsersData, id: "user_cards_container" },
             { url: `${baseUrl}/api/categories`, handler: loadCategoryData, id: "categoryContainer" },
             { url: `${baseUrl}/api/classes`, handler: loadClassData, id: "classTable" },
             { url: `${baseUrl}/api/subjects`, handler: loadSubjectData, id: "subjectContainer" },
@@ -654,68 +668,83 @@ async function postData(url, token = '', body) {
 
 // submit btn
 document.getElementById("submitBtn").addEventListener("click", async (event) => {
-    // Show loading button and hide submit button
     toggleButtonState(true);
 
     const form = document.getElementById("dynamicForm");
-    const formData = new FormData(form); // Collect FormData directly from form
+    const formData = new FormData(form);
+    const dataTitle = event.target.getAttribute('data-title');
 
-    const data_title = event.target.getAttribute('data-title');
+    // Capitalize the "status" field, if it exists
+    const status = formData.get("status");
+    if (status) formData.set("status", status.charAt(0).toUpperCase() + status.slice(1).toLowerCase());
 
-    // Format the "status" field, if it exists
-    if (formData.get("status")) {
-        formData.set(
-            "status",
-            formData.get("status").charAt(0).toUpperCase() + formData.get("status").slice(1).toLowerCase()
-        );
+    const postDataEndpoints = {
+        "Create Category": `${baseUrl}/api/categories`,
+        "Create Class": `${baseUrl}/api/classes`,
+        "Create Subject": `${baseUrl}/api/subjects`,
+        "Create Chapter": `${baseUrl}/api/chapters`,
+        "Create Question": `${baseUrl}/api/questions`,
+        "Create Quiz": `${baseUrl}/api/quizzes/quiz`,
+        "Create User": `${baseUrl}/api/auth/user`
     };
 
-    if (formData.get('options')) {
-
-        // Capture the options A, B, C, D and put them in an array
-        const options = [
-            formData.get("option1"),
-            formData.get("option2"),
-            formData.get("option3"),
-            formData.get("option4")
-        ];
-
-        // Add the options array to the formData as a new key "options"
-        formData.set("options", JSON.stringify(options));
+    if (!postDataEndpoints[dataTitle]) {
+        console.error("Invalid data title:", dataTitle);
+        toggleButtonState(false);
+        return;
     };
-
-    const postDataEndpoints = [
-        { url: `${baseUrl}/api/categories`, name: "Create Category" },
-        { url: `${baseUrl}/api/classes`, name: "Create Class" },
-        { url: `${baseUrl}/api/subjects`, name: "Create Subject" },
-        { url: `${baseUrl}/api/chapters`, name: "Create Chapter" },
-        { url: `${baseUrl}/api/questions`, name: "Create Question" },
-        { url: `${baseUrl}/api/quizzes`, name: "Create Quiz" },
-        { url: `${baseUrl}/api/auth/users`, name: "Create User" },
-    ];
 
     try {
-        for (const { url, name } of postDataEndpoints) {
-            if (name === data_title) {
-                const response = await postData(url, token, formData);
-                console.log(`${name} Response:`, response);
+        let payload = formData; // Default payload
 
-                if (response.success) {
-                    console.log(`${name} created successfully.`);
-                    form.reset();
-                    alert(response.message);
+        if (dataTitle === "Create Question") {
+            const options = [];
+            const questionData = {};
+
+            // Organize data for "Create Question"
+            for (let [key, value] of formData.entries()) {
+                if (key.startsWith("option_") && value.trim() !== "") {
+                    options.push(value); // Collect options if they are not empty
                 } else {
-                    console.error(`${name} creation failed:`, response.error || "Unknown error.");
-                    alert(response.error || response.message || "Unknown error.")
+                    questionData[key] = value;
                 };
             };
+
+            if (options.length === 0) {
+                alert("Please provide at least one option for the question.");
+                toggleButtonState(false);
+                return; // Exit if no options are provided
+            };
+
+            // Construct final JSON payload
+            payload = {
+                categoryId: questionData.categoryId,
+                chapterId: questionData.chapterId,
+                question: questionData.question,
+                questionType: questionData.questionType,
+                options,
+                answer: questionData.answer,
+                status: questionData.status
+            };
+        };
+
+        // Send request
+        const response = await postData(postDataEndpoints[dataTitle], token, payload);
+        console.log(`${dataTitle} Response:`, response);
+
+        if (response.success) {
+            console.log(`${dataTitle} created successfully.`);
+            form.reset();
+            alert(response.message);
+        } else {
+            console.error(`${dataTitle} creation failed:`, response.error || "Unknown error.");
+            alert(response.error || response.message || "Unknown error.");
         };
     } catch (error) {
         console.error("An error occurred:", error);
         alert(error.message);
     } finally {
-        // Reset button state regardless of success or failure
-        toggleButtonState(false);
+        toggleButtonState(false); // Reset button state
     };
 });
 

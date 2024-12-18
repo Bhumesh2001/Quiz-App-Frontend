@@ -1,0 +1,72 @@
+body {
+  background-color: #e9ecef;
+  font-family: Arial, sans-serif;
+}
+
+.login-form {
+  border-radius: 15px;
+  background-color: white;
+  width: 380px;
+  padding: 30px;
+}
+
+h2 {
+  color: #2575fc;
+  font-weight: bold;
+}
+
+.form-control {
+  border-radius: 10px;
+  border-color: rgba(128, 128, 128, 0.712);
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.form-control:focus {
+  outline: none; /* Removes the default focus outline */
+  border: 2px solid #2575fc; /* Adds a custom border to indicate focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Adds a subtle glow effect */
+  transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition for focus effect */
+}
+
+.btn-primary {
+  background-color: #2575fc;
+  border: none;
+}
+
+.btn-primary {
+  background: linear-gradient(to right, #2575fc, #6a11cb);
+  border: none;
+  color: #fff; /* Ensures text is visible */
+  transition: background 0.3s ease; /* Adds a smooth transition effect */
+}
+
+.btn-primary:hover {
+  background: linear-gradient(
+    to right,
+    #6a11cb,
+    #2575fc
+  ); /* Reverse gradient on hover */
+  color: #fff;
+}
+
+#password {
+  padding-right: 45px;
+}
+
+/* Container styling */
+#password-container {
+  position: relative;
+}
+
+/* Toggle button styling */
+#togglePassword {
+  position: absolute;
+  top: 70%;
+  right: 5px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 1rem;
+  background: none;
+  border: none;
+}

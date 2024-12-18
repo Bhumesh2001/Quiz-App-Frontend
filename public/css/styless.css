@@ -73,8 +73,8 @@ body {
 
 /* Icon Styles */
 .sidebar-container div i {
-  font-size: 20px; /* Icon size for visibility */
-  color: #6c757d; /* Neutral color for icons */
+  font-size: 18px; /* Icon size for visibility */
+  color: #6c757d;
 }
 
 /* Hover Icon Effect */
@@ -98,8 +98,6 @@ body {
 /* Active (clicked) state */
 .sidebar-container div.active {
   background-color: #f5f5f5; /* Same background as hover for active state */
-  /* border-color: #0d89ff;  */
-  /* box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); */
 }
 
 /* Active Icon Color */
