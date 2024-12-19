@@ -25,7 +25,16 @@
       class="container-fluid d-flex justify-content-center align-items-center vh-100"
     >
       <div class="login-form card shadow">
-        <h2 class="text-center">Login</h2>
+        <!-- logo -->
+        <div class="d-flex justify-content-center align-items-center">
+          <img src="/assets/icons/cys_logo.jpeg" height="80px" width="80px" alt="Cys logo">
+        </div>
+
+        <!-- title -->
+        <h4 class="text-center">Welcome to CYS</h4>
+        <p class="text-center">Please login to your account!</p>
+
+        <!-- login form -->
         <form id="loginForm">
           <!-- email field -->
           <div class="mb-4">
@@ -57,8 +66,20 @@
             </button>
           </div>
 
-          <button type="submit" class="btn btn-primary w-100">Login</button>
+          <button type="submit" id="submit-btn" class="btn btn-primary w-100">
+            <strong>Login</strong>
+          </button>
+          <button
+            type="button"
+            id="spinner-btn"
+            class="btn btn-primary w-100 d-none"
+          >
+            <div class="spinner-border custom-spinner" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </button>
         </form>
+
       </div>
     </div>
 

@@ -47,69 +47,69 @@ body {
   position: fixed;
   width: 16%;
   background-color: #fff;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+  z-index: 1000;
 }
 
 .sidebar-container div {
   cursor: pointer; /* Indicates the div is clickable */
-  background-color: #ffffff; /* Light background for better visibility */
-  /* border: 2px solid #e0e0e0;  */
-  border-radius: 8px; /* Smooth rounded corners */
-  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+  border-radius: 5px; /* Smooth rounded corners */
   transition: all 0.3s ease; /* Smooth transitions for hover effects */
-  padding: 10px; /* Comfortable padding */
-  display: flex; /* Aligns items neatly */
-  align-items: center; /* Vertical alignment of icons and text */
-  gap: 10px; /* Space between icon and text */
-}
-
-/* Hover Effect */
-.sidebar-container div:hover {
-  background-color: #f5f5f5; /* Soft hover background */
-  /* border-color: #0d89ff;  */
-  /* box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); */
-  transform: translateY(-2px); /* Slight lift effect */
-}
-
-/* Icon Styles */
-.sidebar-container div i {
-  font-size: 18px; /* Icon size for visibility */
-  color: #6c757d;
-}
-
-/* Hover Icon Effect */
-.sidebar-container div:hover i {
-  color: #0d89ff; /* Change icon color on hover to match border */
+  padding: 10px;
 }
 
 /* Text Link Styles */
 .sidebar-container div a {
   color: #333333; /* Text color for better readability */
-  font-weight: 500; /* Semi-bold text */
   text-decoration: none; /* No underline for links */
   transition: color 0.3s ease; /* Smooth text color transition */
+  text-decoration: none;
 }
 
-/* Hover Text Effect */
-.sidebar-container div:hover a {
-  color: #0d89ff; /* Highlight text on hover */
+/* Sidebar Link */
+.sidebar-container .sidebar-link {
+  text-decoration: none;
+  color: #333;
+  margin-bottom: 2px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
 }
 
-/* Active (clicked) state */
-.sidebar-container div.active {
-  background-color: #f5f5f5; /* Same background as hover for active state */
+/* Hover Effect */
+.sidebar-container .sidebar-link:hover {
+  background-color: #f5f3f4;
+  transform: translateY(-2px);
 }
 
-/* Active Icon Color */
-.sidebar-container div.active i {
-  color: #0d89ff; /* Gold icon for active state */
+/* Active Link */
+.sidebar-container a.active {
+  box-shadow: none;
+  background-color: #e9ecef;
 }
 
-/* Active Text Color */
-.sidebar-container div.active a {
-  color: #0d89ff; /* Gold text for active state */
+.sidebar-item span {
+  padding-left: 10px;
 }
 
+/* Sidebar Icons */
+.sidebar-container .sidebar-item i {
+  font-size: 1.1rem;
+  color: #007bff;
+  transition: color 0.3s ease;
+}
+
+/* Sidebar Text */
+.sidebar-container .sidebar-item span {
+  font-size: 1rem;
+  display: inline-block;
+}
+
+/* Responsive Adjustment */
+@media (max-width: 768px) {
+  .sidebar-container {
+    width: 100%;
+  }
+}
 /* Navbar Styles */
 .navbar {
   background-color: #fff;
@@ -266,15 +266,16 @@ canvas {
   color: #198754;
 }
 
-#user_card_container{
+#user_card_container {
   max-height: 480px;
 }
 
-.new-users, .user-analytics{
+.new-users,
+.user-analytics {
   height: 424px;
 }
 
-#user_cards_container{
+#user_cards_container {
   overflow: hidden;
 }
 
@@ -540,5 +541,31 @@ h4 {
   .confirm-btn {
     width: 100%;
     padding: 12px;
+  }
+}
+
+/* Loader Styles */
+.loader_ {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.fa-spinner {
+  font-size: 2rem;
+}
+
+/* For mobile devices (screen width up to 768px) */
+@media only screen and (max-width: 768px) {
+  .sidebar-container {
+    width: 200px;
   }
 }

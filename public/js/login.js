@@ -1,21 +1,27 @@
 // baseUrl
 const baseUrl = 'https://quiz-app-backend-bi9c.onrender.com';
 
-// submit login form
 document.getElementById('loginForm').addEventListener('submit', async function (event) {
     event.preventDefault();
 
+    const submitBtn = document.getElementById('submit-btn');
+    const spinnerBtn = document.getElementById('spinner-btn');
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value.trim();
 
+    // Toggle button states
+    toggleButtonSpinner(submitBtn, spinnerBtn, true);
+
     // Validate input fields
     if (!email || !password) {
-        alert('Please fill out all fields.');
+        showAlert('Please fill out all fields.');
+        toggleButtonSpinner(submitBtn, spinnerBtn, false);
         return;
     };
 
     if (!validateEmail(email)) {
-        alert('Please enter a valid email.');
+        showAlert('Please enter a valid email.');
+        toggleButtonSpinner(submitBtn, spinnerBtn, false);
         return;
     };
 
@@ -24,29 +30,43 @@ document.getElementById('loginForm').addEventListener('submit', async function (
     try {
         const response = await fetch(apiUrl, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password }),
         });
 
+        const data = await response.json();
         if (response.ok) {
-            const data = await response.json();
-            console.log(`User logged in successful...!`, data.user);
+            console.log('User logged in successfully:', data.user);
             setTokenCookie(data.token);
             window.location.href = "/pages/dashboard.html";
             document.getElementById('loginForm').reset();
         } else {
-            const errorData = await response.json();
-            console.error('Login Failed:', errorData);
-            return { success: false, message: errorData.error };
+            console.error('Login Failed:', data);
+            showAlert(data.error || 'Login failed. Please try again.');
         };
-
     } catch (error) {
         console.error('Error during login:', error);
-        alert('An error occurred. Please try again.');
+        showAlert('An error occurred. Please try again.');
+    } finally {
+        toggleButtonSpinner(submitBtn, spinnerBtn, false);
     };
 });
+
+// Helper function to toggle spinner and submit button visibility
+function toggleButtonSpinner(submitBtn, spinnerBtn, isLoading) {
+    if (isLoading) {
+        submitBtn.classList.add('d-none');
+        spinnerBtn.classList.remove('d-none');
+    } else {
+        submitBtn.classList.remove('d-none');
+        spinnerBtn.classList.add('d-none');
+    };
+};
+
+// Helper function to show alerts
+function showAlert(message) {
+    alert(message);
+};
 
 // Function to validate email format
 function validateEmail(email) {

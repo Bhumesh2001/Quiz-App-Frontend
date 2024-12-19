@@ -13,13 +13,6 @@ const baseUrl = 'https://quiz-app-backend-bi9c.onrender.com';
 const frontendBaseUrl = "https://cys-app.netlify.app"
 let token;
 
-// Load sidebar, header, heading and footer
-loadComponent('sidebar__', '/components/sidebar.html');
-loadComponent('header__', '/components/header.html');
-loadComponent('footer__', '/components/footer.html');
-loadComponent('heading__', '/components/heading.html');
-// loadComponent('deletePopup', '/components/popup.html');
-
 // get token 
 token = getTokenFromCookie();
 
@@ -175,14 +168,6 @@ function populateDropdown(dropdown, data, placeholder) {
     data.forEach((item) => {
         dropdown.innerHTML += `<option value="${item._id}">${item.name}</option>`;
     });
-};
-
-// Function to load HTML components
-function loadComponent(id, file) {
-    fetch(file)
-        .then(response => response.text())
-        .then(data => document.getElementById(id).innerHTML = data)
-        .catch(err => console.error(`Error loading ${file}:`, err));
 };
 
 // Show the popup
@@ -637,6 +622,27 @@ async function postData(url, token = '', body) {
     return response;
 };
 
+// link tag
+document.querySelectorAll('.sidebar-container a').forEach(link => {
+    link.addEventListener('click', function (e) {
+        e.preventDefault(); // Prevent default navigation
+
+        // Remove 'active' class from all links
+        document.querySelectorAll('.sidebar-container a').forEach(l => l.classList.remove('active'));
+
+        // Add 'active' class to the clicked link
+        this.classList.add('active');
+
+        // Show the loader
+        document.getElementById('loader').classList.remove("d-none");
+
+        // Redirect to the clicked link after a slight delay
+        setTimeout(() => {
+            window.location.href = this.href;
+        }, 200);
+    });
+});
+
 // call api
 (async (baseUrl) => {
     try {
@@ -666,6 +672,47 @@ async function postData(url, token = '', body) {
         console.error("Error fetching data:", error);
     };
 })(baseUrl);
+
+
+document.getElementById('toggleButton').addEventListener('click', function () {
+    const sidebar = document.getElementById('sidebar__');
+
+    // Check if the screen size is medium to small
+    if (window.matchMedia('(max-width: 768px)').matches) {
+        // Toggle the `d-none` class to show/hide the sidebar
+        if (sidebar.classList.contains('d-none')) {
+            sidebar.classList.remove('d-none'); // Open the sidebar
+            document.body.style.overflow = 'hidden'; // Disable scroll
+        } else {
+            sidebar.classList.add('d-none'); // Close the sidebar
+            document.body.style.overflow = ''; // Enable scroll
+        };
+    };
+});
+
+// Close the sidebar if clicked outside
+document.addEventListener('click', function (event) {
+    const sidebar = document.getElementById('sidebar__');
+    const toggleButton = document.getElementById('toggleButton');
+
+    if (!sidebar.classList.contains('d-none') && !sidebar.contains(event.target) && !toggleButton.contains(event.target)) {
+        sidebar.classList.add('d-none'); // Close the sidebar
+        document.body.style.overflow = ''; // Enable scroll
+    };
+});
+
+// Close the sidebar if clicked outside
+document.addEventListener('click', function (event) {
+    const sidebar = document.getElementById('sidebar__');
+    const toggleButton = document.getElementById('toggleButton');
+
+    if (!sidebar.classList.contains('d-none')
+        && !sidebar.contains(event.target)
+        && !toggleButton.contains(event.target)) {
+        sidebar.classList.add('d-none'); // Close the sidebar
+        document.body.style.overflow = ''; // Enable scroll
+    };
+});
 
 // submit btn
 document.getElementById("submitBtn").addEventListener("click", async (event) => {
@@ -749,18 +796,6 @@ document.getElementById("submitBtn").addEventListener("click", async (event) => 
     };
 });
 
-// chnage active state on a tag of sidebar
-document.querySelectorAll('.sidebar-container a').forEach(function (div) {
-    div.addEventListener('click', function () {
-        // Remove the active class from all divs
-        document.querySelectorAll('.sidebar-container a').forEach(function (item) {
-            item.classList.remove('active');
-        });
-        // Add the active class to the clicked div
-        div.classList.add('active');
-    });
-});
-
 // Close the popup when Cancel is clicked
 document.getElementById("cancelDelete").addEventListener("click", function () {
     document.getElementById("deletePopup").style.display = "none";
@@ -772,3 +807,4 @@ document.getElementById("confirmDelete").addEventListener("click", function () {
     alert("Item deleted!");
     document.getElementById("deletePopup").style.display = "none";
 });
+

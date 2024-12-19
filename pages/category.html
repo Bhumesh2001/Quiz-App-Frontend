@@ -23,29 +23,220 @@
   </head>
   <body>
     <!-- header -->
-    <header
-      class="header position-sticky px-2 pt-2 pb-0"
-      id="header__"
-    ></header>
+    <header class="header position-sticky px-2 pt-2 pb-0" id="header__">
+      <nav class="navbar navbar-expand-lg rounded">
+        <div class="container-fluid">
+          <!-- Right Section (Logo and Three-Line Button) -->
+          <div class="d-flex align-items-center gap-3">
+            <!-- Three-Line Button -->
+            <button class="btn btn-light border btn-sm" id="toggleButton">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Logo -->
+            <img
+              src="/assets/icons/cys_logo.jpeg"
+              alt="Company Logo"
+              class="img-fluid"
+              style="height: 35px; width: 35px"
+            />
+            <!-- Company Name -->
+            <span class="text-dark fw-bold">CYS Dashboard</span>
+          </div>
+
+          <!-- Left Section (Dark/Light Button and Admin Profile) -->
+          <div class="d-flex align-items-center gap-3 ms-auto">
+            <!-- Dark/Light Button -->
+            <button class="btn btn-secondary rounded-circle dark-light-btn">
+              <i class="fas fa-sun"></i>
+            </button>
+
+            <!-- Admin Profile -->
+            <div class="dropdown">
+              <!-- button -->
+              <button
+                class="btn btn-light rounded-circle profile-btn"
+                type="button"
+                id="adminDropdown"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <img
+                  src="/assets/icons/profile-default.svg"
+                  alt="Admin Profile"
+                  class="profile-img"
+                  draggable="false"
+                />
+              </button>
+
+              <!-- option -->
+              <ul
+                class="dropdown-menu dropdown-menu-end"
+                aria-labelledby="adminDropdown"
+              >
+                <li>
+                  <a class="dropdown-item" href="#">
+                    <i class="fas fa-user-circle"></i> Profile</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="fas fa-cog"></i> Settings</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="fas fa-sign-out-alt"></i> Logout</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
 
     <!-- Main -->
     <main class="main">
       <div class="container-fluid">
         <div class="row">
           <!-- sidebar -->
-          <div
-            class="col-xl-2 col-lg-2 d-none d-lg-block p-2"
-            id="sidebar__"
-          ></div>
+          <div class="col-xl-2 col-lg-2 d-none d-lg-block p-2" id="sidebar__">
+            <div class="sidebar-container rounded d-flex flex-column p-3">
+              <!-- dashboard -->
+              <a
+                href="dashboard.html"
+                class="sidebar-link"
+                id="dashboardLink"
+                draggable="false"
+              >
+                <div class="sidebar-item">
+                  <i class="fas fa-tachometer-alt"></i>
+                  <span>Dashboard</span>
+                </div>
+              </a>
+
+              <!-- category -->
+              <a
+                href="category.html"
+                class="sidebar-link"
+                id="category_"
+                draggable="false"
+              >
+                <div class="sidebar-item">
+                  <i class="fa fa-list-alt" aria-hidden="true"></i>
+                  <span>Category</span>
+                </div>
+              </a>
+
+              <!-- class -->
+              <a
+                href="class.html"
+                class="sidebar-link"
+                id="class_"
+                draggable="false"
+              >
+                <div class="sidebar-item">
+                  <i class="fas fa-chalkboard"></i>
+                  <span>Class</span>
+                </div>
+              </a>
+
+              <!-- subject -->
+              <a
+                href="subject.html"
+                class="sidebar-link"
+                id="subjects"
+                draggable="false"
+              >
+                <div class="sidebar-item">
+                  <i class="fas fa-book-open"></i>
+                  <span>Subject</span>
+                </div>
+              </a>
+
+              <!-- chapter -->
+              <a
+                href="chapter.html"
+                class="sidebar-link"
+                id="chapterLink"
+                draggable="false"
+              >
+                <div class="sidebar-item">
+                  <i class="fas fa-scroll"></i>
+                  <span>Chapter</span>
+                </div>
+              </a>
+
+              <!-- question -->
+              <a
+                href="question.html"
+                class="sidebar-link"
+                id="questionLink"
+                draggable="false"
+              >
+                <div class="sidebar-item">
+                  <i class="fa-solid fa-question"></i>
+                  <span>Question</span>
+                </div>
+              </a>
+
+              <!-- quiz -->
+              <a
+                href="quiz.html"
+                class="sidebar-link"
+                id="quizLink"
+                draggable="false"
+              >
+                <div class="sidebar-item">
+                  <i class="fas fa-question-circle"></i>
+                  <span>Quiz</span>
+                </div>
+              </a>
+
+              <!-- user -->
+              <a
+                href="user.html"
+                class="sidebar-link"
+                id="userLink"
+                draggable="false"
+              >
+                <div class="sidebar-item">
+                  <i class="fas fa-users"></i>
+                  <span>User</span>
+                </div>
+              </a>
+
+              <!-- report -->
+              <a
+                href="report.html"
+                class="sidebar-link"
+                id="reportLink"
+                draggable="false"
+              >
+                <div class="sidebar-item">
+                  <i class="fas fa-chart-bar"></i>
+                  <span>Report</span>
+                </div>
+              </a>
+            </div>
+          </div>
 
           <!-- heading, footer and content -->
-          <div class="col p-2">
+          <div class="col-xl-10 col-lg-10 p-2">
             <div class="content-container rounded px-md-3 px-2">
               <!-- heading -->
               <div
                 class="d-flex gap-2 align-items-center rounded mb-2"
                 id="heading__"
-              ></div>
+              >
+                <span class="p-2">
+                  <a href="/pages/dashboard.html">
+                    <i class="fa-solid fa-house"></i>
+                  </a>
+                </span>
+                <h6 id="title" class="m-0 p-1">Dashboard</h6>
+              </div>
 
               <!-- main content -->
               <div class="content mb-3">
@@ -210,7 +401,10 @@
                 </section>
 
                 <!-- create category form -->
-                <div class="form-container_ px-4 pb-4 d-none" id="createCategory">
+                <div
+                  class="form-container_ px-4 pb-4 d-none"
+                  id="createCategory"
+                >
                   <!-- heading part -->
                   <div class="form-header text-center mb-4">
                     <h1 class="mb-0" id="form-title">Create Category</h1>
@@ -319,15 +513,37 @@
               <div
                 class="footer d-flex rounded align-items-center"
                 id="footer__"
-              ></div>
+              >
+                <small class="me-auto p-2 m-0">
+                  Copyright © 2024 <strong>cys</strong> All rights reserved.
+                </small>
+                <small class="p-2 m-0">Cys</small>
+                <small class="p-2 m-0">Telegram</small>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </main>
 
+    <!-- Loader -->
+    <div id="loader" class="loader_ d-none">
+      <i class="fas fa-spinner fa-spin"></i>
+    </div>
+
     <!-- Delete Confirmation Popup -->
-    <div class="delete-popup-overlay" id="deletePopup"></div>
+    <div class="delete-popup-overlay" id="deletePopup">
+      <div class="delete-popup">
+        <h2>Are you sure?</h2>
+        <p>You are about to delete this item. This action cannot be undone.</p>
+        <div
+          class="buttons_ d-flex justify-content-center align-items-center gap-2"
+        >
+          <button class="cancel-btn" id="cancelDelete">Cancel</button>
+          <button class="confirm-btn" id="confirmDelete">Delete</button>
+        </div>
+      </div>
+    </div>
 
     <!-- bootstrap js cdn -->
     <script
