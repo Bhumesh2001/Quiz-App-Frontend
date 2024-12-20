@@ -249,7 +249,7 @@
                   >
                     <!-- back btn -->
                     <button
-                      class="btn btn-secondary fw-bold backButton"
+                      class="btn btn-secondary fw-bold backButton d-none"
                       data-id="subject_createSubject"
                     >
                       <i class="fas fa-arrow-left"></i> Back
@@ -407,7 +407,7 @@
                   id="createSubject"
                 >
                   <!-- heading part -->
-                  <div class="form-header text-center mb-4">
+                  <div class="form-header text-center mb-2">
                     <h1 class="mb-0" id="form-title">Create Subject</h1>
                   </div>
 
@@ -487,6 +487,7 @@
                           placeholder=""
                           class="form-control"
                           name="imageUrl"
+                          id="imageUrl"
                           autocomplete="on"
                           accept="image/*"
                           required
@@ -512,7 +513,6 @@
                       class="btn btn-primary w-100 d-none"
                       type="button"
                       id="loading-btn"
-                      disabled=""
                     >
                       <span
                         class="spinner-border spinner-border-sm"
@@ -561,6 +561,9 @@
         </div>
       </div>
     </div>
+
+     <!-- Notifications will be dynamically inserted -->
+     <div class="notifications-container" id="notifications-container"></div>
 
     <!-- bootstrap js cdn -->
     <script

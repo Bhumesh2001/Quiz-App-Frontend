@@ -249,7 +249,7 @@
                   >
                     <!-- back btn -->
                     <button
-                      class="btn btn-secondary fw-bold backButton"
+                      class="btn btn-secondary fw-bold backButton d-none"
                       data-id="category_createCategory"
                     >
                       <i class="fas fa-arrow-left"></i> Back
@@ -406,7 +406,7 @@
                   id="createCategory"
                 >
                   <!-- heading part -->
-                  <div class="form-header text-center mb-4">
+                  <div class="form-header text-center mb-2">
                     <h1 class="mb-0" id="form-title">Create Category</h1>
                   </div>
 
@@ -426,12 +426,11 @@
                           name="name"
                           id="name"
                           autocomplete="off"
-                          accept=""
-                          max=""
-                          required=""
+                          required
                         />
                       </div>
                     </div>
+
                     <div class="col-12">
                       <div class="mb-3">
                         <label for="description" class="form-label"
@@ -446,6 +445,7 @@
                         ></textarea>
                       </div>
                     </div>
+
                     <div class="col-12">
                       <div class="mb-3">
                         <label for="status" class="form-label">Status</label
@@ -460,6 +460,7 @@
                         </select>
                       </div>
                     </div>
+
                     <div class="col-12">
                       <div class="mb-3">
                         <label for="imageUrl" class="form-label">Image</label
@@ -471,8 +472,7 @@
                           id="imageUrl"
                           autocomplete="on"
                           accept="image/*"
-                          max=""
-                          required=""
+                          required
                         />
                       </div>
                     </div>
@@ -495,7 +495,6 @@
                       class="btn btn-primary w-100 d-none"
                       type="button"
                       id="loading-btn"
-                      disabled
                     >
                       <span
                         class="spinner-border spinner-border-sm"
@@ -544,6 +543,9 @@
         </div>
       </div>
     </div>
+
+    <!-- Notifications will be dynamically inserted -->
+    <div class="notifications-container" id="notifications-container"></div>
 
     <!-- bootstrap js cdn -->
     <script

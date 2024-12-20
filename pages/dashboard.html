@@ -255,7 +255,7 @@
                           >
                             <div>
                               <h2 class="mb-0" id="total_quiz">0</h2>
-                              <h5 class="card-title mb-1">Quizzes</h5>
+                              <h5 class="d-card-title mb-1">Quizzes</h5>
                             </div>
                             <div>
                               <i class="fas fa-question-circle card-icon"></i>
@@ -274,7 +274,7 @@
                           >
                             <div>
                               <h2 class="mb-0" id="total_chapter">0</h2>
-                              <h5 class="card-title mb-1">Chapters</h5>
+                              <h5 class="d-card-title mb-1">Chapters</h5>
                             </div>
                             <div>
                               <i class="fas fa-book card-icon"></i>
@@ -290,7 +290,7 @@
                           >
                             <div>
                               <h2 class="mb-0" id="total_report">0</h2>
-                              <h5 class="card-title mb-1">Reports</h5>
+                              <h5 class="d-card-title mb-1">Reports</h5>
                             </div>
                             <div>
                               <i class="fas fa-chart-line card-icon"></i>
@@ -306,7 +306,7 @@
                           >
                             <div>
                               <h2 class="mb-0" id="total_user">0</h2>
-                              <h5 class="card-title mb-1">Users</h5>
+                              <h5 class="d-card-title mb-1">Users</h5>
                             </div>
                             <div>
                               <i class="fas fa-users card-icon"></i>
@@ -334,91 +334,95 @@
                       <div
                         class="col-lg-5 col-md-6 col-12 d-flex justify-content-center mb-md-0 my-3 new-users"
                       >
-                        <div class="row gy-3 px-3" id="user_cards_container">
-                          <!-- User Card 1 -->
-                          <div
-                            class="col-12 user_card_ d-flex justify-content-between align-items-center gap-0 gap-md-3 gap-2"
-                          >
-                            <div class="image-div">
-                              <img
-                                src="https://via.placeholder.com/50"
-                                alt="user-img"
-                              />
-                            </div>
-                            <div class="title-div">
-                              <h6>John Doe</h6>
-                              <p>johndoe@gmail.com</p>
-                            </div>
-                            <div class="date-div">2024-12-5</div>
-                          </div>
-
-                          <!-- User Card 2 -->
-                          <div
-                            class="col-12 user_card_ d-flex justify-content-between align-items-center gap-0 gap-md-3 gap-2"
-                          >
-                            <div class="image-div">
-                              <img
-                                src="https://via.placeholder.com/50"
-                                alt="user-img"
-                              />
-                            </div>
-                            <div class="title-div">
-                              <h6>Jane Smith</h6>
-                              <p>janesmith@gmail.com</p>
-                            </div>
-                            <div class="date-div">2024-12-5</div>
-                          </div>
-
-                          <!-- User Card 3 -->
-                          <div
-                            class="col-12 user_card_ d-flex justify-content-between align-items-center gap-0 gap-md-3 gap-2"
-                          >
-                            <div class="image-div">
-                              <img
-                                src="https://via.placeholder.com/50"
-                                alt="user-img"
-                              />
-                            </div>
-                            <div class="title-div">
-                              <h6>Michael Brown</h6>
-                              <p>michaelbrown@gmail.com</p>
-                            </div>
-                            <div class="date-div">2024-12-5</div>
-                          </div>
-
-                          <!-- User Card 4 -->
-                          <div
-                            class="col-12 user_card_ d-flex justify-content-between align-items-center gap-0 gap-md-3 gap-2"
-                          >
-                            <div class="image-div">
-                              <img
-                                src="https://via.placeholder.com/50"
-                                alt="user-img"
-                              />
-                            </div>
-                            <div class="title-div">
-                              <h6>Emily Davis</h6>
-                              <p>emilydavis@gmail.com</p>
-                            </div>
-                            <div class="date-div">2024-12-5</div>
-                          </div>
-
-                          <!-- User Card 5 -->
-                          <div
-                            class="col-12 user_card_ d-flex justify-content-between align-items-center gap-0 gap-md-3 gap-2"
-                          >
-                            <div class="image-div">
-                              <img
-                                src="https://via.placeholder.com/50"
-                                alt="user-img"
-                              />
-                            </div>
-                            <div class="title-div">
-                              <h6>Chris Wilson</h6>
-                              <p>chriswilson@gmail.com</p>
-                            </div>
-                            <div class="date-div">2024-12-5</div>
-                          </div>
+                        <div class="_user-card rounded w-100">
+                          <h2 class="mb-0">New Users</h2>
+                          <ul class="user-list" id="user-list">
+                            <li>
+                              <div class="user-avatar">
+                                <img
+                                  src="https://via.placeholder.com/50"
+                                  alt="User 1"
+                                />
+                              </div>
+                              <div class="user-details">
+                                <span class="user-name">User 1</span>
+                                <span class="user-email"
+                                  >user1@example.com</span
+                                >
+                              </div>
+                              <span class="user-date"
+                                >Joined: January 10, 2023</span
+                              >
+                            </li>
+                            <li>
+                              <div class="user-avatar">
+                                <img
+                                  src="https://via.placeholder.com/50"
+                                  alt="User 2"
+                                />
+                              </div>
+                              <div class="user-details">
+                                <span class="user-name">User 2</span>
+                                <span class="user-email"
+                                  >user2@example.com</span
+                                >
+                              </div>
+                              <span class="user-date"
+                                >Joined: March 15, 2023</span
+                              >
+                            </li>
+                            <li>
+                              <div class="user-avatar">
+                                <img
+                                  src="https://via.placeholder.com/50"
+                                  alt="User 3"
+                                />
+                              </div>
+                              <div class="user-details">
+                                <span class="user-name">User 3</span>
+                                <span class="user-email"
+                                  >user3@example.com</span
+                                >
+                              </div>
+                              <span class="user-date"
+                                >Joined: May 20, 2023</span
+                              >
+                            </li>
+                            <li>
+                              <div class="user-avatar">
+                                <img
+                                  src="https://via.placeholder.com/50"
+                                  alt="User 4"
+                                />
+                              </div>
+                              <div class="user-details">
+                                <span class="user-name">User 4</span>
+                                <span class="user-email"
+                                  >user4@example.com</span
+                                >
+                              </div>
+                              <span class="user-date"
+                                >Joined: July 25, 2023</span
+                              >
+                            </li>
+                            <li>
+                              <div class="user-avatar">
+                                <img
+                                  src="https://via.placeholder.com/50"
+                                  alt="User 5"
+                                />
+                              </div>
+                              <div class="user-details">
+                                <span class="user-name">User 5</span>
+                                <span class="user-email"
+                                  >user5@example.com</span
+                                >
+                              </div>
+                              <span class="user-date"
+                                >Joined: September 5, 2023</span
+                              >
+                            </li>
+                          </ul>
                         </div>
                       </div>
                     </div>
@@ -447,6 +451,9 @@
     <div id="loader" class="loader_ d-none">
       <i class="fas fa-spinner fa-spin"></i>
     </div>
+
+    <!-- Notifications will be dynamically inserted -->
+    <div class="notifications-container" id="notifications-container"></div>
 
     <!-- bootstrap js cdn -->
     <script

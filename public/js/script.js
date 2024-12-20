@@ -37,6 +37,12 @@ backButtons.forEach(function (backButton) {
         const categoryId = divId.split('_')[0];
         const formId = divId.split('_')[1];
 
+        document.querySelector('.createButton').classList.remove('d-none');
+        document.querySelector('.createButton').classList.add('d-block');
+
+        document.querySelector('.backButton').classList.remove('d-block');
+        document.querySelector('.backButton').classList.add('d-none');
+
         document.getElementById(categoryId).classList.remove('d-none');
         document.getElementById(formId).classList.add('d-none');
         document.getElementById(formId).classList.remove('d-block');
@@ -51,6 +57,10 @@ createButtons.forEach(function (createButton) {
 
         // get button id
         const buttonId = createButton.getAttribute('id');
+
+        document.getElementById(buttonId).classList.add('d-none');
+        document.querySelector('.backButton').classList.remove('d-none');
+        document.querySelector('.backButton').classList.add('d-block');
 
         // Initialize click count for this button if not already tracked
         if (!buttonClickMap.has(buttonId)) {
@@ -147,6 +157,33 @@ createButtons.forEach(function (createButton) {
     });
 });
 
+// Function to update the Correct Answer dropdown dynamically
+function updateCorrectAnswerOptions() {
+    const answerDropdown = document.getElementById('answer');
+    const options = ['option_1', 'option_2', 'option_3', 'option_4'];
+
+    // Clear existing options in the dropdown
+    answerDropdown.innerHTML = '<option value="" selected>Select Correct Answer</option>';
+
+    // Loop through each option input and add to the dropdown if not empty
+    options.forEach((optionId, index) => {
+        const optionValue = document.getElementById(optionId).value.trim();
+        if (optionValue) {
+            const newOption = document.createElement('option');
+            newOption.value = optionValue;
+            newOption.textContent = `Answer ${String.fromCharCode(65 + index)}`;
+            answerDropdown.appendChild(newOption);
+        }
+    });
+};
+
+// Event listeners to update the dropdown whenever an option is changed
+['option_1', 'option_2', 'option_3', 'option_4'].forEach(optionId => {
+    if (document.getElementById(optionId)) {
+        document.getElementById(optionId).addEventListener('input', updateCorrectAnswerOptions);
+    };
+});
+
 // get token from cookie function
 function getTokenFromCookie() {
     const cookies = document.cookie.split('; ');
@@ -218,28 +255,22 @@ function loadDashboardCardData(data) {
 
 // load new users data
 function loadNewUsersData(data) {
-    // Select the container to hold user cards
-    const container = document.getElementById('user_cards_container');
-    // Clear existing content (optional)
-    container.innerHTML = '';
+    document.getElementById('user-list').innerHTML = "";
+    const userListElement = document.getElementById("user-list");
 
-    // Loop through users and create cards
-    data.newUsers.forEach(user => {
-        const cardHTML = `
-          <div class="col-12 user_card_ d-flex justify-content-between align-items-center">
-            <div class="image-div px-1">
-              <img src="${user.imageUrl || 'https://via.placeholder.com/50'}" alt="user-img" />
-            </div>
-            <div class="title-div px-1">
-              <h6>${user.fullName}</h6>
-              <p>${user.email}</p>
-            </div>
-            <div class="date-div px-1">${new Date(user.createdAt).toISOString().split('T')[0]}</div>
-          </div>
-        `;
-
-        // Append the card to the container
-        container.insertAdjacentHTML('beforeend', cardHTML);
+    data.newUsers.forEach((user) => {
+        const listItem = document.createElement("li");
+        listItem.innerHTML = `
+        <div class="user-avatar">
+          <img src="${user.profileUrl || 'https://via.placeholder.com/50'}" alt="">
+        </div>
+        <div class="user-details">
+          <span class="user-name">${user.fullName}</span>
+          <span class="user-email">${user.email}</span>
+        </div>
+        <span class="user-date">Joined: ${new Date(user.createdAt).toISOString().split('T')[0]}</span>
+      `;
+        userListElement.appendChild(listItem);
     });
 };
 
@@ -567,6 +598,88 @@ function viewReport(id) {
     // Add your logic to display or handle report viewing
 };
 
+// Function to handle server response with errors
+function handleFormErrors(errors) {
+    // Clear any existing error messages
+    const errorElements = document.querySelectorAll('.error-message');
+    errorElements.forEach((elem) => elem.remove());
+
+    // Ensure errors is an array before processing
+    if (Array.isArray(errors)) {
+        // Group errors by field path (name or id)
+        const groupedErrors = {};
+
+        errors.forEach((error) => {
+            // Group errors by field name/path (we only keep the first error for each field)
+            if (!groupedErrors[error.path]) {
+                groupedErrors[error.path] = error.msg;
+            };
+        });
+
+        // Now loop through the grouped errors and display them
+        Object.keys(groupedErrors).forEach((fieldId) => {
+            const field = document.getElementById(fieldId);
+            if (field) {
+                // Create a div to display the first error message for the field
+                const errorMessageDiv = document.createElement('div');
+                errorMessageDiv.classList.add('error-message', 'text-danger', 'mt-2');
+                errorMessageDiv.textContent = groupedErrors[fieldId];
+
+                // Append the error message after the field
+                field.insertAdjacentElement('afterend', errorMessageDiv);
+            };
+        });
+    } else {
+        console.error('Expected errors to be an array but got:', errors);
+    };
+};
+
+// Function to create and display a notification
+function showNotification(type, message) {
+    const notificationsContainer = document.getElementById("notifications-container");
+
+    // Helper function to create elements with class and content
+    const createElement = (tag, classNames, textContent) => {
+        const element = document.createElement(tag);
+        element.classList.add(...classNames);
+        if (textContent) element.textContent = textContent;
+        return element;
+    };
+
+    // Define notification types and corresponding icons
+    const notificationTypes = {
+        success: { icon: "✔️", class: "success", bgColor: "#e9f7ec", borderColor: "#28a745" },
+        error: { icon: "❌", class: "error", bgColor: "#f8d7da", borderColor: "#dc3545" },
+        info: { icon: "ℹ️", class: "info", bgColor: "#d1ecf1", borderColor: "#17a2b8" },
+        warning: { icon: "⚠️", class: "warning", bgColor: "#fff3cd", borderColor: "#ffc107" }
+    };
+
+    const { icon, class: notificationClass, bgColor, borderColor } = notificationTypes[type] || {};
+
+    // Create notification card with type-specific styles
+    const notificationCard = createElement("div", ["notification-card", notificationClass]);
+    notificationCard.style.backgroundColor = bgColor;
+    notificationCard.style.borderLeft = `5px solid ${borderColor}`;
+
+    const iconElement = createElement("div", ["icon"], icon);
+    const messageDiv = createElement("div", ["message"], message);
+    const closeBtn = createElement("button", ["close-btn"], "×");
+    closeBtn.onclick = () => removeNotification(notificationCard);
+
+    notificationCard.append(iconElement, messageDiv, closeBtn);
+    notificationsContainer.appendChild(notificationCard);
+
+    // Automatically remove the notification after 5 seconds
+    setTimeout(() => removeNotification(notificationCard), 2000);
+};
+
+// Function to remove notification (both manually and automatically)
+function removeNotification(notificationCard) {
+    notificationCard.style.opacity = "0";
+    notificationCard.style.transform = "translateX(100%)";
+    setTimeout(() => notificationCard.remove(), 500); // Remove after animation
+};
+
 // dynamic api function
 async function dynamicApiRequest({ url, method = "GET", headers = {}, body = null }) {
     try {
@@ -592,6 +705,7 @@ async function dynamicApiRequest({ url, method = "GET", headers = {}, body = nul
         if (!response.ok) {
             const errorData = await response.json();
             console.error("API Error Response:", errorData);
+            handleFormErrors(errorData.errors);
             throw new Error(`HTTP error! status: ${response.status}`);
         };
 
@@ -622,26 +736,8 @@ async function postData(url, token = '', body) {
     return response;
 };
 
-// link tag
-document.querySelectorAll('.sidebar-container a').forEach(link => {
-    link.addEventListener('click', function (e) {
-        e.preventDefault(); // Prevent default navigation
-
-        // Remove 'active' class from all links
-        document.querySelectorAll('.sidebar-container a').forEach(l => l.classList.remove('active'));
-
-        // Add 'active' class to the clicked link
-        this.classList.add('active');
-
-        // Show the loader
-        document.getElementById('loader').classList.remove("d-none");
-
-        // Redirect to the clicked link after a slight delay
-        setTimeout(() => {
-            window.location.href = this.href;
-        }, 200);
-    });
-});
+// show loader
+loader.classList.remove('d-none');
 
 // call api
 (async (baseUrl) => {
@@ -649,7 +745,7 @@ document.querySelectorAll('.sidebar-container a').forEach(link => {
         // get data endpoints
         const getDataEndpoints = [
             { url: `${baseUrl}/api/dashboard/stats`, handler: loadDashboardCardData, id: "dashboard-card-container" },
-            // { url: `${baseUrl}/api/dashboard/new-users`, handler: loadNewUsersData, id: "user_cards_container" },
+            { url: `${baseUrl}/api/dashboard/new-users`, handler: loadNewUsersData, id: "user-list" },
             { url: `${baseUrl}/api/categories`, handler: loadCategoryData, id: "categoryContainer" },
             { url: `${baseUrl}/api/classes`, handler: loadClassData, id: "classTable" },
             { url: `${baseUrl}/api/subjects`, handler: loadSubjectData, id: "subjectContainer" },
@@ -660,20 +756,23 @@ document.querySelectorAll('.sidebar-container a').forEach(link => {
             { url: `${baseUrl}/api/reports`, handler: loadReportData, id: "reportTableBody" }
         ];
 
-        // get data endpoints
-        for (const { url, handler, id } of getDataEndpoints) {
+        // Use Promise.all to wait for all data to load
+        await Promise.all(getDataEndpoints.map(async ({ url, handler, id }) => {
             if (document.getElementById(id)) {
                 const data = await fetchData(url, token);
                 handler(data);
             };
-        };
+        }));
+
+        // Hide loader and show main content
+        loader.classList.add('d-none');
 
     } catch (error) {
         console.error("Error fetching data:", error);
     };
 })(baseUrl);
 
-
+// toggle sidebar btn
 document.getElementById('toggleButton').addEventListener('click', function () {
     const sidebar = document.getElementById('sidebar__');
 
@@ -712,6 +811,17 @@ document.addEventListener('click', function (event) {
         sidebar.classList.add('d-none'); // Close the sidebar
         document.body.style.overflow = ''; // Enable scroll
     };
+});
+
+// Close the popup when Cancel is clicked
+document.getElementById("cancelDelete").addEventListener("click", function () {
+    document.getElementById("deletePopup").style.display = "none";
+});
+
+// Close the popup and confirm delete when Confirm is clicked
+document.getElementById("confirmDelete").addEventListener("click", function () {
+    document.getElementById("deletePopup").style.display = "none";
+    showNotification('success', 'Item deleted!');
 });
 
 // submit btn
@@ -759,7 +869,7 @@ document.getElementById("submitBtn").addEventListener("click", async (event) => 
             };
 
             if (options.length === 0) {
-                alert("Please provide at least one option for the question.");
+                showNotification('error', 'Please provide at least one option for the question.')
                 toggleButtonState(false);
                 return; // Exit if no options are provided
             };
@@ -778,33 +888,15 @@ document.getElementById("submitBtn").addEventListener("click", async (event) => 
 
         // Send request
         const response = await postData(postDataEndpoints[dataTitle], token, payload);
-        console.log(`${dataTitle} Response:`, response);
-
         if (response.success) {
-            console.log(`${dataTitle} created successfully.`);
             form.reset();
-            alert(response.message);
+            showNotification('success', response.message);
         } else {
             console.error(`${dataTitle} creation failed:`, response.error || "Unknown error.");
-            alert(response.error || response.message || "Unknown error.");
         };
     } catch (error) {
         console.error("An error occurred:", error);
-        alert(error.message);
     } finally {
         toggleButtonState(false); // Reset button state
     };
 });
-
-// Close the popup when Cancel is clicked
-document.getElementById("cancelDelete").addEventListener("click", function () {
-    document.getElementById("deletePopup").style.display = "none";
-});
-
-// Close the popup and confirm delete when Confirm is clicked
-document.getElementById("confirmDelete").addEventListener("click", function () {
-    // Add your delete logic here (e.g., delete the item)
-    alert("Item deleted!");
-    document.getElementById("deletePopup").style.display = "none";
-});
-

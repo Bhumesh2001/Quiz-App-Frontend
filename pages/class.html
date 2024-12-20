@@ -249,7 +249,7 @@
                   >
                     <!-- back btn -->
                     <button
-                      class="btn btn-secondary fw-bold backButton"
+                      class="btn btn-secondary fw-bold backButton d-none"
                       data-id="class_createClass"
                     >
                       <i class="fas fa-arrow-left"></i> Back
@@ -268,10 +268,7 @@
                   <div class="content-section" id="class">
                     <!-- Classes Section -->
                     <div class="table-responsive">
-                      <table
-                        class="table table-bordered table-striped"
-                        id="classTable"
-                      >
+                      <table class="table" id="classTable">
                         <!-- Table Heading -->
                         <thead class="thead-dark">
                           <tr>
@@ -373,7 +370,7 @@
                 <!-- create class -->
                 <div class="form-container_ px-4 pb-4 d-none" id="createClass">
                   <!-- heading part -->
-                  <div class="form-header text-center mb-4">
+                  <div class="form-header text-center mb-2">
                     <h1 class="mb-0" id="form-title">Create Class</h1>
                   </div>
 
@@ -391,10 +388,12 @@
                           placeholder="Enter class"
                           class="form-control"
                           name="name"
+                          id="name"
                           autocomplete="off"
                         />
                       </div>
                     </div>
+
                     <div class="col-12">
                       <div class="mb-3">
                         <label for="description" class="form-label"
@@ -404,16 +403,19 @@
                           class="form-control"
                           rows="4"
                           name="description"
+                          id="description"
                           autocomplete="off"
                         ></textarea>
                       </div>
                     </div>
+
                     <div class="col-12">
                       <div class="mb-3">
                         <label for="status" class="form-label">Status</label
                         ><select
                           class="form-select"
                           name="status"
+                          id="status"
                           autocomplete="off"
                         >
                           <option value="active">Active</option>
@@ -440,7 +442,6 @@
                       class="btn btn-primary w-100 d-none"
                       type="button"
                       id="loading-btn"
-                      disabled=""
                     >
                       <span
                         class="spinner-border spinner-border-sm"
@@ -489,6 +490,9 @@
         </div>
       </div>
     </div>
+
+    <!-- Notifications will be dynamically inserted -->
+    <div class="notifications-container" id="notifications-container"></div>
 
     <!-- bootstrap js cdn -->
     <script

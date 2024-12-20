@@ -249,7 +249,7 @@
                   >
                     <!-- back button -->
                     <button
-                      class="btn btn-secondary backButton fw-bold"
+                      class="btn btn-secondary backButton fw-bold d-none"
                       data-id="user_crateUser"
                     >
                       <i class="fas fa-arrow-left"></i> Back
@@ -269,7 +269,7 @@
                   <div class="content-section" id="user">
                     <!-- Users Table -->
                     <div class="table-responsive">
-                      <table class="table table-bordered table-striped">
+                      <table class="table">
                         <!-- User heading -->
                         <thead class="thead-dark">
                           <tr>
@@ -409,7 +409,7 @@
                 <!-- create user -->
                 <div class="form-container_ px-4 pb-4 d-none" id="crateUser">
                   <!-- heading part -->
-                  <div class="form-header text-center mb-4">
+                  <div class="form-header text-center mb-2">
                     <h1 class="mb-0" id="form-title">Create User</h1>
                   </div>
 
@@ -538,6 +538,7 @@
                           placeholder=""
                           class="form-control"
                           name="profileUrl"
+                          id="profileUrl"
                           autocomplete="off"
                           accept="image/*"
                         />
@@ -562,7 +563,6 @@
                       class="btn btn-primary w-100 d-none"
                       type="button"
                       id="loading-btn"
-                      disabled=""
                     >
                       <span
                         class="spinner-border spinner-border-sm"
@@ -611,6 +611,9 @@
         </div>
       </div>
     </div>
+
+    <!-- Notifications will be dynamically inserted -->
+    <div class="notifications-container" id="notifications-container"></div>
 
     <!-- bootstrap js cdn -->
     <script

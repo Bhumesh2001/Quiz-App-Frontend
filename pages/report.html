@@ -247,7 +247,7 @@
                     class="d-flex justify-content-between align-items-center button-section"
                     id="report-id"
                   >
-                    <button class="btn btn-secondary backButton fw-bold">
+                    <button class="btn btn-secondary backButton fw-bold d-none">
                       <i class="fas fa-arrow-left"></i> Back
                     </button>
                     <h5 class="m-0">Total reports 3</h5>
@@ -256,7 +256,7 @@
                   <div class="content-section" id="report">
                     <!-- Reports Table -->
                     <div class="table-responsive">
-                      <table class="table table-bordered table-striped">
+                      <table class="table">
                         <!-- Report Heading -->
                         <thead class="thead-dark">
                           <tr>
@@ -373,6 +373,9 @@
         </div>
       </div>
     </div>
+
+    <!-- Notifications will be dynamically inserted -->
+    <div class="notifications-container" id="notifications-container"></div>
 
     <!-- bootstrap js cdn -->
     <script

@@ -249,7 +249,7 @@
                   >
                     <!-- back button  -->
                     <button
-                      class="btn btn-secondary fw-bold backButton"
+                      class="btn btn-secondary fw-bold backButton d-none"
                       data-id="chapter_createChapter"
                     >
                       <i class="fas fa-arrow-left"></i> Back
@@ -414,7 +414,7 @@
                   id="createChapter"
                 >
                   <!-- heading part -->
-                  <div class="form-header text-center mb-4">
+                  <div class="form-header text-center mb-2">
                     <h1 class="mb-0" id="form-title">Create Chapter</h1>
                   </div>
 
@@ -430,8 +430,8 @@
                         ><select
                           class="form-select"
                           name="subjectId"
-                          id="subjectId"
                           autocomplete="on"
+                          id="subjectId"
                         >
                           <option value="select subject">Select Subject</option>
                           <option value="subject1">Subject1</option>
@@ -450,8 +450,6 @@
                           name="name"
                           id="name"
                           autocomplete="off"
-                          accept=""
-                          max=""
                         />
                       </div>
                     </div>
@@ -504,12 +502,13 @@
 
                     <div class="col-12">
                       <div class="mb-3">
-                        <label for="image" class="form-label">Image</label
+                        <label for="imageUrl" class="form-label">Image</label
                         ><input
                           type="file"
                           placeholder=""
                           class="form-control"
                           name="imageUrl"
+                          id="imageUrl"
                           autocomplete="on"
                           accept="image/*"
                         />
@@ -534,7 +533,6 @@
                       class="btn btn-primary w-100 d-none"
                       type="button"
                       id="loading-btn"
-                      disabled=""
                     >
                       <span
                         class="spinner-border spinner-border-sm"
@@ -583,6 +581,9 @@
         </div>
       </div>
     </div>
+
+    <!-- Notifications will be dynamically inserted -->
+    <div class="notifications-container" id="notifications-container"></div>
 
     <!-- bootstrap js cdn -->
     <script

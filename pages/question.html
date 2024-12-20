@@ -249,7 +249,7 @@
                   >
                     <!-- back button -->
                     <button
-                      class="btn btn-secondary backButton fw-bold"
+                      class="btn btn-secondary backButton fw-bold d-none"
                       data-id="question_createQuestion"
                     >
                       <i class="fas fa-arrow-left"></i> Back
@@ -269,7 +269,7 @@
                   <div class="content-section" id="question">
                     <!-- Users Table -->
                     <div class="table-responsive">
-                      <table class="table table-bordered table-striped">
+                      <table class="table">
                         <!-- User heading -->
                         <thead class="thead-dark">
                           <tr>
@@ -393,7 +393,7 @@
                   id="createQuestion"
                 >
                   <!-- heading part -->
-                  <div class="form-header text-center mb-4">
+                  <div class="form-header text-center mb-2">
                     <h1 class="mb-0" id="form-title">Create Question</h1>
                   </div>
 
@@ -449,8 +449,6 @@
                           name="question"
                           id="question_"
                           autocomplete="off"
-                          accept=""
-                          max=""
                         />
                       </div>
                     </div>
@@ -462,6 +460,7 @@
                         ><select
                           class="form-select"
                           name="questionType"
+                          id="questionType"
                           autocomplete="off"
                         >
                           <option value="Options" selected>Options</option>
@@ -475,12 +474,17 @@
                     <!-- option -->
                     <div class="col-12">
                       <div class="mb-3">
-                        <label for="option_1" class="form-label">Answer A</label
+                        <label
+                          for="option_1"
+                          class="form-label option-input"
+                          data-answer="Answer A"
+                          >Answer A</label
                         ><input
                           type="text"
                           placeholder="Enter option"
                           class="form-control"
                           name="option_1"
+                          id="option_1"
                           autocomplete="off"
                         />
                       </div>
@@ -488,12 +492,17 @@
 
                     <div class="col-12">
                       <div class="mb-3">
-                        <label for="option_2" class="form-label">Answer B</label
+                        <label
+                          for="option_2"
+                          class="form-label option-input"
+                          data-answer="Answer B"
+                          >Answer B</label
                         ><input
                           type="text"
                           placeholder="Enter option"
                           class="form-control"
                           name="option_2"
+                          id="option_2"
                           autocomplete="off"
                         />
                       </div>
@@ -501,12 +510,17 @@
 
                     <div class="col-12">
                       <div class="mb-3">
-                        <label for="option_3" class="form-label">Answer C</label
+                        <label
+                          for="option_3"
+                          class="form-label option-input"
+                          data-answer="Answer C"
+                          >Answer C</label
                         ><input
                           type="text"
                           placeholder="Enter option"
                           class="form-control"
                           name="option_3"
+                          id="option_3"
                           autocomplete="off"
                         />
                       </div>
@@ -514,28 +528,42 @@
 
                     <div class="col-12">
                       <div class="mb-3">
-                        <label for="option_4" class="form-label">Answer D</label
+                        <label
+                          for="option_4"
+                          class="form-label option-input"
+                          data-answer="Answer D"
+                          >Answer D</label
                         ><input
                           type="text"
                           placeholder="Enter option"
                           class="form-control"
                           name="option_4"
+                          id="option_4"
                           autocomplete="off"
                         />
                       </div>
                     </div>
 
+                    <!-- Answer Dropdown -->
                     <div class="col-12">
                       <div class="mb-3">
                         <label for="answer" class="form-label"
                           >Correct Answer</label
-                        ><input
-                          type="text"
-                          placeholder="Enter option"
+                        >
+                        <select
                           class="form-control"
+                          id="answer"
                           name="answer"
-                          autocomplete="off"
-                        />
+                          required
+                        >
+                          <option value="" selected="">
+                            Select Correct Answer
+                          </option>
+                          <option value="">Answer A</option>
+                          <option value="">Answer B</option>
+                          <option value="">Answer C</option>
+                          <option value="">Answer D</option>
+                        </select>
                       </div>
                     </div>
 
@@ -545,6 +573,7 @@
                         ><select
                           class="form-select"
                           name="status"
+                          id="status"
                           autocomplete="off"
                         >
                           <option value="active">Active</option>
@@ -571,7 +600,6 @@
                       class="btn btn-primary w-100 d-none"
                       type="button"
                       id="loading-btn"
-                      disabled=""
                     >
                       <span
                         class="spinner-border spinner-border-sm"
@@ -614,6 +642,9 @@
         </div>
       </div>
     </div>
+
+    <!-- Notifications will be dynamically inserted -->
+    <div class="notifications-container" id="notifications-container"></div>
 
     <!-- bootstrap js cdn -->
     <script

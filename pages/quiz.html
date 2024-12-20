@@ -249,7 +249,7 @@
                   >
                     <!-- back button -->
                     <button
-                      class="btn btn-secondary fw-bold backButton"
+                      class="btn btn-secondary fw-bold backButton d-none"
                       data-id="quiz_createQuiz"
                     >
                       <i class="fas fa-arrow-left"></i> Back
@@ -407,7 +407,7 @@
                 <!-- create quiz -->
                 <div class="form-container_ px-4 pb-4 d-none" id="createQuiz">
                   <!-- headin part -->
-                  <div class="form-header text-center mb-4">
+                  <div class="form-header text-center mb-2">
                     <h1 class="mb-0" id="form-title">Create Quiz</h1>
                   </div>
 
@@ -432,6 +432,7 @@
                         </select>
                       </div>
                     </div>
+
                     <div class="col-12">
                       <div class="mb-3">
                         <label for="subjectId" class="form-label">Subject</label
@@ -447,6 +448,7 @@
                         </select>
                       </div>
                     </div>
+
                     <div class="col-12">
                       <div class="mb-3">
                         <label for="chapterId" class="form-label">Chapter</label
@@ -462,6 +464,7 @@
                         </select>
                       </div>
                     </div>
+
                     <div class="col-12">
                       <div class="mb-3">
                         <label for="categoryId" class="form-label"
@@ -480,6 +483,7 @@
                         </select>
                       </div>
                     </div>
+
                     <div class="col-12">
                       <div class="mb-3">
                         <label for="quizTitle" class="form-label"
@@ -494,6 +498,7 @@
                         />
                       </div>
                     </div>
+
                     <div class="col-12">
                       <div class="mb-3">
                         <label for="quizTime" class="form-label"
@@ -508,6 +513,7 @@
                         />
                       </div>
                     </div>
+
                     <div class="col-12">
                       <div class="mb-3">
                         <label for="description" class="form-label"
@@ -517,18 +523,21 @@
                           class="form-control"
                           rows="4"
                           name="description"
+                          id="description"
                           autocomplete="off"
                         ></textarea>
                       </div>
                     </div>
+
                     <div class="col-12">
                       <div class="mb-3">
-                        <label for="image" class="form-label">Image</label
+                        <label for="imageUrl" class="form-label">Image</label
                         ><input
                           type="file"
                           placeholder=""
                           class="form-control"
                           name="imageUrl"
+                          id="imageUrl"
                           autocomplete="off"
                           accept="image/*"
                         />
@@ -553,7 +562,6 @@
                       class="btn btn-primary w-100 d-none"
                       type="button"
                       id="loading-btn"
-                      disabled=""
                     >
                       <span
                         class="spinner-border spinner-border-sm"
@@ -602,6 +610,9 @@
         </div>
       </div>
     </div>
+
+     <!-- Notifications will be dynamically inserted -->
+     <div class="notifications-container" id="notifications-container"></div>
 
     <!-- bootstrap js cdn -->
     <script
