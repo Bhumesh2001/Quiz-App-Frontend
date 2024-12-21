@@ -32,6 +32,7 @@
             <button class="btn btn-light border btn-sm" id="toggleButton">
               <span class="navbar-toggler-icon"></span>
             </button>
+
             <!-- Logo -->
             <img
               src="/assets/icons/cys_logo.jpeg"
@@ -39,6 +40,7 @@
               class="img-fluid"
               style="height: 35px; width: 35px"
             />
+
             <!-- Company Name -->
             <span class="text-dark fw-bold">CYS Dashboard</span>
           </div>
@@ -85,7 +87,7 @@
                 </li>
                 <li><hr class="dropdown-divider" /></li>
                 <li>
-                  <a class="dropdown-item" href="#"
+                  <a class="dropdown-item" id="logoutButton" href="#"
                     ><i class="fas fa-sign-out-alt"></i> Logout</a
                   >
                 </li>
@@ -234,7 +236,7 @@
                   <a href="/pages/dashboard.html">
                     <i class="fa-solid fa-house"></i>
                   </a>
-                </span>
+                </span>/
                 <h6 id="title" class="m-0 p-1">Dashboard</h6>
               </div>
 
@@ -451,9 +453,6 @@
     <div id="loader" class="loader_ d-none">
       <i class="fas fa-spinner fa-spin"></i>
     </div>
-
-    <!-- Notifications will be dynamically inserted -->
-    <div class="notifications-container" id="notifications-container"></div>
 
     <!-- bootstrap js cdn -->
     <script

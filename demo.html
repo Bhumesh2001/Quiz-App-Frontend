@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dark and Light Mode Toggle</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <style>
+      /* Base Styles */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #ffffff;
+        color: #000000;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      .dark-mode {
+        background-color: #121212;
+        color: #ffffff;
+      }
+
+      header {
+        padding: 1rem;
+        text-align: center;
+        background: #f0f0f0;
+        border-bottom: 1px solid #ccc;
+      }
+
+      .dark-mode header {
+        background: #1e1e1e;
+        border-color: #333;
+      }
+
+      .dark-light-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        padding: 15px;
+        border-radius: 50%;
+        background-color: #f0f0f0;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s;
+      }
+
+      .dark-light-btn i {
+        font-size: 1.5rem;
+      }
+
+      .dark-light-btn:hover {
+        background-color: #ddd;
+      }
+
+      .dark-mode .dark-light-btn {
+        background-color: #333;
+      }
+
+      .dark-mode .dark-light-btn i {
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Dark and Light Mode Toggle</h1>
+      <p>Click the button below to switch between light and dark modes.</p>
+    </header>
+
+    <button class="btn btn-secondary rounded-circle dark-light-btn">
+      <i class="fas fa-sun"></i>
+    </button>
+
+    <script>
+      // Select the toggle button and the body
+      const themeToggleButton = document.querySelector(".dark-light-btn");
+      const body = document.body;
+      const icon = themeToggleButton.querySelector("i");
+
+      // Check if the user has a saved theme preference
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme) {
+        body.classList.toggle("dark-mode", savedTheme === "dark");
+        icon.classList.toggle("fa-sun", savedTheme !== "dark");
+        icon.classList.toggle("fa-moon", savedTheme === "dark");
+      }
+
+      // Add event listener to toggle the theme
+      themeToggleButton.addEventListener("click", () => {
+        // Toggle the dark mode class on the body
+        body.classList.toggle("dark-mode");
+
+        // Toggle the icon inside the button
+        const isDarkMode = body.classList.contains("dark-mode");
+        icon.classList.toggle("fa-sun", !isDarkMode);
+        icon.classList.toggle("fa-moon", isDarkMode);
+
+        // Save the theme preference in localStorage
+        localStorage.setItem("theme", isDarkMode ? "dark" : "light");
+      });
+    </script>
+  </body>
+</html>

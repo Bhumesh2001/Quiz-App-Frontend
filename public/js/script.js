@@ -10,7 +10,7 @@ const createButtons = document.querySelectorAll('.createButton');
 const buttons = document.querySelectorAll('.button-section');
 const buttonClickMap = new Map();
 const baseUrl = 'https://quiz-app-backend-bi9c.onrender.com';
-const frontendBaseUrl = "https://cys-app.netlify.app"
+const frontendBaseUrl = "https://cys-app.netlify.app";
 let token;
 
 // get token 
@@ -189,9 +189,15 @@ function getTokenFromCookie() {
     const cookies = document.cookie.split('; ');
     const tokenCookie = cookies.find((cookie) => cookie.startsWith('admin_token='));
 
+    // show loader
+    document.getElementById('loader').classList.remove('d-none');
+
     if (tokenCookie) {
         return tokenCookie.split('=')[1]; // Extract the token value
     };
+
+    // hide loader
+    document.getElementById('loader').classList.add('d-none');
     window.location.href = `${frontendBaseUrl}/index.html`;
 };
 
@@ -737,7 +743,7 @@ async function postData(url, token = '', body) {
 };
 
 // show loader
-loader.classList.remove('d-none');
+document.getElementById('loader').classList.remove('d-none');
 
 // call api
 (async (baseUrl) => {
@@ -765,7 +771,7 @@ loader.classList.remove('d-none');
         }));
 
         // Hide loader and show main content
-        loader.classList.add('d-none');
+        document.getElementById('loader').classList.add('d-none');
 
     } catch (error) {
         console.error("Error fetching data:", error);
@@ -813,90 +819,121 @@ document.addEventListener('click', function (event) {
     };
 });
 
-// Close the popup when Cancel is clicked
-document.getElementById("cancelDelete").addEventListener("click", function () {
-    document.getElementById("deletePopup").style.display = "none";
+document.getElementById("logoutButton").addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    // show loader
+    document.getElementById('loader').classList.remove('d-none');
+
+    const url = `${baseUrl}/api/auth/logout`;
+    const response = await dynamicApiRequest({
+        url,
+        method: "POST",
+        headers: token ? { "Authorization": `Bearer ${token}` } : {},
+    });
+    if (response.success) {
+        document.cookie.split(";").forEach((cookie) => {
+            const [name] = cookie.split("=");
+            document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+        });
+        // show loader
+        document.getElementById('loader').classList.add('d-none');
+
+        window.location.href = `${frontendBaseUrl}/index.html`;
+    } else {
+        showNotification('error', response.message || 'Logout failed!')
+    };
 });
 
-// Close the popup and confirm delete when Confirm is clicked
-document.getElementById("confirmDelete").addEventListener("click", function () {
-    document.getElementById("deletePopup").style.display = "none";
-    showNotification('success', 'Item deleted!');
-});
+if (document.getElementById('cancelDelete')
+    || document.getElementById('confirmDelete')
+    || document.getElementById('submitBtn')) {
 
-// submit btn
-document.getElementById("submitBtn").addEventListener("click", async (event) => {
-    toggleButtonState(true);
+    // Close the popup when Cancel is clicked
+    document.getElementById("cancelDelete").addEventListener("click", function () {
+        document.getElementById("deletePopup").style.display = "none";
+    });
 
-    const form = document.getElementById("dynamicForm");
-    const formData = new FormData(form);
-    const dataTitle = event.target.getAttribute('data-title');
+    // Close the popup and confirm delete when Confirm is clicked
+    document.getElementById("confirmDelete").addEventListener("click", function () {
+        document.getElementById("deletePopup").style.display = "none";
+        showNotification('success', 'Item deleted!');
+    });
 
-    // Capitalize the "status" field, if it exists
-    const status = formData.get("status");
-    if (status) formData.set("status", status.charAt(0).toUpperCase() + status.slice(1).toLowerCase());
+    // submit btn
+    document.getElementById("submitBtn").addEventListener("click", async (event) => {
+        toggleButtonState(true);
 
-    const postDataEndpoints = {
-        "Create Category": `${baseUrl}/api/categories`,
-        "Create Class": `${baseUrl}/api/classes`,
-        "Create Subject": `${baseUrl}/api/subjects`,
-        "Create Chapter": `${baseUrl}/api/chapters`,
-        "Create Question": `${baseUrl}/api/questions`,
-        "Create Quiz": `${baseUrl}/api/quizzes/quiz`,
-        "Create User": `${baseUrl}/api/auth/user`
-    };
+        const form = document.getElementById("dynamicForm");
+        const formData = new FormData(form);
+        const dataTitle = event.target.getAttribute('data-title');
 
-    if (!postDataEndpoints[dataTitle]) {
-        console.error("Invalid data title:", dataTitle);
-        toggleButtonState(false);
-        return;
-    };
+        // Capitalize the "status" field, if it exists
+        const status = formData.get("status");
+        if (status) formData.set("status", status.charAt(0).toUpperCase() + status.slice(1).toLowerCase());
 
-    try {
-        let payload = formData; // Default payload
+        const postDataEndpoints = {
+            "Create Category": `${baseUrl}/api/categories`,
+            "Create Class": `${baseUrl}/api/classes`,
+            "Create Subject": `${baseUrl}/api/subjects`,
+            "Create Chapter": `${baseUrl}/api/chapters`,
+            "Create Question": `${baseUrl}/api/questions`,
+            "Create Quiz": `${baseUrl}/api/quizzes/quiz`,
+            "Create User": `${baseUrl}/api/auth/user`
+        };
 
-        if (dataTitle === "Create Question") {
-            const options = [];
-            const questionData = {};
+        if (!postDataEndpoints[dataTitle]) {
+            console.error("Invalid data title:", dataTitle);
+            toggleButtonState(false);
+            return;
+        };
 
-            // Organize data for "Create Question"
-            for (let [key, value] of formData.entries()) {
-                if (key.startsWith("option_") && value.trim() !== "") {
-                    options.push(value); // Collect options if they are not empty
-                } else {
-                    questionData[key] = value;
+        try {
+            let payload = formData; // Default payload
+
+            if (dataTitle === "Create Question") {
+                const options = [];
+                const questionData = {};
+
+                // Organize data for "Create Question"
+                for (let [key, value] of formData.entries()) {
+                    if (key.startsWith("option_") && value.trim() !== "") {
+                        options.push(value); // Collect options if they are not empty
+                    } else {
+                        questionData[key] = value;
+                    };
+                };
+
+                if (options.length === 0) {
+                    showNotification('error', 'Please provide at least one option for the question.')
+                    toggleButtonState(false);
+                    return; // Exit if no options are provided
+                };
+
+                // Construct final JSON payload
+                payload = {
+                    categoryId: questionData.categoryId,
+                    chapterId: questionData.chapterId,
+                    question: questionData.question,
+                    questionType: questionData.questionType,
+                    options,
+                    answer: questionData.answer,
+                    status: questionData.status
                 };
             };
 
-            if (options.length === 0) {
-                showNotification('error', 'Please provide at least one option for the question.')
-                toggleButtonState(false);
-                return; // Exit if no options are provided
+            // Send request
+            const response = await postData(postDataEndpoints[dataTitle], token, payload);
+            if (response.success) {
+                form.reset();
+                showNotification('success', response.message);
+            } else {
+                console.error(`${dataTitle} creation failed:`, response.error || "Unknown error.");
             };
-
-            // Construct final JSON payload
-            payload = {
-                categoryId: questionData.categoryId,
-                chapterId: questionData.chapterId,
-                question: questionData.question,
-                questionType: questionData.questionType,
-                options,
-                answer: questionData.answer,
-                status: questionData.status
-            };
+        } catch (error) {
+            console.error("An error occurred:", error);
+        } finally {
+            toggleButtonState(false); // Reset button state
         };
-
-        // Send request
-        const response = await postData(postDataEndpoints[dataTitle], token, payload);
-        if (response.success) {
-            form.reset();
-            showNotification('success', response.message);
-        } else {
-            console.error(`${dataTitle} creation failed:`, response.error || "Unknown error.");
-        };
-    } catch (error) {
-        console.error("An error occurred:", error);
-    } finally {
-        toggleButtonState(false); // Reset button state
-    };
-});
+    });
+};
