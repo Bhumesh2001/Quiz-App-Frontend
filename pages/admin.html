@@ -18,6 +18,10 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://site-assets.fontawesome.com/releases/v6.7.2/css/all.css"
+    />
     <!-- dashboard2 css -->
     <link rel="stylesheet" href="/public/css/styless.css" />
   </head>
@@ -116,19 +120,6 @@
                 </div>
               </a>
 
-              <!-- category -->
-              <a
-                href="category.html"
-                class="sidebar-link"
-                id="category_"
-                draggable="false"
-              >
-                <div class="sidebar-item">
-                  <i class="fa fa-list-alt" aria-hidden="true"></i>
-                  <span>Category</span>
-                </div>
-              </a>
-
               <!-- class -->
               <a
                 href="class.html"
@@ -176,7 +167,7 @@
                 draggable="false"
               >
                 <div class="sidebar-item">
-                  <i class="fa-solid fa-question"></i>
+                  <i class="fa-solid fa-seal-question"></i>
                   <span>Question</span>
                 </div>
               </a>
@@ -219,6 +210,19 @@
                   <span>Report</span>
                 </div>
               </a>
+
+              <!-- admin -->
+              <a
+                href="admin.html"
+                class="sidebar-link"
+                id="adminLink"
+                draggable="false"
+              >
+                <div class="sidebar-item">
+                  <i class="fa-solid fa-user"></i>
+                  <span>Admin</span>
+                </div>
+              </a>
             </div>
           </div>
 
@@ -233,181 +237,102 @@
                 <span class="p-2">
                   <a href="/pages/dashboard.html">
                     <i class="fa-solid fa-house"></i>
-                  </a>
-                </span>/
-                <h6 id="title" class="m-0 p-1">Category</h6>
+                  </a> </span
+                >/
+                <h6 id="title" class="m-0 p-1">Admin User</h6>
               </div>
 
               <!-- main content -->
               <div class="content mb-3">
-                <!-- category section -->
-                <section class="category_section">
-                  <!-- button section -->
+                <!-- user section -->
+                <section class="user_section">
+                  <!-- Navigation Buttons -->
                   <div
-                    class="d-flex justify-content-between align-items-center pb-2 button-section"
-                    id="category-id"
+                    class="d-flex justify-content-between flex-wrap gap-2 button-section"
+                    id="admin-id"
                   >
-                    <!-- back btn -->
+                    <!-- back button -->
                     <button
-                      class="btn btn-secondary fw-bold backButton d-none"
-                      data-id="category_createCategory"
+                      class="btn btn-secondary backButton fw-bold d-none"
+                      data-id="admin_crateAdmin"
                     >
                       <i class="fas fa-arrow-left"></i> Back
                     </button>
 
-                    <!-- create btn -->
+                    <!-- Create user button -->
                     <button
                       class="btn btn-primary fw-bold createButton"
-                      id="createCategoryButton"
-                      data-id="category_createCategory"
+                      data-id="admin_crateAdmin"
+                      id="createAdminButton"
+                      data-class="classId_subjectId_categoryId_chapterId_userId"
                     >
-                      <i class="fas fa-plus"></i>
-                      Create Category
+                      <i class="fas fa-plus"></i> Create Admin
                     </button>
                   </div>
 
-                  <div class="content-section" id="category">
-                    <!-- show categories -->
-                    <div
-                      class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3 mb-3"
-                      id="categoryContainer"
-                    >
-                      <!-- Category 1 -->
-                      <div class="col">
-                        <div class="card subject-card h-100">
-                          <img
-                            src="/assets/images/category/education_category.png"
-                            class="card-img-top"
-                            alt="Education"
-                          />
-                          <div class="card-body text-center">
-                            <h5 class="card-title">Education</h5>
-                            <div class="d-flex justify-content-center gap-2">
-                              <button
-                                class="btn btn-warning btn-sm fw-bold createButton"
-                                data-edit-id="6"
-                                id="createEditCategory1"
-                                data-id="category"
-                                data-form-id="create"
-                                data-title="Edit Category"
-                              >
-                                <i class="fas fa-edit"></i>
-                              </button>
-                              <button
-                                class="btn btn-danger btn-sm fw-bold"
-                                onclick="showDeletePopup()"
-                              >
-                                <i class="fas fa-trash-alt"></i>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                  <div class="content-section" id="admin">
+                    <!-- Users Table -->
+                    <div class="table-responsive">
+                      <table class="table">
+                        <!-- Admin User heading -->
+                        <thead class="thead-dark">
+                          <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Registered</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
 
-                      <!-- Category 2 -->
-                      <div class="col">
-                        <div class="card subject-card h-100">
-                          <img
-                            src="/assets/images/category/technology_category.png"
-                            class="card-img-top"
-                            alt="Technology"
-                          />
-                          <div class="card-body text-center">
-                            <h5 class="card-title">Technology</h5>
-                            <div class="d-flex justify-content-center gap-2">
+                        <!-- Admin Users -->
+                        <tbody id="adminTableBody">
+                          <!-- Admin User Row 1 -->
+                          <tr>
+                            <td>
+                              <img
+                                src="https://via.placeholder.com/50"
+                                alt="Admin Image"
+                                class="rounded-circle"
+                              />
+                            </td>
+                            <td>John Doe</td>
+                            <td>john.doe@example.com</td>
+                            <td>2024-01-15</td>
+                            <td>
+                              <span class="badge bg-success badge-status"
+                                >Active</span
+                              >
+                            </td>
+                            <td>
                               <button
-                                class="btn btn-warning btn-sm fw-bold createButton"
-                                id="createEditCategory2"
-                                data-id="category"
-                                data-form-id="create"
-                                data-title="Edit Category"
+                                class="btn btn-warning btn-sm mb-1 createButton"
+                                title="Edit Admin"
+                                data-edit-id="adminEdit1"
                               >
                                 <i class="fas fa-edit"></i>
                               </button>
                               <button
-                                class="btn btn-danger btn-sm fw-bold"
+                                class="btn btn-danger btn-sm mb-1"
+                                title="Delete User"
                                 onclick="showDeletePopup()"
                               >
                                 <i class="fas fa-trash-alt"></i>
                               </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <!-- Category 3 -->
-                      <div class="col">
-                        <div class="card subject-card h-100">
-                          <img
-                            src="/assets/images/category/travel_category.png"
-                            class="card-img-top"
-                            alt="Travel"
-                          />
-                          <div class="card-body text-center">
-                            <h5 class="card-title">Travel</h5>
-                            <div class="d-flex justify-content-center gap-2">
-                              <button
-                                class="btn btn-warning btn-sm fw-bold createButton"
-                                id="createEditCategory3"
-                                data-id="category"
-                                data-form-id="create"
-                                data-title="Edit Category"
-                              >
-                                <i class="fas fa-edit"></i>
-                              </button>
-                              <button
-                                class="btn btn-danger btn-sm fw-bold"
-                                onclick="showDeletePopup()"
-                              >
-                                <i class="fas fa-trash-alt"></i>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <!-- Category 4 -->
-                      <div class="col">
-                        <div class="card subject-card h-100">
-                          <img
-                            src="/assets/images/category/food_category.png"
-                            class="card-img-top"
-                            alt="Food"
-                          />
-                          <div class="card-body text-center">
-                            <h5 class="card-title">Food</h5>
-                            <div class="d-flex justify-content-center gap-2">
-                              <button
-                                class="btn btn-warning btn-sm fw-bold createButton"
-                                id="createEditFood4"
-                                data-id="category"
-                                data-form-id="create"
-                                data-title="Edit Category"
-                              >
-                                <i class="fas fa-edit"></i>
-                              </button>
-                              <button
-                                class="btn btn-danger btn-sm fw-bold"
-                                onclick="showDeletePopup()"
-                              >
-                                <i class="fas fa-trash-alt"></i>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 </section>
 
-                <!-- create category form -->
-                <div
-                  class="form-container_ px-4 pb-4 d-none"
-                  id="createCategory"
-                >
+                <!-- Create admin -->
+                <div class="form-container_ px-4 pb-4 d-none" id="crateAdmin">
                   <!-- heading part -->
                   <div class="form-header text-center mb-2">
-                    <h1 class="mb-0" id="form-title">Create Category</h1>
+                    <h1 class="mb-0" id="form-title">Create Admin</h1>
                   </div>
 
                   <!-- form part -->
@@ -418,13 +343,14 @@
                   >
                     <div class="col-12">
                       <div class="mb-3">
-                        <label for="name" class="form-label">Category</label
+                        <label for="fullName" class="form-label"
+                          >Full Name</label
                         ><input
                           type="text"
-                          placeholder="Enter category"
+                          placeholder="Enter full name"
                           class="form-control"
-                          name="name"
-                          id="name"
+                          name="fullName"
+                          id="fullName"
                           autocomplete="off"
                           required
                         />
@@ -433,59 +359,105 @@
 
                     <div class="col-12">
                       <div class="mb-3">
-                        <label for="description" class="form-label"
-                          >Description</label
-                        ><textarea
-                          placeholder="Write description"
+                        <label for="email" class="form-label">Email</label
+                        ><input
+                          type="email"
+                          placeholder="Enter email"
                           class="form-control"
-                          rows="4"
-                          name="description"
-                          id="description"
-                          autocomplete="on"
-                        ></textarea>
+                          name="email"
+                          id="email"
+                          autocomplete="off"
+                          required
+                        />
                       </div>
                     </div>
 
                     <div class="col-12">
                       <div class="mb-3">
-                        <label for="status" class="form-label">Status</label
+                        <label for="password" class="form-label">Password</label
+                        ><input
+                          type="password"
+                          placeholder="Enter password"
+                          class="form-control"
+                          name="password"
+                          id="password"
+                          autocomplete="off"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="confirmPassword" class="form-label"
+                          >Confirm Password</label
+                        ><input
+                          type="password"
+                          placeholder="Enter confirm password"
+                          class="form-control"
+                          name="confirmPassword"
+                          id="confirmPassword"
+                          autocomplete="off"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="mobile" class="form-label">Mobile</label
+                        ><input
+                          type="number"
+                          placeholder="Enter mobile number"
+                          class="form-control"
+                          name="mobile"
+                          id="mobile"
+                          autocomplete="off"
+                          required
+                          max="10"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="role" class="form-label">Role</label
                         ><select
                           class="form-select"
-                          name="status"
-                          id="status"
+                          name="role"
+                          id="role"
                           autocomplete="on"
                         >
-                          <option value="active">Active</option>
-                          <option value="inactive">Inactive</option>
+                          <option value="admin" selected>Admin</option>
                         </select>
                       </div>
                     </div>
 
                     <div class="col-12">
                       <div class="mb-3">
-                        <label for="imageUrl" class="form-label">Image</label
+                        <label for="profileUrl" class="form-label"
+                          >Profile</label
                         ><input
                           type="file"
                           placeholder=""
                           class="form-control"
-                          name="imageUrl"
-                          id="imageUrl"
-                          autocomplete="on"
+                          name="profileUrl"
+                          id="profileUrl"
+                          autocomplete="off"
                           accept="image/*"
-                          required
                         />
                       </div>
                     </div>
                   </form>
 
-                  <!-- buttons part -->
+                  <!-- button part -->
                   <div class="text-center">
                     <!-- submit button -->
                     <button
                       id="submitBtn"
                       type="button"
                       class="btn btn-primary submit-btn w-100"
-                      data-title="Create Category"
+                      data-title="Create User"
                     >
                       Submit
                     </button>

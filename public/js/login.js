@@ -72,7 +72,7 @@ function validateEmail(email) {
 // set token in cookie 
 function setTokenCookie(token) {
     const cookieName = 'admin_token';
-    const expiryDays = 1; // Number of days the cookie should last
+    const expiryDays = 7; // Number of days the cookie should last
 
     const expiryDate = new Date();
     expiryDate.setDate(expiryDate.getDate() + expiryDays);

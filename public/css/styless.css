@@ -11,11 +11,6 @@ body {
   transition: background-color 0.3s, color 0.3s;
 }
 
-.dark-mode {
-  background-color: #121212;
-  color: #ffffff;
-}
-
 /* Header Styles */
 .header {
   top: 0;
@@ -32,7 +27,8 @@ body {
 #user,
 #report,
 #category,
-#question {
+#question,
+#admin {
   background-color: #ffffff;
   padding: 20px;
   border-bottom-left-radius: 10px;
@@ -142,7 +138,7 @@ body {
 
 .dark-light-btn {
   background-color: gray;
-  color: #000;
+  color: #ffffff;
   padding: 6px; /* Smaller padding */
   width: 35px; /* Set fixed width */
   height: 35px; /* Set fixed height */
@@ -266,7 +262,7 @@ canvas {
 }
 
 .fa-question-circle {
-  color: #0d6efd;
+  color: #686cff;
 }
 
 .fa-book {
@@ -274,11 +270,11 @@ canvas {
 }
 
 .fa-chart-line {
-  color: #dc3545;
+  color: #ff4120;
 }
 
 .fa-users {
-  color: #198754;
+  color: #71dd39;
 }
 
 #user_card_container {
@@ -374,7 +370,6 @@ h4 {
 .table {
   margin: 0px;
   font-size: 16px;
-  text-align: center;
 }
 
 .table th {
@@ -397,10 +392,6 @@ h4 {
 .badge {
   font-size: 0.8rem;
   padding: 0.5em 0.8em;
-}
-
-#questionTableBody tr td {
-  text-align: start;
 }
 
 /* Buttons */
@@ -513,7 +504,8 @@ h4 {
 #createChapterButton,
 #createQuestionButton,
 #createQuizButton,
-#createUserButton {
+#createUserButton,
+#createAdminButton {
   background: linear-gradient(to right, #2575fc, #6a11cb);
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1), 0px 2px 4px rgba(0, 0, 0, 0.06);
   color: #fff;
@@ -527,7 +519,8 @@ h4 {
 #createChapterButton:hover,
 #createQuestionButton:hover,
 #createQuizButton:hover,
-#createUserButton:hover {
+#createUserButton:hover,
+#createAdminButton:hover {
   background: linear-gradient(to right, #6a11cb, #2575fc);
   color: #fff; /* Optional: Change text color on hover */
   transition: background 0.3s ease; /* Smooth transition */

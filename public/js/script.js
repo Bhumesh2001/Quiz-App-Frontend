@@ -97,27 +97,21 @@ createButtons.forEach(function (createButton) {
                     dropdowns: [{ data_id: "subjectId", placeholder: "Select a subject" }]
                 },
                 {
-                    url: `${baseUrl}/api/categories`,
-                    url2: `${baseUrl}/api/chapters`,
+                    url: `${baseUrl}/api/chapters`,
                     id: "createQuestionButton",
-                    dropdowns: [
-                        { data_id: "categoryId", placeholder: "Select a category" },
-                        { data_id: "chapterId", placeholder: "Select a chapter" }
-                    ]
+                    dropdowns: [{ data_id: "chapterId", placeholder: "Select a chapter" }]
                 },
                 {
                     url: `${baseUrl}/api/classes`,
                     url2: `${baseUrl}/api/subjects`,
                     url3: `${baseUrl}/api/chapters`,
-                    url4: `${baseUrl}/api/categories`,
                     id: "createQuizButton",
                     dropdowns: [
                         { data_id: "classId", placeholder: "Select a class" },
                         { data_id: "subjectId", placeholder: "Select a subject" },
                         { data_id: "chapterId", placeholder: "Select a chapter" },
-                        { data_id: "categoryId", placeholder: "Select a category" }
                     ]
-                }
+                },
             ];
 
             async function fetchDropDownData(buttonId, token) {
@@ -134,7 +128,7 @@ createButtons.forEach(function (createButton) {
                         .filter((key) => key.startsWith("url"))
                         .map((key) => endpoint[key]);
 
-                    const responses = await Promise.all(urls.map((url) => fetchData(url, token)));
+                    const responses = await Promise.all(urls.map((url) => fetchData(url, token)));                    
 
                     // Map data to dropdowns dynamically
                     responses.forEach((response, index) => {
@@ -277,50 +271,6 @@ function loadNewUsersData(data) {
         <span class="user-date">Joined: ${new Date(user.createdAt).toISOString().split('T')[0]}</span>
       `;
         userListElement.appendChild(listItem);
-    });
-};
-
-// lead category data
-function loadCategoryData(data) {
-    const container = document.getElementById("categoryContainer");
-    container.innerHTML = '';
-
-    data.data.forEach((category, index) => {
-        // Create the card structure
-        const card = document.createElement("div");
-        card.className = "col";
-        card.innerHTML = `
-        <div class="card subject-card h-100">
-          <img
-            src="${category.imageUrl}"
-            class="card-img-top"
-            alt="${category.name}"
-          />
-          <div class="card-body text-center">
-            <h5 class="card-title">${category.name}</h5>
-            <div class="d-flex justify-content-center gap-2">
-              <button
-                class="btn btn-warning btn-sm fw-bold createButton"
-                data-edit-id="${category._id}"
-                id="createEditCategory${index + 1}"
-                data-id="category"
-                data-form-id="create"
-                data-title="Edit Category"
-              >
-                <i class="fas fa-edit"></i>
-              </button>
-              <button
-                class="btn btn-danger btn-sm fw-bold"
-                onclick="showDeletePopup()"
-              >
-                <i class="fas fa-trash-alt"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      `;
-        // Append the card to the container
-        container.appendChild(card);
     });
 };
 
@@ -727,7 +677,7 @@ async function fetchData(url, token = '') {
     const response = await dynamicApiRequest({
         url,
         headers: token ? { "Authorization": `Bearer ${token}` } : {}
-    });
+    });    
     return response;
 };
 
@@ -751,8 +701,7 @@ document.getElementById('loader').classList.remove('d-none');
         // get data endpoints
         const getDataEndpoints = [
             { url: `${baseUrl}/api/dashboard/stats`, handler: loadDashboardCardData, id: "dashboard-card-container" },
-            { url: `${baseUrl}/api/dashboard/new-users`, handler: loadNewUsersData, id: "user-list" },
-            { url: `${baseUrl}/api/categories`, handler: loadCategoryData, id: "categoryContainer" },
+            // { url: `${baseUrl}/api/dashboard/new-users`, handler: loadNewUsersData, id: "user-list" },
             { url: `${baseUrl}/api/classes`, handler: loadClassData, id: "classTable" },
             { url: `${baseUrl}/api/subjects`, handler: loadSubjectData, id: "subjectContainer" },
             { url: `${baseUrl}/api/chapters`, handler: loadChapterData, id: "chapterContainer" },
@@ -873,7 +822,6 @@ if (document.getElementById('cancelDelete')
         if (status) formData.set("status", status.charAt(0).toUpperCase() + status.slice(1).toLowerCase());
 
         const postDataEndpoints = {
-            "Create Category": `${baseUrl}/api/categories`,
             "Create Class": `${baseUrl}/api/classes`,
             "Create Subject": `${baseUrl}/api/subjects`,
             "Create Chapter": `${baseUrl}/api/chapters`,
@@ -889,7 +837,7 @@ if (document.getElementById('cancelDelete')
         };
 
         try {
-            let payload = formData; // Default payload
+            let payload = formData; // Default payload            
 
             if (dataTitle === "Create Question") {
                 const options = [];
