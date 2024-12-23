@@ -8,6 +8,9 @@ const cards = document.querySelectorAll('.card');
 const backButtons = document.querySelectorAll('.backButton');
 const createButtons = document.querySelectorAll('.createButton');
 const buttons = document.querySelectorAll('.button-section');
+const settingsLink = document.getElementById('settingsLink');
+const nestedSettingsMenu = document.getElementById('nestedSettingsMenu');
+const chevronIcon = document.getElementById('chevronIcon');
 const buttonClickMap = new Map();
 const baseUrl = 'https://quiz-app-backend-bi9c.onrender.com';
 const frontendBaseUrl = "https://cys-app.netlify.app";
@@ -128,7 +131,7 @@ createButtons.forEach(function (createButton) {
                         .filter((key) => key.startsWith("url"))
                         .map((key) => endpoint[key]);
 
-                    const responses = await Promise.all(urls.map((url) => fetchData(url, token)));                    
+                    const responses = await Promise.all(urls.map((url) => fetchData(url, token)));
 
                     // Map data to dropdowns dynamically
                     responses.forEach((response, index) => {
@@ -149,6 +152,20 @@ createButtons.forEach(function (createButton) {
             buttonClickMap.set(buttonId, countClick + 1);
         };
     });
+});
+
+settingsLink.addEventListener('click', () => {
+    const isOpen = nestedSettingsMenu.style.height && nestedSettingsMenu.style.height !== '0px';
+
+    if (isOpen) {
+        // Close the menu
+        nestedSettingsMenu.style.height = '0px';
+        chevronIcon.classList.remove('open'); // Reset chevron rotation
+    } else {
+        // Open the menu
+        nestedSettingsMenu.style.height = nestedSettingsMenu.scrollHeight + 'px';
+        chevronIcon.classList.add('open'); // Rotate the chevron
+    }
 });
 
 // Function to update the Correct Answer dropdown dynamically
@@ -677,7 +694,7 @@ async function fetchData(url, token = '') {
     const response = await dynamicApiRequest({
         url,
         headers: token ? { "Authorization": `Bearer ${token}` } : {}
-    });    
+    });
     return response;
 };
 
@@ -885,3 +902,4 @@ if (document.getElementById('cancelDelete')
         };
     });
 };
+

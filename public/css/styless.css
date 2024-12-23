@@ -57,6 +57,33 @@ body {
   z-index: 1000;
 }
 
+#nestedSettingsMenu {
+  padding: 5px;
+}
+
+#nestedSettingsMenu i {
+  font-size: 12px;
+}
+
+.nested-menu {
+  overflow: hidden;
+  height: 0; /* Initially hidden */
+  transition: height 0.3s ease; /* Smooth height transition */
+}
+
+#settingsLink .dropdown-icon {
+  font-size: 12px;
+}
+
+.dropdown-icon {
+  transition: transform 0.3s ease; /* Smooth rotation transition */
+  padding-left: 20px;
+}
+
+.dropdown-icon.open {
+  transform: rotate(180deg); /* Rotate when open */
+}
+
 .sidebar-container div {
   cursor: pointer; /* Indicates the div is clickable */
   border-radius: 5px; /* Smooth rounded corners */
@@ -106,7 +133,7 @@ body {
 
 /* Sidebar Text */
 .sidebar-container .sidebar-item span {
-  font-size: 1rem;
+  font-size: 15px;
   display: inline-block;
 }
 
@@ -116,6 +143,16 @@ body {
     width: 100%;
   }
 }
+
+.sidebar-item:hover,
+.nested-link:hover {
+  color: #007bff; /* Highlight on hover */
+}
+
+.sidebar-item.active + .nested-menu {
+  display: block;
+}
+
 /* Navbar Styles */
 .navbar {
   background-color: #fff;
@@ -197,7 +234,11 @@ body {
 }
 
 .d-card-title {
-  font-size: 1rem;
+  font-size: 15px;
+}
+
+.createButton, .backButton{
+  font-size: 15px;
 }
 
 .card-title {
@@ -209,8 +250,8 @@ body {
 .quiz-card {
   background-color: #ffffff;
   color: black;
-  border-left: 5px solid #0d6efd;
-  border-radius: 8px;
+  border-left: 4px solid #0d6efd;
+  border-radius: 7px;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: transform 0.3s, box-shadow 0.3s;
@@ -219,8 +260,8 @@ body {
 .chapter-card {
   background-color: #ffffff;
   color: black;
-  border-left: 5px solid #0dc8ed;
-  border-radius: 8px;
+  border-left: 4px solid #0dc8ed;
+  border-radius: 7px;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: transform 0.3s, box-shadow 0.3s;
@@ -229,8 +270,8 @@ body {
 .report-card {
   background-color: #ffffff;
   color: black;
-  border-left: 5px solid #dc3545;
-  border-radius: 8px;
+  border-left: 4px solid #dc3545;
+  border-radius: 7px;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: transform 0.3s, box-shadow 0.3s;
@@ -239,8 +280,8 @@ body {
 .user-card {
   background-color: #ffffff;
   color: black;
-  border-left: 5px solid #198754;
-  border-radius: 8px;
+  border-left: 4px solid #198754;
+  border-radius: 7px;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: transform 0.3s, box-shadow 0.3s;
