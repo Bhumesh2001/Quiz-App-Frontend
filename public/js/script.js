@@ -594,7 +594,7 @@ function handleFormErrors(errors) {
             const field = document.getElementById(fieldId);
             if (field) {
                 // Create a div to display the first error message for the field
-                const errorMessageDiv = document.createElement('div');
+                const errorMessageDiv = document.createElement('small');
                 errorMessageDiv.classList.add('error-message', 'text-danger', 'mt-2');
                 errorMessageDiv.textContent = groupedErrors[fieldId];
 
@@ -902,4 +902,3 @@ if (document.getElementById('cancelDelete')
         };
     });
 };
-

@@ -25,33 +25,29 @@ h2 {
 
 .form-control:focus {
   outline: none; /* Removes the default focus outline */
-  border: 2px solid #2575fc; /* Adds a custom border to indicate focus */
+  border: 2px solid #00c6ff; /* Adds a custom border to indicate focus */
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Adds a subtle glow effect */
   transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition for focus effect */
 }
 
 .btn-primary {
-  background-color: #2575fc;
+  background-color: #00c6ff;
   border: none;
 }
 
 .btn-primary {
-  background: linear-gradient(to right, #2575fc, #6a11cb);
+  background: linear-gradient(90deg, #007bff, #00c6ff);
   border: none;
   color: #fff; /* Ensures text is visible */
   transition: background 0.3s ease; /* Adds a smooth transition effect */
-  padding-top: 6px;
-  padding-bottom: 6px;
+  padding-top: 8px;
+  padding-bottom: 8px;
   /* Box shadow added */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
 .btn-primary:hover {
-  background: linear-gradient(
-    to right,
-    #6a11cb,
-    #2575fc
-  ); /* Reverse gradient on hover */
+  background: linear-gradient(90deg, #00c6ff, #007bff);
   color: #fff;
 }
 

@@ -28,13 +28,23 @@ body {
 #report,
 #category,
 #question,
-#admin {
+#admin,
+#admin_setting,
+#admin_setting2 {
   background-color: #ffffff;
   padding: 20px;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
     rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+}
+
+#admin_setting,
+#admin_setting2 {
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px -2px 6px, rgba(0, 0, 0, 0.05) 2px 0px 6px,
+    rgba(0, 0, 0, 0.05) -2px 0px 6px;
+    padding: 25px;
 }
 
 .button-section {
@@ -127,8 +137,22 @@ body {
 /* Sidebar Icons */
 .sidebar-container .sidebar-item i {
   font-size: 1.1rem;
-  color: #007bff;
+  color: #0496ff;
   transition: color 0.3s ease;
+}
+
+.dropdown-menu a:hover{
+  background-color: #f5f3f4;
+}
+
+.dropdown-menu a:active{
+  background-color: #eff0f1;
+  color: black;
+}
+
+.dropdown-item i {
+  color: #0496ff;
+  padding-right: 5px;
 }
 
 /* Sidebar Text */
@@ -146,7 +170,7 @@ body {
 
 .sidebar-item:hover,
 .nested-link:hover {
-  color: #007bff; /* Highlight on hover */
+  color: #0496ff; /* Highlight on hover */
 }
 
 .sidebar-item.active + .nested-menu {
@@ -208,6 +232,7 @@ body {
 
 .fa-house {
   cursor: pointer;
+  color: #0496ff;
 }
 
 /* Card Styles */
@@ -237,7 +262,8 @@ body {
   font-size: 15px;
 }
 
-.createButton, .backButton{
+.createButton,
+.backButton {
   font-size: 15px;
 }
 
@@ -502,14 +528,14 @@ h4 {
 .form-select,
 .form-control:focus {
   outline: none; /* Removes the default focus outline */
-  border: 2px solid #2575fc; /* Adds a custom border to indicate focus */
+  border: 2px solid #00c6ff; /* Adds a custom border to indicate focus */
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Adds a subtle glow effect */
   transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition for focus effect */
 }
 /* When the select is focused (clicked) */
 .form-select:focus {
   outline: none; /* Removes default outline */
-  border: 2px solid #2575fc; /* Apply custom border when focused */
+  border: 2px solid #00c6ff; /* Apply custom border when focused */
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add subtle glow */
   transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition */
 }
@@ -522,20 +548,34 @@ h4 {
 }
 
 .submit-btn {
-  background: linear-gradient(to right, #2575fc, #6a11cb);
+  background: linear-gradient(90deg, #007bff, #00c6ff);
   border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
   font-weight: bold;
+  font-size: 15px;
   color: #fff;
-  transition: background 0.3s ease;
+  /* transition: background 0.3s ease; */
+  transition: all 0.3s ease;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1), 0px 2px 4px rgba(0, 0, 0, 0.06);
 }
 
 #loading-btn {
-  background: linear-gradient(to right, #2575fc, #6a11cb);
+  background: linear-gradient(90deg, #007bff, #00c6ff);
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
 }
 
 .submit-btn:hover {
-  background: linear-gradient(to right, #6a11cb, #2575fc);
+  background: linear-gradient(90deg, #00c6ff, #007bff);
+  color: black;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.submit-btn:active{
+  transform: translateY(0);
 }
 
 .backButton,
@@ -547,10 +587,15 @@ h4 {
 #createQuizButton,
 #createUserButton,
 #createAdminButton {
-  background: linear-gradient(to right, #2575fc, #6a11cb);
+  background: linear-gradient(90deg, #007bff, #00c6ff);
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1), 0px 2px 4px rgba(0, 0, 0, 0.06);
   color: #fff;
-  transition: background 0.3s ease;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  /* transition: background 0.3s ease; */
 }
 
 .backButton:hover,
@@ -562,9 +607,24 @@ h4 {
 #createQuizButton:hover,
 #createUserButton:hover,
 #createAdminButton:hover {
-  background: linear-gradient(to right, #6a11cb, #2575fc);
-  color: #fff; /* Optional: Change text color on hover */
-  transition: background 0.3s ease; /* Smooth transition */
+  background: linear-gradient(90deg, #00c6ff, #007bff);
+  border: none;
+  color: black;
+  /* transition: background 0.3s ease;  */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.backButton:active,
+#createCategoryButton:active,
+#createClassButton:active,
+#createSubjectButton:active,
+#createChapterButton:active,
+#createQuestionButton:active,
+#createQuizButton:active,
+#createUserButton:active,
+#createAdminButton:active{
+  transform: translateY(0);
 }
 
 /* Overlay for popup */
@@ -799,4 +859,26 @@ h4 {
     opacity: 1;
     transform: translateX(0);
   }
+}
+
+/* setting1 css */
+.btn-save, .save-btn {
+  background: linear-gradient(90deg, #007bff, #00c6ff);
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-size: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+.btn-save:hover, .save-btn:hover {
+  background: linear-gradient(90deg, #00c6ff, #007bff);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+  color: black;
+}
+.btn-save:active, .save-btn:active {
+  transform: translateY(0);
 }

@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/assets/icons/cys_logo.jpeg" />
+    <!-- bootstrap css cdn -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <!-- Include Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://site-assets.fontawesome.com/releases/v6.7.2/css/all.css"
+    />
+    <!-- dashboard2 css -->
+    <link rel="stylesheet" href="/public/css/styless.css" />
+  </head>
+  <body>
+    <!-- header -->
+    <header class="header position-sticky px-2 pt-2 pb-0" id="header__">
+      <nav class="navbar navbar-expand-lg rounded">
+        <div class="container-fluid">
+          <!-- Right Section (Logo and Three-Line Button) -->
+          <div class="d-flex align-items-center gap-3">
+            <!-- Three-Line Button -->
+            <button class="btn btn-light border btn-sm" id="toggleButton">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Logo -->
+            <img
+              src="/assets/icons/cys_logo.jpeg"
+              alt="Company Logo"
+              class="img-fluid"
+              style="height: 35px; width: 35px"
+            />
+            <!-- Company Name -->
+            <span class="text-dark fw-bold">CYS Dashboard</span>
+          </div>
+
+          <!-- Left Section (Dark/Light Button and Admin Profile) -->
+          <div class="d-flex align-items-center gap-3 ms-auto">
+            <!-- Dark/Light Button -->
+            <button class="btn btn-secondary rounded-circle dark-light-btn">
+              <i class="fas fa-sun"></i>
+            </button>
+
+            <!-- Admin Profile -->
+            <div class="dropdown">
+              <!-- button -->
+              <button
+                class="btn btn-light rounded-circle profile-btn"
+                type="button"
+                id="adminDropdown"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <img
+                  src="/assets/icons/profile-default.svg"
+                  alt="Admin Profile"
+                  class="profile-img"
+                  draggable="false"
+                />
+              </button>
+
+              <!-- option -->
+              <ul
+                class="dropdown-menu dropdown-menu-end"
+                aria-labelledby="adminDropdown"
+              >
+                <li>
+                  <a class="dropdown-item" href="#">
+                    <i class="fas fa-user-circle"></i> Profile</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="setting1.html"
+                    ><i class="fas fa-cog"></i> Settings</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" id="logoutButton" href="#"
+                    ><i class="fas fa-sign-out-alt"></i> Logout</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main -->
+    <main class="main">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- sidebar -->
+          <div class="col-xl-2 col-lg-2 d-none d-lg-block p-2" id="sidebar__">
+            <div class="sidebar-container rounded d-flex flex-column p-3">
+              <!-- dashboard -->
+              <a
+                href="dashboard.html"
+                class="sidebar-link"
+                id="dashboardLink"
+                draggable="false"
+              >
+                <div class="sidebar-item">
+                  <i class="fas fa-tachometer-alt"></i>
+                  <span>Dashboard</span>
+                </div>
+              </a>
+
+              <!-- class -->
+              <a
+                href="class.html"
+                class="sidebar-link"
+                id="class_"
+                draggable="false"
+              >
+                <div class="sidebar-item">
+                  <i class="fas fa-chalkboard"></i>
+                  <span>Class</span>
+                </div>
+              </a>
+
+              <!-- subject -->
+              <a
+                href="subject.html"
+                class="sidebar-link"
+                id="subjects"
+                draggable="false"
+              >
+                <div class="sidebar-item">
+                  <i class="fas fa-book-open"></i>
+                  <span>Subject</span>
+                </div>
+              </a>
+
+              <!-- chapter -->
+              <a
+                href="chapter.html"
+                class="sidebar-link"
+                id="chapterLink"
+                draggable="false"
+              >
+                <div class="sidebar-item">
+                  <i class="fas fa-scroll"></i>
+                  <span>Chapter</span>
+                </div>
+              </a>
+
+              <!-- question -->
+              <a
+                href="question.html"
+                class="sidebar-link"
+                id="questionLink"
+                draggable="false"
+              >
+                <div class="sidebar-item">
+                  <i class="fa-solid fa-seal-question"></i>
+                  <span>Question</span>
+                </div>
+              </a>
+
+              <!-- quiz -->
+              <a
+                href="quiz.html"
+                class="sidebar-link"
+                id="quizLink"
+                draggable="false"
+              >
+                <div class="sidebar-item">
+                  <i class="fas fa-question-circle"></i>
+                  <span>Quiz</span>
+                </div>
+              </a>
+
+              <!-- user -->
+              <a
+                href="user.html"
+                class="sidebar-link"
+                id="userLink"
+                draggable="false"
+              >
+                <div class="sidebar-item">
+                  <i class="fas fa-users"></i>
+                  <span>User</span>
+                </div>
+              </a>
+
+              <!-- report -->
+              <a
+                href="report.html"
+                class="sidebar-link"
+                id="reportLink"
+                draggable="false"
+              >
+                <div class="sidebar-item">
+                  <i class="fas fa-chart-bar"></i>
+                  <span>Report</span>
+                </div>
+              </a>
+
+              <!-- admin -->
+              <a
+                href="admin.html"
+                class="sidebar-link"
+                id="adminLink"
+                draggable="false"
+              >
+                <div class="sidebar-item">
+                  <i class="fa-solid fa-user"></i>
+                  <span>Admin</span>
+                </div>
+              </a>
+
+              <!-- setting -->
+              <a
+                href="javascript:void(0);"
+                class="sidebar-link"
+                id="settingsLink"
+                draggable="false"
+              >
+                <div class="sidebar-item">
+                  <i class="fa-solid fa-gear"></i>
+                  <!-- Settings icon -->
+                  <span>Settings</span>
+                  <i class="fa-solid fa-chevron-down dropdown-icon"></i>
+                </div>
+              </a>
+
+              <!-- nested setting -->
+              <div class="nested-menu" id="nestedSettingsMenu">
+                <a href="#" class="sidebar-link nested-link">
+                  <div class="sidebar-item pt-0">
+                    <i class="fa-solid fa-user-gear"></i>
+                    <!-- Admin settings icon -->
+                    <span>Admin Setting</span>
+                  </div>
+                </a>
+
+                <a href="setting2.html" class="sidebar-link nested-link">
+                  <div class="sidebar-item">
+                    <i class="fa-solid fa-cogs"></i>
+                    <!-- App settings icon -->
+                    <span>App Setting</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- heading, footer and content -->
+          <div class="col-xl-10 col-lg-10 p-2">
+            <div class="content-container rounded px-md-3 px-2">
+              <!-- heading -->
+              <div
+                class="d-flex gap-2 align-items-center rounded mb-2"
+                id="heading__"
+              >
+                <span class="p-2">
+                  <a href="/pages/dashboard.html">
+                    <i class="fa-solid fa-house"></i>
+                  </a> </span
+                >/
+                <h6 id="title" class="m-0 p-1">Setting App</h6>
+              </div>
+
+              <!-- main content -->
+              <div class="content mb-4">
+                <!-- user section -->
+                <section class="setting2_section">
+                  <div class="content-section" id="admin_setting2">
+                    <div class="settings-container">
+                      <!-- setting tab -->
+                      <ul
+                        class="nav nav-tabs mb-4"
+                        id="settingsTab"
+                        role="tablist"
+                      >
+                        <li class="nav-item" role="presentation">
+                          <button
+                            class="nav-link active"
+                            id="general-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#general"
+                            type="button"
+                            role="tab"
+                            aria-controls="general"
+                            aria-selected="true"
+                          >
+                            General
+                          </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button
+                            class="nav-link"
+                            id="app-setting-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#app-setting"
+                            type="button"
+                            role="tab"
+                            aria-controls="app-setting"
+                            aria-selected="false"
+                          >
+                            App Setting
+                          </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button
+                            class="nav-link"
+                            id="privacy-policy-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#privacy-policy"
+                            type="button"
+                            role="tab"
+                            aria-controls="privacy-policy"
+                            aria-selected="false"
+                          >
+                            Privacy Policy
+                          </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button
+                            class="nav-link"
+                            id="terms-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#terms"
+                            type="button"
+                            role="tab"
+                            aria-controls="terms"
+                            aria-selected="false"
+                          >
+                            Terms & Conditions
+                          </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button
+                            class="nav-link"
+                            id="notification-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#notification"
+                            type="button"
+                            role="tab"
+                            aria-controls="notification"
+                            aria-selected="false"
+                          >
+                            Notification
+                          </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button
+                            class="nav-link"
+                            id="app-update-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#app-update"
+                            type="button"
+                            role="tab"
+                            aria-controls="app-update"
+                            aria-selected="false"
+                          >
+                            App Update
+                          </button>
+                        </li>
+                      </ul>
+
+                      <!-- setting content -->
+                      <div class="tab-content" id="settingsTabContent">
+                        <!-- general -->
+                        <div
+                          class="tab-pane fade show active"
+                          id="general"
+                          role="tabpanel"
+                          aria-labelledby="general-tab"
+                        >
+                          <div class="mb-4">
+                            <label for="email_" class="form-label">Email</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="email_"
+                              name="email"
+                              placeholder="Enter email"
+                            />
+                          </div>
+
+                          <div class="mb-4">
+                            <label for="author_" class="form-label"
+                              >Author</label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="author_"
+                              name="author_"
+                              placeholder="Enter Author"
+                            />
+                          </div>
+
+                          <div class="mb-4">
+                            <label for="contact_" class="form-label"
+                              >Contact</label
+                            >
+                            <input
+                              type="number"
+                              class="form-control"
+                              id="contact_"
+                              name="contact_"
+                              placeholder="Enter Contact"
+                            />
+                          </div>
+
+                          <div class="mb-4">
+                            <label for="website_" class="form-label"
+                              >Website</label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="website_"
+                              name="website_"
+                              placeholder="Enter site url"
+                            />
+                          </div>
+
+                          <div class="mb-4">
+                            <label for="developedBy_" class="form-label"
+                              >Developed By</label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="developedBy_"
+                              name="developedBy_"
+                              placeholder="Enter Developed by name"
+                            />
+                          </div>
+
+                          <div class="mb-3">
+                            <label for="description_" class="form-label"
+                              >Description</label
+                            >
+                            <textarea
+                              class="form-control"
+                              id="description_"
+                              name="description_"
+                              rows="4"
+                              placeholder="Write description"
+                            ></textarea>
+                          </div>
+                          <div class="text-end">
+                            <button class="save-btn">Save</button>
+                          </div>
+                        </div>
+
+                        <!-- app setting -->
+                        <div
+                          class="tab-pane fade"
+                          id="app-setting"
+                          role="tabpanel"
+                          aria-labelledby="app-setting-tab"
+                        >
+                          <div class="col-12">
+                            <div class="mb-4">
+                              <label for="rtl" class="form-label">RTL</label
+                              ><select
+                                class="form-select"
+                                name="rtl"
+                                id="rtl"
+                                autocomplete="off"
+                              >
+                                <option value="Active" selected>Active</option>
+                                <option value="Inactive">InActive</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="col-12">
+                            <div class="mb-4">
+                              <label
+                                for="App_App Maintenance"
+                                class="form-label"
+                                >App Maintenance</label
+                              ><select
+                                class="form-select"
+                                name="App_App Maintenance"
+                                id="App_App Maintenance"
+                                autocomplete="off"
+                              >
+                                <option value="Active" selected>Active</option>
+                                <option value="Inactive">Inactive</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="col-12">
+                            <div class="mb-4">
+                              <label for="Google_Login" class="form-label"
+                                >Google Login</label
+                              ><select
+                                class="form-select"
+                                name="Google_Login"
+                                id="Google_Login"
+                                autocomplete="off"
+                              >
+                                <option value="Active" selected>Active</option>
+                                <option value="Inactive">Inactive</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="col-12">
+                            <div class="mb-4">
+                              <label for="First_open_login" class="form-label"
+                                >First open login</label
+                              ><select
+                                class="form-select"
+                                name="First_open_login"
+                                id="First_open_login"
+                                autocomplete="off"
+                              >
+                                <option value="Active" selected>Active</option>
+                                <option value="Inactive">Inactive</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="col-12">
+                            <div class="mb-4">
+                              <label for="Sccrenshot_block" class="form-label"
+                                >Sccrenshot block</label
+                              ><select
+                                class="form-select"
+                                name="Sccrenshot_block"
+                                id="Sccrenshot_block"
+                                autocomplete="off"
+                              >
+                                <option value="Active" selected>Active</option>
+                                <option value="Inactive">Inactive</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="col-12">
+                            <div class="mb-3">
+                              <label for="VPN_block" class="form-label"
+                                >VPN block</label
+                              ><select
+                                class="form-select"
+                                name="VPN_block"
+                                id="VPN_block"
+                                autocomplete="off"
+                              >
+                                <option value="Active" selected>Active</option>
+                                <option value="Inactive">Inactive</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="text-end">
+                            <button class="save-btn">Save</button>
+                          </div>
+                        </div>
+
+                        <!-- privacy policy -->
+                        <div
+                          class="tab-pane fade"
+                          id="privacy-policy"
+                          role="tabpanel"
+                          aria-labelledby="privacy-policy-tab"
+                        >
+                          <div class="mb-3">
+                            <label for="privacyPolicy" class="form-label"
+                              >Privacy Policy</label
+                            >
+                            <textarea
+                              class="form-control"
+                              id="privacyPolicy"
+                              rows="5"
+                              placeholder="Enter privacy policy"
+                            ></textarea>
+                          </div>
+                          <div class="text-end">
+                            <button class="save-btn">Save</button>
+                          </div>
+                        </div>
+
+                        <!-- term & condition -->
+                        <div
+                          class="tab-pane fade"
+                          id="terms"
+                          role="tabpanel"
+                          aria-labelledby="terms-tab"
+                        >
+                          <div class="mb-3">
+                            <label for="termsConditions" class="form-label"
+                              >Terms & Conditions</label
+                            >
+                            <textarea
+                              class="form-control"
+                              id="termsConditions"
+                              rows="5"
+                              placeholder="Enter terms and conditions"
+                            ></textarea>
+                          </div>
+
+                          <div class="text-end">
+                            <button class="save-btn">Save</button>
+                          </div>
+                        </div>
+
+                        <!-- notification -->
+                        <div
+                          class="tab-pane fade"
+                          id="notification"
+                          role="tabpanel"
+                          aria-labelledby="notification-tab"
+                        >
+                          <div class="mb-4">
+                            <label for="OneSignal_Id" class="form-label"
+                              >OneSignal App Id</label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="OneSignal_Id"
+                              name="OneSignal_Id"
+                              placeholder="Enter email"
+                            />
+                          </div>
+
+                          <div class="mb-3">
+                            <label for="OneSignal_key" class="form-label"
+                              >OneSignal App Key</label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="OneSignal_key"
+                              name="OneSignal_key"
+                              placeholder="Enter Author"
+                            />
+                          </div>
+                          <div class="text-end">
+                            <button class="save-btn">Save</button>
+                          </div>
+                        </div>
+
+                        <!-- app update -->
+                        <div
+                          class="tab-pane fade"
+                          id="app-update"
+                          role="tabpanel"
+                          aria-labelledby="app-update-tab"
+                        >
+                          <div class="col-12">
+                            <div class="mb-4">
+                              <label for="on_off" class="form-label"
+                                >ON/OFF</label
+                              ><select
+                                class="form-select"
+                                name="on_off"
+                                id="on_off"
+                                autocomplete="off"
+                              >
+                                <option value="Active" selected>Active</option>
+                                <option value="Inactive">Inactive</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="mb-4">
+                            <label for="new_ap_version" class="form-label"
+                              >New App Version</label
+                            >
+                            <input
+                              type="number"
+                              class="form-control"
+                              id="new_ap_version"
+                              name="new_ap_version"
+                              placeholder="Enter app version"
+                            />
+                          </div>
+
+                          <div class="mb-4">
+                            <label for="_description" class="form-label"
+                              >Description</label
+                            >
+                            <textarea
+                              class="form-control"
+                              id="_description"
+                              name="_description"
+                              rows="4"
+                              placeholder="Write description"
+                            ></textarea>
+                          </div>
+
+                          <div class="mb-3">
+                            <label for="app_link" class="form-label"
+                              >App link</label
+                            >
+                            <input
+                              type="url"
+                              class="form-control"
+                              id="app_link"
+                              name="app_link"
+                              placeholder="Enter app link"
+                            />
+                          </div>
+                          <div class="text-end">
+                            <button class="save-btn">Save</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+
+              <!-- footer -->
+              <div
+                class="footer d-flex rounded align-items-center"
+                id="footer__"
+              >
+                <small class="me-auto p-2 m-0">
+                  Copyright © 2024 <strong>cys</strong> All rights reserved.
+                </small>
+                <small class="p-2 m-0">Cys</small>
+                <small class="p-2 m-0">Telegram</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Loader -->
+    <div id="loader" class="loader_ d-none">
+      <i class="fas fa-spinner fa-spin"></i>
+    </div>
+
+    <!-- Delete Confirmation Popup -->
+    <div class="delete-popup-overlay" id="deletePopup">
+      <div class="delete-popup">
+        <h2>Are you sure?</h2>
+        <p>You are about to delete this item. This action cannot be undone.</p>
+        <div
+          class="buttons_ d-flex justify-content-center align-items-center gap-2"
+        >
+          <button class="cancel-btn" id="cancelDelete">Cancel</button>
+          <button class="confirm-btn" id="confirmDelete">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notifications will be dynamically inserted -->
+    <div class="notifications-container" id="notifications-container"></div>
+
+    <!-- bootstrap js cdn -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- js file -->
+    <script src="/public/js/script.js"></script>
+  </body>
+</html>
