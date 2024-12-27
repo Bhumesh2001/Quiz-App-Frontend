@@ -11,8 +11,10 @@ const buttons = document.querySelectorAll('.button-section');
 const settingsLink = document.getElementById('settingsLink');
 const nestedSettingsMenu = document.getElementById('nestedSettingsMenu');
 const chevronIcon = document.getElementById('chevronIcon');
+const logoPreview = document.getElementById('logoPreview');
+const logoImage = document.getElementById('logoImage');
 const buttonClickMap = new Map();
-const baseUrl = 'https://quiz-app-backend-bi9c.onrender.com';
+const baseUrl = 'https://cys-backend.vercel.app';
 const frontendBaseUrl = "https://cys-app.netlify.app";
 let token;
 
@@ -160,13 +162,21 @@ settingsLink.addEventListener('click', () => {
     if (isOpen) {
         // Close the menu
         nestedSettingsMenu.style.height = '0px';
-        chevronIcon.classList.remove('open'); // Reset chevron rotation
     } else {
         // Open the menu
         nestedSettingsMenu.style.height = nestedSettingsMenu.scrollHeight + 'px';
-        chevronIcon.classList.add('open'); // Rotate the chevron
     }
 });
+
+// Show Loader
+function showLoader() {
+    document.getElementById('loader').classList.remove('d-none');
+};
+
+// Hide Loader
+function hideLoader() {
+    document.getElementById('loader').classList.add('d-none');
+};
 
 // Function to update the Correct Answer dropdown dynamically
 function updateCorrectAnswerOptions() {
@@ -200,15 +210,13 @@ function getTokenFromCookie() {
     const cookies = document.cookie.split('; ');
     const tokenCookie = cookies.find((cookie) => cookie.startsWith('admin_token='));
 
-    // show loader
-    document.getElementById('loader').classList.remove('d-none');
+    showLoader();
 
     if (tokenCookie) {
         return tokenCookie.split('=')[1]; // Extract the token value
     };
 
-    // hide loader
-    document.getElementById('loader').classList.add('d-none');
+    hideLoader();
     window.location.href = `${frontendBaseUrl}/index.html`;
 };
 
@@ -559,6 +567,50 @@ function loadReportData(data) {
     `).join('');
 };
 
+// Function to load settings data
+async function loadSettingsData(settingDataEndpoints) {
+    try {
+        // Fetch data in parallel for all endpoints using Promise.all
+        const responses = await Promise.all(
+            settingDataEndpoints.map(endpoint => fetchData(endpoint, token))
+        );
+
+        // Iterate over each response and update the fields
+        responses.forEach(({ data }) => {
+            Object.entries(data).forEach(([key, value]) => {
+                const field = document.getElementById(key);
+                if (!field) return;
+
+                if (key === 'siteLogo') {
+                    logoImage.src = value; // Set the src to the URL from the database
+                    logoPreview.style.display = 'block'; // Show the preview div
+                };
+
+                // Handle select fields (active/inactive for boolean values)
+                if (field.tagName.toLowerCase() === 'select') {
+                    field.value = typeof value === 'boolean' ? (value ? 'Active' : 'Inactive')
+                        : (Array.from(field.options)
+                            .some(option => option.value === value) ? value : field.options[0].value);
+                } else if (field.type === 'number') {
+                    field.value = !isNaN(value) ? Number(value) : '';
+                }
+                else if (field.type === 'file') {
+                    const fileUrl = value; // assuming the URL is passed for the file
+                    const fileLink = document.getElementById(`${key}-fileLink`);
+                    if (fileLink) {
+                        fileLink.href = fileUrl;
+                    };
+                } else {
+                    field.value = value;
+                };
+            });
+        });
+
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    };
+};
+
 // edit
 function handleEdit(id) {
     console.log(`Edit button clicked for ID: ${id}`);
@@ -709,23 +761,28 @@ async function postData(url, token = '', body) {
     return response;
 };
 
-// show loader
-document.getElementById('loader').classList.remove('d-none');
+// show loder
+showLoader();
 
 // call api
 (async (baseUrl) => {
     try {
+        showLoader();
         // get data endpoints
         const getDataEndpoints = [
-            { url: `${baseUrl}/api/dashboard/stats`, handler: loadDashboardCardData, id: "dashboard-card-container" },
-            // { url: `${baseUrl}/api/dashboard/new-users`, handler: loadNewUsersData, id: "user-list" },
+            {
+                url: `${baseUrl}/api/dashboard/stats`,
+                handler: loadDashboardCardData,
+                id: "dashboard-card-container"
+            },
+            { url: `${baseUrl}/api/dashboard/new-users`, handler: loadNewUsersData, id: "user-list" },
             { url: `${baseUrl}/api/classes`, handler: loadClassData, id: "classTable" },
             { url: `${baseUrl}/api/subjects`, handler: loadSubjectData, id: "subjectContainer" },
             { url: `${baseUrl}/api/chapters`, handler: loadChapterData, id: "chapterContainer" },
             { url: `${baseUrl}/api/questions`, handler: loadQuestionData, id: "questionTableBody" },
             { url: `${baseUrl}/api/quizzes`, handler: loadQuizData, id: "quizContainer" },
             { url: `${baseUrl}/api/auth/users`, handler: loadUserData, id: "userTableBody" },
-            { url: `${baseUrl}/api/reports`, handler: loadReportData, id: "reportTableBody" }
+            { url: `${baseUrl}/api/reports`, handler: loadReportData, id: "reportTableBody" },
         ];
 
         // Use Promise.all to wait for all data to load
@@ -736,8 +793,23 @@ document.getElementById('loader').classList.remove('d-none');
             };
         }));
 
-        // Hide loader and show main content
-        document.getElementById('loader').classList.add('d-none');
+        // setting data endpoint
+        const settingDataEndpoints = [
+            `${baseUrl}/api/setting/admin-setting/general`,
+            `${baseUrl}/api/setting/admin-setting/smtp`,
+            `${baseUrl}/api/setting/app-setting/general`,
+            `${baseUrl}/api/setting/app-setting/app`,
+            `${baseUrl}/api/setting/app-setting/privacy-policy`,
+            `${baseUrl}/api/setting/app-setting/terms`,
+            `${baseUrl}/api/setting/app-setting/notification`,
+            `${baseUrl}/api/setting/app-setting/app-update`,
+        ];
+
+        // load setting data
+        loadSettingsData(settingDataEndpoints);
+
+        // hide the loader
+        hideLoader();
 
     } catch (error) {
         console.error("Error fetching data:", error);
@@ -813,7 +885,22 @@ document.getElementById("logoutButton").addEventListener("click", async (e) => {
 
 if (document.getElementById('cancelDelete')
     || document.getElementById('confirmDelete')
-    || document.getElementById('submitBtn')) {
+    || document.getElementById('submitBtn')
+) {
+
+    // Handle file input to show preview
+    // document.getElementById('siteLogo').addEventListener('change', function (event) {
+    //     const file = event.target.files[0];
+
+    //     if (file) {
+    //         const reader = new FileReader();
+    //         reader.onload = function (e) {
+    //             logoImage.src = e.target.result; // Set the preview image source from the uploaded file
+    //             logoPreview.style.display = 'block'; // Show the preview div
+    //         };
+    //         reader.readAsDataURL(file);
+    //     }
+    // });
 
     // Close the popup when Cancel is clicked
     document.getElementById("cancelDelete").addEventListener("click", function () {

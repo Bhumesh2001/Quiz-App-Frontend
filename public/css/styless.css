@@ -44,7 +44,7 @@ body {
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.05) 0px -2px 6px, rgba(0, 0, 0, 0.05) 2px 0px 6px,
     rgba(0, 0, 0, 0.05) -2px 0px 6px;
-    padding: 25px;
+  padding: 25px;
 }
 
 .button-section {
@@ -141,11 +141,11 @@ body {
   transition: color 0.3s ease;
 }
 
-.dropdown-menu a:hover{
+.dropdown-menu a:hover {
   background-color: #f5f3f4;
 }
 
-.dropdown-menu a:active{
+.dropdown-menu a:active {
   background-color: #eff0f1;
   color: black;
 }
@@ -574,7 +574,7 @@ h4 {
   transform: translateY(-2px);
 }
 
-.submit-btn:active{
+.submit-btn:active {
   transform: translateY(0);
 }
 
@@ -623,7 +623,7 @@ h4 {
 #createQuestionButton:active,
 #createQuizButton:active,
 #createUserButton:active,
-#createAdminButton:active{
+#createAdminButton:active {
   transform: translateY(0);
 }
 
@@ -862,7 +862,8 @@ h4 {
 }
 
 /* setting1 css */
-.btn-save, .save-btn {
+.btn-save,
+.save-btn {
   background: linear-gradient(90deg, #007bff, #00c6ff);
   color: #fff;
   font-weight: bold;
@@ -873,12 +874,23 @@ h4 {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 }
-.btn-save:hover, .save-btn:hover {
+.btn-save:hover,
+.save-btn:hover {
   background: linear-gradient(90deg, #00c6ff, #007bff);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   transform: translateY(-2px);
   color: black;
 }
-.btn-save:active, .save-btn:active {
+.btn-save:active,
+.save-btn:active {
   transform: translateY(0);
+}
+
+/* site logo */
+#logoImage {
+  width: 150px; /* Set your desired width */
+  height: 100px; /* Set your desired height */
+  object-fit: cover; /* Adjust how the image fits into the container */
+  border: 3px solid #00c6ff;
+  border-radius: 5px;
 }
