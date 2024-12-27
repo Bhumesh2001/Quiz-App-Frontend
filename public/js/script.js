@@ -14,7 +14,7 @@ const chevronIcon = document.getElementById('chevronIcon');
 const logoPreview = document.getElementById('logoPreview');
 const logoImage = document.getElementById('logoImage');
 const buttonClickMap = new Map();
-const baseUrl = 'https://cys-backend.vercel.app';
+const baseUrl = 'https://quiz-app-backend-bi9c.onrender.com';
 const frontendBaseUrl = "https://cys-app.netlify.app";
 let token;
 

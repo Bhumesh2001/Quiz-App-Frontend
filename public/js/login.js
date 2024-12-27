@@ -1,5 +1,5 @@
 // baseUrl
-const baseUrl = 'https://cys-backend.vercel.app';
+const baseUrl = 'https://quiz-app-backend-bi9c.onrender.com';
 
 document.getElementById('loginForm').addEventListener('submit', async function (event) {
     event.preventDefault();
