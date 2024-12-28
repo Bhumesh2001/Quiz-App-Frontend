@@ -363,15 +363,13 @@
                               class="mt-3"
                               style="display: none"
                             >
-                              <label for="preview" class="form-label"
-                                >Logo Preview</label
-                              >
+                              <label class="form-label">Logo Preview</label>
                               <img
                                 id="logoImage"
                                 src=""
                                 alt="Logo Preview"
                                 class="img-fluid mx-3"
-                                style="max-width: 200px"
+                                style="max-width: 200px; height: auto"
                               />
                             </div>
                           </form>
@@ -382,7 +380,10 @@
                             <button
                               type="button"
                               data-title="Update General Setting"
-                              class="btn btn-save"
+                              class="btn save-btn"
+                              data-id="dynamicForm7"
+                              data-loader-id="loading-btn7"
+                              id="saveBtn-7"
                             >
                               Save
                             </button>
@@ -391,7 +392,7 @@
                             <button
                               class="btn btn-primary d-none"
                               type="button"
-                              id="loading-btn"
+                              id="loading-btn7"
                             >
                               <span
                                 class="spinner-border spinner-border-sm"
@@ -423,8 +424,8 @@
                                 draggable="false"
                                 id="smtpType"
                               >
-                                <option value="gmail">Gmail</option>
-                                <option value="server">Server</option>
+                                <option value="Gmail">Gmail</option>
+                                <option value="Server">Server</option>
                               </select>
                             </div>
 
@@ -512,7 +513,14 @@
                           <!-- Save Button -->
                           <div class="text-end d-flex justify-content-end">
                             <!-- save btn -->
-                            <button type="button" data-title="Update SMTP Setting" class="btn btn-save">
+                            <button
+                              type="button"
+                              data-title="Update SMTP Setting"
+                              class="btn save-btn"
+                              data-id="dynamicForm8"
+                              data-loader-id="loading-btn8"
+                              id="saveBtn-8"
+                            >
                               Save
                             </button>
 
@@ -520,7 +528,7 @@
                             <button
                               class="btn btn-primary d-none"
                               type="button"
-                              id="loading-btn"
+                              id="loading-btn8"
                             >
                               <span
                                 class="spinner-border spinner-border-sm"

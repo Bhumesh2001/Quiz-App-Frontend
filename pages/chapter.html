@@ -311,137 +311,7 @@
                       class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3 mb-3"
                       id="chapterContainer"
                     >
-                      <!-- Card Example for Chapter -->
-                      <div class="col">
-                        <div class="card chapter-card_">
-                          <img
-                            src="/assets/images/chapter/intro_program.png"
-                            alt="Chapter Image"
-                            class="card-img-top"
-                          />
-                          <div class="card-body text-center">
-                            <h5 class="card-title">Intro</h5>
-
-                            <div class="d-flex justify-content-center gap-2">
-                              <button
-                                class="btn btn-warning btn-sm createButton"
-                                data-edit-id="6"
-                                id="createEditChapter1"
-                                data-id="chapter"
-                                data-form-id="create"
-                                data-title="Edit Chapter"
-                              >
-                                <i class="fas fa-edit"></i>
-                              </button>
-                              <button
-                                class="btn btn-danger btn-sm"
-                                onclick="showDeletePopup()"
-                              >
-                                <i class="fas fa-trash-alt"></i>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <!-- Card Example for Chapter -->
-                      <div class="col">
-                        <div class="card chapter-card_">
-                          <img
-                            src="/assets/images/chapter/function.png"
-                            alt="Chapter Image"
-                            class="card-img-top"
-                          />
-                          <div class="card-body text-center">
-                            <h5 class="card-title">Logic</h5>
-
-                            <div class="d-flex justify-content-center gap-2">
-                              <button
-                                class="btn btn-warning btn-sm createButton"
-                                data-edit-id="6"
-                                id="createEditChapter2"
-                                data-id="chapter"
-                                data-form-id="create"
-                                data-title="Edit Chapter"
-                              >
-                                <i class="fas fa-edit"></i>
-                              </button>
-                              <button
-                                class="btn btn-danger btn-sm"
-                                onclick="showDeletePopup()"
-                              >
-                                <i class="fas fa-trash-alt"></i>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <!-- Card Example for Locked Chapter -->
-                      <div class="col">
-                        <div class="card chapter-card_">
-                          <img
-                            src="/assets/images/chapter/function2.png"
-                            alt="Chapter Image"
-                            class="card-img-top"
-                          />
-                          <div class="card-body text-center">
-                            <h5 class="card-title">Data Types</h5>
-
-                            <div class="d-flex justify-content-center gap-2">
-                              <button
-                                class="btn btn-warning btn-sm createButton"
-                                data-edit-id="6"
-                                id="createEditChapter3"
-                                data-id="chapter"
-                                data-form-id="create"
-                                data-title="Edit Chapter"
-                              >
-                                <i class="fas fa-edit"></i>
-                              </button>
-                              <button
-                                class="btn btn-danger btn-sm"
-                                onclick="showDeletePopup()"
-                              >
-                                <i class="fas fa-trash-alt"></i>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <!-- Card Example for Locked Chapter -->
-                      <div class="col">
-                        <div class="card chapter-card_">
-                          <img
-                            src="/assets/images/chapter/dsa.png"
-                            alt="Chapter Image"
-                            class="card-img-top"
-                          />
-                          <div class="card-body text-center">
-                            <h5 class="card-title">Flow Control</h5>
-
-                            <div class="d-flex justify-content-center gap-2">
-                              <button
-                                class="btn btn-warning btn-sm createButton"
-                                data-edit-id="6"
-                                id="createEditChapter4"
-                                data-id="chapter"
-                                data-form-id="create"
-                                data-title="Edit Chapter"
-                              >
-                                <i class="fas fa-edit"></i>
-                              </button>
-                              <button
-                                class="btn btn-danger btn-sm"
-                                onclick="showDeletePopup()"
-                              >
-                                <i class="fas fa-trash-alt"></i>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      <h5 class="text-center py-2">No chapters found !</h5>
                     </div>
                   </div>
                 </section>
@@ -549,6 +419,21 @@
                           id="imageUrl"
                           autocomplete="on"
                           accept="image/*"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="pdfUrl" class="form-label">Upload Pdf</label>
+                        <input
+                          type="file"
+                          class="form-control"
+                          name="pdfUrl"
+                          id="pdfUrl"
+                          autocomplete="on"
+                          accept=".pdf"
+                          required
                         />
                       </div>
                     </div>

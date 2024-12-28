@@ -13,6 +13,7 @@ const nestedSettingsMenu = document.getElementById('nestedSettingsMenu');
 const chevronIcon = document.getElementById('chevronIcon');
 const logoPreview = document.getElementById('logoPreview');
 const logoImage = document.getElementById('logoImage');
+const saveButtons = document.querySelectorAll('.save-btn');
 const buttonClickMap = new Map();
 const baseUrl = 'https://quiz-app-backend-bi9c.onrender.com';
 const frontendBaseUrl = "https://cys-app.netlify.app";
@@ -156,6 +157,7 @@ createButtons.forEach(function (createButton) {
     });
 });
 
+// nested menu settings link
 settingsLink.addEventListener('click', () => {
     const isOpen = nestedSettingsMenu.style.height && nestedSettingsMenu.style.height !== '0px';
 
@@ -166,6 +168,16 @@ settingsLink.addEventListener('click', () => {
         // Open the menu
         nestedSettingsMenu.style.height = nestedSettingsMenu.scrollHeight + 'px';
     }
+});
+
+// Add a click event listener to each button
+saveButtons.forEach((button) => {
+    button.addEventListener('click', (event) => {
+        const dataId = event.target.getAttribute('data-id');
+        const loderId = event.target.getAttribute('data-loader-id');
+        const btnId = event.target.getAttribute('id');
+        submitData(event, dataId, loderId, btnId);
+    });
 });
 
 // Show Loader
@@ -210,13 +222,16 @@ function getTokenFromCookie() {
     const cookies = document.cookie.split('; ');
     const tokenCookie = cookies.find((cookie) => cookie.startsWith('admin_token='));
 
+    // show loder
     showLoader();
 
     if (tokenCookie) {
         return tokenCookie.split('=')[1]; // Extract the token value
     };
 
+    // hide loader
     hideLoader();
+
     window.location.href = `${frontendBaseUrl}/index.html`;
 };
 
@@ -238,9 +253,9 @@ function showDeletePopup() {
 };
 
 // Helper function to toggle button states
-function toggleButtonState(isLoading) {
-    const submitBtn = document.getElementById("submitBtn");
-    const loadingBtn = document.getElementById("loading-btn");
+function toggleButtonState(isLoading, loderId, btnId) {
+    const submitBtn = document.getElementById(btnId || "submitBtn");
+    const loadingBtn = document.getElementById(loderId || "loading-btn");
 
     if (isLoading) {
         submitBtn.classList.add("d-none");
@@ -260,7 +275,7 @@ function handleMissingElement(selector) {
 };
 
 // Load dashboard data
-function loadDashboardCardData(data) {
+function loadDashboardCardData(data) {    
     // Check if the data and necessary properties exist before trying to set values
     if (data && data.data) {
         // Check if each element exists in the DOM before modifying it
@@ -542,6 +557,8 @@ function loadUserData(data) {
 function loadReportData(data) {
     const reportTableBody = document.getElementById("reportTableBody");
     reportTableBody.innerHTML = "";
+    
+    document.getElementById('total_report').innerText = `Total reports ${data.totalReports}`
     reportTableBody.innerHTML = data.data.map(report => `
         <tr>
             <td>${report.reporterId.fullName}</td>
@@ -567,14 +584,68 @@ function loadReportData(data) {
     `).join('');
 };
 
-// Function to load settings data
-async function loadSettingsData(settingDataEndpoints) {
-    try {
-        // Fetch data in parallel for all endpoints using Promise.all
-        const responses = await Promise.all(
-            settingDataEndpoints.map(endpoint => fetchData(endpoint, token))
-        );
+// Function to load admin data into the table
+function loadAdminData(data) {
+    const tableBody = document.getElementById('adminTableBody');
+    tableBody.innerHTML = ''; // Clear existing rows
 
+    data.data.forEach(admin => {
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+            <td>
+                <img 
+                    src="${admin.profileUrl || "https://via.placeholder.com/50"}" 
+                    alt="Admin Image" 
+                    class="rounded-circle"
+                >
+            </td>
+            <td>${admin.fullName}</td>
+            <td>${admin.email}</td>
+            <td>${new Date(admin.createdAt).toISOString().split('T')[0]}</td>
+            <td>
+                <span 
+                    class="badge ${admin.status === 'Active' ? 'bg-success' : 'bg-danger'} badge-status"
+                >
+                    ${admin.status}
+                </span>
+            </td>
+            <td>
+                <button 
+                    class="btn btn-warning btn-sm mb-1 createButton" 
+                    title="Edit Admin" 
+                    data-edit-id="adminEdit${admin._id}"
+                >
+                    <i class="fas fa-edit"></i>
+                </button>
+
+                <button 
+                    class="btn btn-danger btn-sm mb-1" 
+                    title="Delete User" 
+                    onclick="showDeletePopup()"
+                >
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </td>
+        `;
+
+        tableBody.appendChild(row);
+    });
+};
+
+// load admin setting data
+function laodAdminSettingData(data) {
+    loadSettingsData(data);
+};
+
+// load app setting data
+function loadAppSettingData(data) {
+    loadSettingsData(data)
+};
+
+// Function to load settings data
+async function loadSettingsData(responses) {
+    try {
         // Iterate over each response and update the fields
         responses.forEach(({ data }) => {
             Object.entries(data).forEach(([key, value]) => {
@@ -625,6 +696,7 @@ function viewReport(id) {
 
 // Function to handle server response with errors
 function handleFormErrors(errors) {
+
     // Clear any existing error messages
     const errorElements = document.querySelectorAll('.error-message');
     errorElements.forEach((elem) => elem.remove());
@@ -730,7 +802,11 @@ async function dynamicApiRequest({ url, method = "GET", headers = {}, body = nul
         if (!response.ok) {
             const errorData = await response.json();
             console.error("API Error Response:", errorData);
-            handleFormErrors(errorData.errors);
+            if (Array.isArray(errorData.errors)) {
+                handleFormErrors(errorData.errors);
+            } else {
+                showNotification('error', errorData.error || errorData.message);
+            };
             throw new Error(`HTTP error! status: ${response.status}`);
         };
 
@@ -741,13 +817,119 @@ async function dynamicApiRequest({ url, method = "GET", headers = {}, body = nul
     };
 };
 
+// submit the data of from
+async function submitData(event, id, loderId, btnId) {
+    toggleButtonState(true, loderId, btnId);
+
+    const form = document.getElementById(id || "dynamicForm");
+    const formData = new FormData(form);
+    const dataTitle = event.target.getAttribute('data-title');
+
+    // Capitalize the "status" field, if it exists
+    const status = formData.get("status");
+    if (status) formData.set("status", status.charAt(0).toUpperCase() + status.slice(1).toLowerCase());
+
+    // post data endpoints
+    const postDataEndpoints = {
+        "Create Class": `${baseUrl}/api/classes`,
+        "Create Subject": `${baseUrl}/api/subjects`,
+        "Create Chapter": `${baseUrl}/api/chapters`,
+        "Create Question": `${baseUrl}/api/questions`,
+        "Create Quiz": `${baseUrl}/api/quizzes/quiz`,
+        "Create User": `${baseUrl}/api/auth/user`,
+        "Update General Setting": `${baseUrl}/api/setting/admin-setting/general`,
+        "Update SMTP Setting": `${baseUrl}/api/setting/admin-setting/smtp`,
+        "Update App General Setting": `${baseUrl}/api/setting/app-setting/general`,
+        "Update App Setting": `${baseUrl}/api/setting/app-setting/app`,
+        "Update Privacy Policy": `${baseUrl}/api/setting/app-setting/privacy-policy`,
+        "Update Terms Setting": `${baseUrl}/api/setting/app-setting/terms`,
+        "Update Notification Setting": `${baseUrl}/api/setting/app-setting/notification`,
+        "Update App Update Setting": `${baseUrl}/api/setting/app-setting/app-update`,
+    };
+
+    if (!postDataEndpoints[dataTitle]) {
+        console.error("Invalid data title:", dataTitle);
+        toggleButtonState(false, loderId, btnId);
+        return;
+    };
+
+    try {
+        let payload = formData; // Default payload            
+
+        if (dataTitle === "Create Question") {
+            const options = [];
+            const questionData = {};
+
+            // Organize data for "Create Question"
+            for (let [key, value] of formData.entries()) {
+                if (key.startsWith("option_") && value.trim() !== "") {
+                    options.push(value); // Collect options if they are not empty
+                } else {
+                    questionData[key] = value;
+                };
+            };
+
+            if (options.length === 0) {
+                showNotification('error', 'Please provide at least one option for the question.');
+                toggleButtonState(false);
+                return; // Exit if no options are provided
+            };
+
+            // Construct final JSON payload
+            payload = {
+                categoryId: questionData.categoryId,
+                chapterId: questionData.chapterId,
+                question: questionData.question,
+                questionType: questionData.questionType,
+                options,
+                answer: questionData.answer,
+                status: questionData.status
+            };
+
+        } else if (dataTitle === "Update App Setting" || dataTitle === "Update App Update Setting") {
+            // Convert Active/Inactive to boolean
+            payload = {};
+            for (let [key, value] of formData.entries()) {
+                if (value === "Active") {
+                    payload[key] = true;
+                } else if (value === "Inactive") {
+                    payload[key] = false;
+                } else {
+                    payload[key] = value;
+                };
+            };
+        };
+
+        // Send request
+        const response = await postData(postDataEndpoints[dataTitle], token, payload);
+        if (response.success) {
+            form.reset();
+            showNotification('success', response.message);
+        } else {
+            console.error(`${dataTitle} creation failed:`, response.error || "Unknown error.");
+        };
+    } catch (error) {
+        console.error("An error occurred:", error);
+    } finally {
+        toggleButtonState(false, loderId, btnId); // Reset button state
+    };
+};
+
 // Helper function to make API requests dynamically get
 async function fetchData(url, token = '') {
-    const response = await dynamicApiRequest({
-        url,
-        headers: token ? { "Authorization": `Bearer ${token}` } : {}
-    });
-    return response;
+    try {
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
+        const urls = Array.isArray(url) ? url : [url];
+
+        const responses = await Promise.all(
+            urls.map(singleUrl => dynamicApiRequest({ url: singleUrl, headers }))
+        );
+
+        return Array.isArray(url) ? responses : responses[0]; // Return single response for single URL
+    } catch (error) {
+        console.error('Error in fetchData:', error.message);
+        throw error;
+    };
 };
 
 // Helper function to make API requests dynamically post
@@ -768,6 +950,7 @@ showLoader();
 (async (baseUrl) => {
     try {
         showLoader();
+
         // get data endpoints
         const getDataEndpoints = [
             {
@@ -783,6 +966,27 @@ showLoader();
             { url: `${baseUrl}/api/quizzes`, handler: loadQuizData, id: "quizContainer" },
             { url: `${baseUrl}/api/auth/users`, handler: loadUserData, id: "userTableBody" },
             { url: `${baseUrl}/api/reports`, handler: loadReportData, id: "reportTableBody" },
+            { url: `${baseUrl}/api/auth/admins`, handler: loadAdminData, id: "adminTableBody" },
+            {
+                url: [
+                    `${baseUrl}/api/setting/admin-setting/general`,
+                    `${baseUrl}/api/setting/admin-setting/smtp`
+                ],
+                handler: laodAdminSettingData,
+                id: "settingsTabContent"
+            },
+            {
+                url: [
+                    `${baseUrl}/api/setting/app-setting/general`,
+                    `${baseUrl}/api/setting/app-setting/app`,
+                    `${baseUrl}/api/setting/app-setting/privacy-policy`,
+                    `${baseUrl}/api/setting/app-setting/terms`,
+                    `${baseUrl}/api/setting/app-setting/notification`,
+                    `${baseUrl}/api/setting/app-setting/app-update`,
+                ],
+                handler: loadAppSettingData,
+                id: "settingsTabContent_"
+            }
         ];
 
         // Use Promise.all to wait for all data to load
@@ -792,21 +996,6 @@ showLoader();
                 handler(data);
             };
         }));
-
-        // setting data endpoint
-        const settingDataEndpoints = [
-            `${baseUrl}/api/setting/admin-setting/general`,
-            `${baseUrl}/api/setting/admin-setting/smtp`,
-            `${baseUrl}/api/setting/app-setting/general`,
-            `${baseUrl}/api/setting/app-setting/app`,
-            `${baseUrl}/api/setting/app-setting/privacy-policy`,
-            `${baseUrl}/api/setting/app-setting/terms`,
-            `${baseUrl}/api/setting/app-setting/notification`,
-            `${baseUrl}/api/setting/app-setting/app-update`,
-        ];
-
-        // load setting data
-        loadSettingsData(settingDataEndpoints);
 
         // hide the loader
         hideLoader();
@@ -883,109 +1072,40 @@ document.getElementById("logoutButton").addEventListener("click", async (e) => {
     };
 });
 
-if (document.getElementById('cancelDelete')
-    || document.getElementById('confirmDelete')
-    || document.getElementById('submitBtn')
-) {
-
+if (document.getElementById('siteLogo')) {
     // Handle file input to show preview
-    // document.getElementById('siteLogo').addEventListener('change', function (event) {
-    //     const file = event.target.files[0];
+    document.getElementById('siteLogo').addEventListener('change', function (event) {
+        const file = event.target.files[0];
 
-    //     if (file) {
-    //         const reader = new FileReader();
-    //         reader.onload = function (e) {
-    //             logoImage.src = e.target.result; // Set the preview image source from the uploaded file
-    //             logoPreview.style.display = 'block'; // Show the preview div
-    //         };
-    //         reader.readAsDataURL(file);
-    //     }
-    // });
-
-    // Close the popup when Cancel is clicked
-    document.getElementById("cancelDelete").addEventListener("click", function () {
-        document.getElementById("deletePopup").style.display = "none";
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                logoImage.src = e.target.result; // Set the preview image source from the uploaded file
+                logoPreview.style.display = 'block'; // Show the preview div
+            };
+            reader.readAsDataURL(file);
+        }
     });
+};
 
+if (document.getElementById('cancelDelete')) {
     // Close the popup and confirm delete when Confirm is clicked
     document.getElementById("confirmDelete").addEventListener("click", function () {
         document.getElementById("deletePopup").style.display = "none";
         showNotification('success', 'Item deleted!');
     });
+};
 
+if (document.getElementById('confirmDelete')) {
+    // Close the popup when Cancel is clicked
+    document.getElementById("cancelDelete").addEventListener("click", function () {
+        document.getElementById("deletePopup").style.display = "none";
+    });
+};
+
+if (document.getElementById('submitBtn')) {
     // submit btn
     document.getElementById("submitBtn").addEventListener("click", async (event) => {
-        toggleButtonState(true);
-
-        const form = document.getElementById("dynamicForm");
-        const formData = new FormData(form);
-        const dataTitle = event.target.getAttribute('data-title');
-
-        // Capitalize the "status" field, if it exists
-        const status = formData.get("status");
-        if (status) formData.set("status", status.charAt(0).toUpperCase() + status.slice(1).toLowerCase());
-
-        const postDataEndpoints = {
-            "Create Class": `${baseUrl}/api/classes`,
-            "Create Subject": `${baseUrl}/api/subjects`,
-            "Create Chapter": `${baseUrl}/api/chapters`,
-            "Create Question": `${baseUrl}/api/questions`,
-            "Create Quiz": `${baseUrl}/api/quizzes/quiz`,
-            "Create User": `${baseUrl}/api/auth/user`
-        };
-
-        if (!postDataEndpoints[dataTitle]) {
-            console.error("Invalid data title:", dataTitle);
-            toggleButtonState(false);
-            return;
-        };
-
-        try {
-            let payload = formData; // Default payload            
-
-            if (dataTitle === "Create Question") {
-                const options = [];
-                const questionData = {};
-
-                // Organize data for "Create Question"
-                for (let [key, value] of formData.entries()) {
-                    if (key.startsWith("option_") && value.trim() !== "") {
-                        options.push(value); // Collect options if they are not empty
-                    } else {
-                        questionData[key] = value;
-                    };
-                };
-
-                if (options.length === 0) {
-                    showNotification('error', 'Please provide at least one option for the question.')
-                    toggleButtonState(false);
-                    return; // Exit if no options are provided
-                };
-
-                // Construct final JSON payload
-                payload = {
-                    categoryId: questionData.categoryId,
-                    chapterId: questionData.chapterId,
-                    question: questionData.question,
-                    questionType: questionData.questionType,
-                    options,
-                    answer: questionData.answer,
-                    status: questionData.status
-                };
-            };
-
-            // Send request
-            const response = await postData(postDataEndpoints[dataTitle], token, payload);
-            if (response.success) {
-                form.reset();
-                showNotification('success', response.message);
-            } else {
-                console.error(`${dataTitle} creation failed:`, response.error || "Unknown error.");
-            };
-        } catch (error) {
-            console.error("An error occurred:", error);
-        } finally {
-            toggleButtonState(false); // Reset button state
-        };
+        submitData(event, null, null, null);
     });
 };

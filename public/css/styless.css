@@ -560,7 +560,15 @@ h4 {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1), 0px 2px 4px rgba(0, 0, 0, 0.06);
 }
 
-#loading-btn {
+#loading-btn,
+#loading-btn1,
+#loading-btn2,
+#loading-btn3,
+#loading-btn4,
+#loading-btn5,
+#loading-btn6,
+#loading-btn7,
+#loading-btn8 {
   background: linear-gradient(90deg, #007bff, #00c6ff);
   border: none;
   border-radius: 25px;
