@@ -190,33 +190,6 @@ function hideLoader() {
     document.getElementById('loader').classList.add('d-none');
 };
 
-// Function to update the Correct Answer dropdown dynamically
-function updateCorrectAnswerOptions() {
-    const answerDropdown = document.getElementById('answer');
-    const options = ['option_1', 'option_2', 'option_3', 'option_4'];
-
-    // Clear existing options in the dropdown
-    answerDropdown.innerHTML = '<option value="" selected>Select Correct Answer</option>';
-
-    // Loop through each option input and add to the dropdown if not empty
-    options.forEach((optionId, index) => {
-        const optionValue = document.getElementById(optionId).value.trim();
-        if (optionValue) {
-            const newOption = document.createElement('option');
-            newOption.value = optionValue;
-            newOption.textContent = `Answer ${String.fromCharCode(65 + index)}`;
-            answerDropdown.appendChild(newOption);
-        }
-    });
-};
-
-// Event listeners to update the dropdown whenever an option is changed
-['option_1', 'option_2', 'option_3', 'option_4'].forEach(optionId => {
-    if (document.getElementById(optionId)) {
-        document.getElementById(optionId).addEventListener('input', updateCorrectAnswerOptions);
-    };
-});
-
 // get token from cookie function
 function getTokenFromCookie() {
     const cookies = document.cookie.split('; ');
@@ -275,7 +248,7 @@ function handleMissingElement(selector) {
 };
 
 // Load dashboard data
-function loadDashboardCardData(data) {    
+function loadDashboardCardData(data) {
     // Check if the data and necessary properties exist before trying to set values
     if (data && data.data) {
         // Check if each element exists in the DOM before modifying it
@@ -557,7 +530,7 @@ function loadUserData(data) {
 function loadReportData(data) {
     const reportTableBody = document.getElementById("reportTableBody");
     reportTableBody.innerHTML = "";
-    
+
     document.getElementById('total_report').innerText = `Total reports ${data.totalReports}`
     reportTableBody.innerHTML = data.data.map(report => `
         <tr>
@@ -857,19 +830,23 @@ async function submitData(event, id, loderId, btnId) {
         let payload = formData; // Default payload            
 
         if (dataTitle === "Create Question") {
-            const options = [];
+            const options = {};
             const questionData = {};
+            let optionIndex = 0;
 
             // Organize data for "Create Question"
             for (let [key, value] of formData.entries()) {
                 if (key.startsWith("option_") && value.trim() !== "") {
-                    options.push(value); // Collect options if they are not empty
+                    // Map options to a, b, c, d dynamically
+                    const optionKey = String.fromCharCode(97 + optionIndex); // 'a', 'b', 'c', ...
+                    options[optionKey] = value;
+                    optionIndex++;
                 } else {
                     questionData[key] = value;
-                };
-            };
+                }
+            }
 
-            if (options.length === 0) {
+            if (Object.keys(options).length === 0) {
                 showNotification('error', 'Please provide at least one option for the question.');
                 toggleButtonState(false);
                 return; // Exit if no options are provided
@@ -881,12 +858,12 @@ async function submitData(event, id, loderId, btnId) {
                 chapterId: questionData.chapterId,
                 question: questionData.question,
                 questionType: questionData.questionType,
-                options,
+                options, // Now in object format
                 answer: questionData.answer,
                 status: questionData.status
             };
-
-        } else if (dataTitle === "Update App Setting" || dataTitle === "Update App Update Setting") {
+        }
+        else if (dataTitle === "Update App Setting" || dataTitle === "Update App Update Setting") {
             // Convert Active/Inactive to boolean
             payload = {};
             for (let [key, value] of formData.entries()) {
