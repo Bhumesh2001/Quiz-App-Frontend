@@ -105,7 +105,7 @@
       <div class="container-fluid">
         <div class="row">
           <!-- sidebar -->
-          <div class="col-xl-2 col-lg-2 d-none d-lg-block p-2" id="sidebar__">
+          <div class="col-xl-2 d-none d-xl-block p-2" id="sidebar__">
             <div class="sidebar-container rounded d-flex flex-column p-3">
               <!-- dashboard -->
               <a
@@ -261,7 +261,7 @@
           </div>
 
           <!-- heading, footer and content -->
-          <div class="col-xl-10 col-lg-10 p-2">
+          <div class="col-xl-10 p-2">
             <div class="content-container rounded px-md-3 px-2">
               <!-- heading -->
               <div
@@ -822,9 +822,7 @@
                                   id="onOff"
                                   autocomplete="off"
                                 >
-                                  <option value="true" selected>
-                                    Active
-                                  </option>
+                                  <option value="true" selected>Active</option>
                                   <option value="false">Inactive</option>
                                 </select>
                               </div>
@@ -878,7 +876,6 @@
                               data-id="dynamicForm6"
                               data-loader-id="loading-btn6"
                               id="saveBtn-6"
-                              
                             >
                               Save
                             </button>
@@ -936,7 +933,14 @@
           class="buttons_ d-flex justify-content-center align-items-center gap-2"
         >
           <button class="cancel-btn" id="cancelDelete">Cancel</button>
-          <button class="confirm-btn" id="confirmDelete">Delete</button>
+          <button class="confirm-btn" id="confirmDelete">
+            <span class="button-text">Delete</span>
+            <span
+              class="spinner-border spinner-border-sm d-none"
+              role="status"
+              aria-hidden="true"
+            ></span>
+          </button>
         </div>
       </div>
     </div>

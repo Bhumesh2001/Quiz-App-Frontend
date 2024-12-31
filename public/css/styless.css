@@ -161,13 +161,6 @@ body {
   display: inline-block;
 }
 
-/* Responsive Adjustment */
-@media (max-width: 768px) {
-  .sidebar-container {
-    width: 100%;
-  }
-}
-
 .sidebar-item:hover,
 .nested-link:hover {
   color: #0496ff; /* Highlight on hover */
@@ -453,6 +446,8 @@ h4 {
   max-height: 50px;
   object-fit: cover;
   margin: 0 auto;
+  height: 50px;
+  width: 50px;
 }
 
 /* Badge Styles */
@@ -542,7 +537,7 @@ h4 {
 
 /* Revert styles when not focused */
 .form-select:not(:focus) {
-  border: 1px solid #ccc; /* Default border */
+  border: 1px solid rgba(128, 128, 128, 0.712); /* Default border */
   box-shadow: none; /* Remove shadow */
   transition: border-color 0.3s, box-shadow 0.3s;
 }
@@ -782,7 +777,14 @@ h4 {
 }
 
 /* For mobile devices (screen width up to 768px) */
-@media only screen and (max-width: 768px) {
+/* @media only screen and (max-width: 768px) {
+  .sidebar-container {
+    width: 200px;
+  }
+} */
+
+/* For devices with screen width between 768px and 1200px */
+@media only screen and (min-width: 320px) and (max-width: 1200px) {
   .sidebar-container {
     width: 200px;
   }
@@ -901,4 +903,81 @@ h4 {
   object-fit: cover; /* Adjust how the image fits into the container */
   border: 3px solid #00c6ff;
   border-radius: 5px;
+}
+
+/* Custom styles for password toggle */
+.toggle-password {
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+
+.input-group {
+  position: relative;
+  display: block;
+}
+
+.input-group .form-control {
+  padding-right: 40px;
+}
+
+.input-group .toggle-password {
+  position: absolute;
+  top: 60%;
+  right: 22px;
+  transform: translateY(-50%);
+  color: #6c757d;
+}
+
+.input-group .toggle-password:hover {
+  color: #000;
+}
+
+.page-link:hover {
+  color: #0090ff;
+}
+
+.page-link {
+  color: black;
+  border-radius: 50%;
+  text-align: center;
+  outline: none; /* Prevent the default focus border */
+}
+
+.page-link:focus {
+  outline: none; /* Removes the focus outline when clicked */
+  box-shadow: none; /* Prevents any additional browser-specific focus styling */
+}
+
+.page-item a.page-link {
+  text-decoration: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-size: 16px;
+  background-color: white;
+  outline: none;
+  border: none;
+}
+
+.page-item.active a.page-link {
+  background-color: #0090ff;
+  color: white;
+  border-color: #0090ff;
+  outline: none;
+  border: none;
+}
+
+.page-item.disabled a.page-link {
+  color: black;
+  pointer-events: none;
+  opacity: 0.65;
+}
+
+page-item a.page-link:hover {
+  color: #0090ff;
 }

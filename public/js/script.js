@@ -17,6 +17,7 @@ const saveButtons = document.querySelectorAll('.save-btn');
 const buttonClickMap = new Map();
 const baseUrl = 'https://quiz-app-backend-bi9c.onrender.com';
 const frontendBaseUrl = "https://cys-app.netlify.app";
+let deleteButton;
 let token;
 
 // get token 
@@ -221,8 +222,12 @@ function populateDropdown(dropdown, data, placeholder) {
 };
 
 // Show the popup
-function showDeletePopup() {
+function showDeletePopup(id, url, link) {
     document.getElementById("deletePopup").style.display = "flex";
+    document.getElementById("confirmDelete").setAttribute('data-delete-id', id);
+    document.getElementById("confirmDelete").setAttribute('data-url', url);
+    document.getElementById("confirmDelete").setAttribute('data-link', link);
+    deleteButton = document.getElementById('confirmDelete');
 };
 
 // Helper function to toggle button states
@@ -268,8 +273,10 @@ function loadDashboardCardData(data) {
 
 // load new users data
 function loadNewUsersData(data) {
-    document.getElementById('user-list').innerHTML = "";
     const userListElement = document.getElementById("user-list");
+
+    // clear previous card
+    userListElement.innerHTML = "";
 
     data.newUsers.forEach((user) => {
         const listItem = document.createElement("li");
@@ -281,7 +288,7 @@ function loadNewUsersData(data) {
           <span class="user-name">${user.fullName}</span>
           <span class="user-email">${user.email}</span>
         </div>
-        <span class="user-date">Joined: ${new Date(user.createdAt).toISOString().split('T')[0]}</span>
+        <span class="user-date">${new Date(user.createdAt).toISOString().split('T')[0]}</span>
       `;
         userListElement.appendChild(listItem);
     });
@@ -293,9 +300,11 @@ function loadClassData(data) {
     if (!data || !Array.isArray(data.data)) {
         console.error("Invalid data format. Expected an object with a 'data' array.");
         return;
-    }
+    };
 
-    const table = document.getElementById("classTable");
+    const table = document.getElementById('classTable');
+    const url = '/api/classes';
+    const link = 'class.html';
 
     // Clear existing table rows (excluding headers)
     table.querySelector("tbody").innerHTML = "";
@@ -340,7 +349,7 @@ function loadClassData(data) {
         deleteButton.className = "btn btn-danger btn-sm fw-bold";
         deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
         deleteButton.addEventListener("click", () => {
-            showDeletePopup(class_._id); // Attach event listener for delete
+            showDeletePopup(class_._id, url, link); // Attach event listener for delete
         });
         actionsCell.appendChild(deleteButton);
 
@@ -352,10 +361,16 @@ function loadClassData(data) {
     table.querySelector("tbody").appendChild(fragment);
 };
 
-// load subject data
+// Load subject data
 function loadSubjectData(data) {
     const container = document.getElementById("subjectContainer");
+    const url = '/api/subjects';
+    const link = 'subject.html';
+
+    // Clear container
     container.innerHTML = '';
+
+    // Generate subject cards
     container.innerHTML = data.data.map(subject => `
         <div class="col">
             <div class="card subject-card h-100">
@@ -372,7 +387,7 @@ function loadSubjectData(data) {
                             <i class="fas fa-edit"></i>
                         </button>
                         <button class="btn btn-danger btn-sm fw-bold" 
-                                onclick="showDeletePopup()">
+                                onclick="showDeletePopup('${subject._id}', '${url}', '${link}')">
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </div>
@@ -385,7 +400,12 @@ function loadSubjectData(data) {
 // load chapter data
 function loadChapterData(data) {
     const container = document.getElementById("chapterContainer");
+    const url = '/api/chapters';
+    const link = 'chapter.html';
+
+    // clear previous html
     container.innerHTML = "";
+
     container.innerHTML = data.data.map(chapter => `
         <div class="col">
             <div class="card chapter-card_">
@@ -402,7 +422,7 @@ function loadChapterData(data) {
                             <i class="fas fa-edit"></i>
                         </button>
                         <button class="btn btn-danger btn-sm" 
-                                onclick="showDeletePopup()">
+                                onclick="showDeletePopup('${chapter._id}', '${url}', '${link}')">
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </div>
@@ -415,7 +435,12 @@ function loadChapterData(data) {
 // load question data
 function loadQuestionData(data) {
     const tableBody = document.getElementById("questionTableBody");
+
+    const url = '/api/questions';
+    const link = 'question.html';
+
     tableBody.innerHTML = "";
+
     tableBody.innerHTML = data.data.map(question => `
         <tr>
             <td>${question.question}</td>
@@ -436,7 +461,7 @@ function loadQuestionData(data) {
                 </button>
                 <button class="btn btn-danger btn-sm mb-1"
                         title="Delete Question"
-                        onclick="showDeletePopup()">
+                        onclick="showDeletePopup('${question._id}', '${url}', '${link}')">
                     <i class="fas fa-trash-alt"></i>
                 </button>
             </td>
@@ -447,6 +472,10 @@ function loadQuestionData(data) {
 // load quiz data 
 function loadQuizData(data) {
     const quizContainer = document.getElementById("quizContainer");
+
+    const url = '/api/quizzes/quiz';
+    const link = 'quiz.html';
+
     quizContainer.innerHTML = "";
     quizContainer.innerHTML = data.data.map(quiz => `
         <div class="col">
@@ -470,7 +499,7 @@ function loadQuizData(data) {
                         </button>
                         <button 
                             class="btn btn-danger btn-sm"
-                            onclick="showDeletePopup()">
+                            onclick="showDeletePopup('${quiz._id}', '${url}', '${link}')">
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </div>
@@ -483,7 +512,13 @@ function loadQuizData(data) {
 // load user data
 function loadUserData(data) {
     const userTableBody = document.getElementById("userTableBody");
+
+    const url = '/api/auth/user';
+    const link = 'user.html';
+
+    // clear table body
     userTableBody.innerHTML = "";
+
     userTableBody.innerHTML = data.data.map(user => `
         <tr>
             <td>
@@ -517,7 +552,7 @@ function loadUserData(data) {
                 <button
                     class="btn btn-danger btn-sm mb-1"
                     title="Delete User"
-                    onclick="showDeletePopup()"
+                    onclick="showDeletePopup('${user._id}', '${url}', '${link}')"
                 >
                     <i class="fas fa-trash-alt"></i>
                 </button>
@@ -529,6 +564,11 @@ function loadUserData(data) {
 // load report data
 function loadReportData(data) {
     const reportTableBody = document.getElementById("reportTableBody");
+
+    const url = '/api/reports';
+    const link = 'report.html';
+
+    // clear privious data
     reportTableBody.innerHTML = "";
 
     document.getElementById('total_report').innerText = `Total reports ${data.totalReports}`
@@ -548,7 +588,7 @@ function loadReportData(data) {
                 <button
                     class="btn btn-danger btn-sm mb-2 fw-bold"
                     title="Delete Report"
-                    onclick="showDeletePopup()"
+                    onclick="showDeletePopup('${report._id}', '${url}', '${link}')"
                 >
                     <i class="fas fa-trash-alt"></i>
                 </button>
@@ -560,7 +600,12 @@ function loadReportData(data) {
 // Function to load admin data into the table
 function loadAdminData(data) {
     const tableBody = document.getElementById('adminTableBody');
+
+    const url = '/api/auth/admin';
+    const link = 'admin.html';
+
     tableBody.innerHTML = ''; // Clear existing rows
+    let count = 1;
 
     data.data.forEach(admin => {
         const row = document.createElement('tr');
@@ -593,9 +638,9 @@ function loadAdminData(data) {
                 </button>
 
                 <button 
-                    class="btn btn-danger btn-sm mb-1" 
+                    class="btn btn-danger btn-sm mb-1 ${count === 1 ? 'disabled' : ''} " 
                     title="Delete User" 
-                    onclick="showDeletePopup()"
+                    onclick="showDeletePopup('${admin._id}', '${url}', '${link}')"
                 >
                     <i class="fas fa-trash-alt"></i>
                 </button>
@@ -603,6 +648,7 @@ function loadAdminData(data) {
         `;
 
         tableBody.appendChild(row);
+        count++
     });
 };
 
@@ -740,7 +786,7 @@ function showNotification(type, message) {
     notificationsContainer.appendChild(notificationCard);
 
     // Automatically remove the notification after 5 seconds
-    setTimeout(() => removeNotification(notificationCard), 2000);
+    setTimeout(() => removeNotification(notificationCard), 3000);
 };
 
 // Function to remove notification (both manually and automatically)
@@ -779,8 +825,8 @@ async function dynamicApiRequest({ url, method = "GET", headers = {}, body = nul
                 handleFormErrors(errorData.errors);
             } else {
                 showNotification('error', errorData.error || errorData.message);
+                return false
             };
-            throw new Error(`HTTP error! status: ${response.status}`);
         };
 
         return await response.json();
@@ -810,6 +856,7 @@ async function submitData(event, id, loderId, btnId) {
         "Create Question": `${baseUrl}/api/questions`,
         "Create Quiz": `${baseUrl}/api/quizzes/quiz`,
         "Create User": `${baseUrl}/api/auth/user`,
+        "Create Admin": `${baseUrl}/api/auth/user`,
         "Update General Setting": `${baseUrl}/api/setting/admin-setting/general`,
         "Update SMTP Setting": `${baseUrl}/api/setting/admin-setting/smtp`,
         "Update App General Setting": `${baseUrl}/api/setting/app-setting/general`,
@@ -818,6 +865,25 @@ async function submitData(event, id, loderId, btnId) {
         "Update Terms Setting": `${baseUrl}/api/setting/app-setting/terms`,
         "Update Notification Setting": `${baseUrl}/api/setting/app-setting/notification`,
         "Update App Update Setting": `${baseUrl}/api/setting/app-setting/app-update`,
+    };
+
+    // file links
+    const fileLinks = {
+        "Create Class": `${frontendBaseUrl}/pages/class.html`,
+        "Create Subject": `${frontendBaseUrl}/pages/subject.html`,
+        "Create Chapter": `${frontendBaseUrl}/pages/chapter.html`,
+        "Create Question": `${frontendBaseUrl}/pages/question.html`,
+        "Create Quiz": `${frontendBaseUrl}/pages/quiz.html`,
+        "Create User": `${frontendBaseUrl}/pages/user.html`,
+        "Create Admin": `${frontendBaseUrl}/pages/admin.html`,
+        "Update General Setting": `${frontendBaseUrl}/pages/setting1.html`,
+        "Update SMTP Setting": `${frontendBaseUrl}/pages/setting1.html`,
+        "Update App General Setting": `${frontendBaseUrl}/pages/setting2.html`,
+        "Update App Setting": `${frontendBaseUrl}/pages/setting2.html`,
+        "Update Privacy Policy": `${frontendBaseUrl}/pages/setting2.html`,
+        "Update Terms Setting": `${frontendBaseUrl}/pages/setting2.html`,
+        "Update Notification Setting": `${frontendBaseUrl}/pages/setting2.html`,
+        "Update App Update Setting": `${frontendBaseUrl}/pages/setting2.html`,
     };
 
     if (!postDataEndpoints[dataTitle]) {
@@ -881,7 +947,9 @@ async function submitData(event, id, loderId, btnId) {
         const response = await postData(postDataEndpoints[dataTitle], token, payload);
         if (response.success) {
             form.reset();
-            showNotification('success', response.message);
+            sessionStorage.setItem('itemCreated', 'true');
+            sessionStorage.setItem('message', `${response.message}`);
+            window.location.href = fileLinks[dataTitle];
         } else {
             console.error(`${dataTitle} creation failed:`, response.error || "Unknown error.");
         };
@@ -920,11 +988,18 @@ async function postData(url, token = '', body) {
     return response;
 };
 
-// show loder
-showLoader();
+// helper function to delete particular data
+async function deleteData(url, token = '', id) {
+    const response = await dynamicApiRequest({
+        url: `${url}/${id}`,
+        method: "DELETE",
+        headers: token ? { "Authorization": `Bearer ${token}` } : {},
+    });
+    return response;
+};
 
 // call api
-(async (baseUrl) => {
+async function renderData (baseUrl) {
     try {
         showLoader();
 
@@ -980,14 +1055,34 @@ showLoader();
     } catch (error) {
         console.error("Error fetching data:", error);
     };
-})(baseUrl);
+};
+renderData(baseUrl);
+
+// toggle password icon
+const toggleButtons = document.querySelectorAll(".toggle-password");
+toggleButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        const input = document.querySelector(button.dataset.target);
+        const icon = button.querySelector("i");
+
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+        } else {
+            input.type = "password";
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+        }
+    });
+});
 
 // toggle sidebar btn
 document.getElementById('toggleButton').addEventListener('click', function () {
     const sidebar = document.getElementById('sidebar__');
 
     // Check if the screen size is medium to small
-    if (window.matchMedia('(max-width: 768px)').matches) {
+    if (window.matchMedia('(max-width: 1200px)').matches) {
         // Toggle the `d-none` class to show/hide the sidebar
         if (sidebar.classList.contains('d-none')) {
             sidebar.classList.remove('d-none'); // Open the sidebar
@@ -1066,17 +1161,49 @@ if (document.getElementById('siteLogo')) {
 };
 
 if (document.getElementById('cancelDelete')) {
-    // Close the popup and confirm delete when Confirm is clicked
-    document.getElementById("confirmDelete").addEventListener("click", function () {
+    // Close the popup when Cancel is clicked
+    document.getElementById("cancelDelete").addEventListener("click", function () {
         document.getElementById("deletePopup").style.display = "none";
-        showNotification('success', 'Item deleted!');
     });
 };
 
 if (document.getElementById('confirmDelete')) {
-    // Close the popup when Cancel is clicked
-    document.getElementById("cancelDelete").addEventListener("click", function () {
-        document.getElementById("deletePopup").style.display = "none";
+    // Confirm the deletion when Confirm is clicked
+    document.getElementById("confirmDelete").addEventListener("click", function (event) {
+
+        const data_id = deleteButton.getAttribute('data-delete-id');
+        const data_url = deleteButton.getAttribute('data-url');
+        const data_link = deleteButton.getAttribute('data-link');
+
+        const buttonText = deleteButton.querySelector('.button-text');
+        const spinner = deleteButton.querySelector('.spinner-border');
+
+        // Show spinner and disable button
+        buttonText.textContent = '';
+        spinner.classList.remove('d-none');
+        deleteButton.disabled = true;
+
+        // Call the deleteData function
+        deleteData(`${baseUrl}${data_url}`, token, data_id)
+            .then(response => {
+                if (response) {
+                    // Set a flag for success in sessionStorage
+                    sessionStorage.setItem('itemDeleted', 'true');
+
+                    // Reset button state
+                    buttonText.textContent = 'Delete';
+                    spinner.classList.add('d-none');
+                    deleteButton.disabled = false;
+
+                    // Redirect after a slight delay
+                    setTimeout(() => {
+                        window.location.href = `${frontendBaseUrl}/pages/${data_link}`;
+                    }, 100);
+                };
+            })
+            .catch(error => {
+                console.error("Error deleting item:", error);
+            });
     });
 };
 
@@ -1086,3 +1213,68 @@ if (document.getElementById('submitBtn')) {
         submitData(event, null, null, null);
     });
 };
+
+// load item
+window.addEventListener('load', () => {
+    // Check if the item was deleted from sessionStorage
+    if (sessionStorage.getItem('itemDeleted') === 'true') {
+        showNotification('success', 'Item deleted successfully!');
+        sessionStorage.removeItem('itemDeleted');
+    }
+    else if (sessionStorage.getItem('itemCreated') === "true") {
+        const message = sessionStorage.getItem('message');
+        showNotification('success', message);
+
+        sessionStorage.removeItem('itemCreated');
+        sessionStorage.removeItem('message');
+    }
+});
+
+// pagination js
+document.addEventListener("DOMContentLoaded", () => {
+    const paginationItems = document.querySelectorAll(".page-item");
+    const prevBtn = document.getElementById("prev-btn");
+    const nextBtn = document.getElementById("next-btn");
+
+    paginationItems.forEach((item, index) => {
+        item.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            // Skip prev and next buttons
+            if (item === prevBtn || item === nextBtn) return;
+
+            // Update active state
+            paginationItems.forEach((el) => el.classList.remove("active"));
+            item.classList.add("active");
+
+            // Manage prev/next button states
+            const currentPage = index; // 0-based index
+            prevBtn.classList.toggle("disabled", currentPage === 1);
+            nextBtn.classList.toggle(
+                "disabled",
+                currentPage === paginationItems.length - 2
+            );
+        });
+    });
+
+    // Prev button click handler
+    prevBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const activeItem = document.querySelector(".page-item.active");
+        const prevItem = activeItem.previousElementSibling;
+        if (prevItem && !prevItem.classList.contains("disabled")) {
+            prevItem.click();
+        };
+    });
+
+    // Next button click handler
+    nextBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const activeItem = document.querySelector(".page-item.active");
+        const nextItem = activeItem.nextElementSibling;
+        if (nextItem && !nextItem.classList.contains("disabled")) {
+            nextItem.click();
+        };
+    });
+
+});

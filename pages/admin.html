@@ -105,7 +105,7 @@
       <div class="container-fluid">
         <div class="row">
           <!-- sidebar -->
-          <div class="col-xl-2 col-lg-2 d-none d-lg-block p-2" id="sidebar__">
+          <div class="col-xl-2 d-none d-xl-block p-2" id="sidebar__">
             <div class="sidebar-container rounded d-flex flex-column p-3">
               <!-- dashboard -->
               <a
@@ -238,7 +238,7 @@
                   <i class="fa-solid fa-chevron-down dropdown-icon"></i>
                 </div>
               </a>
-              
+
               <!-- nested setting -->
               <div class="nested-menu" id="nestedSettingsMenu">
                 <a href="setting1.html" class="sidebar-link nested-link">
@@ -261,7 +261,7 @@
           </div>
 
           <!-- heading, footer and content -->
-          <div class="col-xl-10 col-lg-10 p-2">
+          <div class="col-xl-10 p-2">
             <div class="content-container rounded px-md-3 px-2">
               <!-- heading -->
               <div
@@ -324,6 +324,54 @@
                         <tbody id="adminTableBody"></tbody>
                       </table>
                     </div>
+
+                    <!-- Enhanced Circular Pagination -->
+                    <nav
+                      aria-label="Page navigation example"
+                      class="pagination-container"
+                      draggable="false"
+                    >
+                      <ul class="pagination justify-content-center pt-3 m-0">
+                        <!-- Previous Button -->
+                        <li class="page-item disabled px-1" id="prev-btn">
+                          <a
+                            draggable="false"
+                            class="page-link"
+                            href="#"
+                            aria-label="Previous"
+                            tabindex="-1"
+                          >
+                            Pre
+                          </a>
+                        </li>
+
+                        <!-- Page Numbers -->
+                        <li class="page-item active" aria-current="page">
+                          <a draggable="false" class="page-link" href="#">1</a>
+                        </li>
+                        <li class="page-item">
+                          <a draggable="false" class="page-link" href="#">2</a>
+                        </li>
+                        <li class="page-item">
+                          <a draggable="false" class="page-link" href="#">3</a>
+                        </li>
+                        <li class="page-item">
+                          <a draggable="false" class="page-link" href="#">4</a>
+                        </li>
+
+                        <!-- Next Button -->
+                        <li class="page-item px-2" id="next-btn">
+                          <a
+                            draggable="false"
+                            class="page-link"
+                            href="#"
+                            aria-label="Next"
+                          >
+                            Next
+                          </a>
+                        </li>
+                      </ul>
+                    </nav>
                   </div>
                 </section>
 
@@ -371,7 +419,7 @@
                       </div>
                     </div>
 
-                    <div class="col-12">
+                    <div class="col-12 input-group">
                       <div class="mb-3">
                         <label for="password" class="form-label">Password</label
                         ><input
@@ -383,10 +431,17 @@
                           autocomplete="off"
                           required
                         />
+                        <button
+                          type="button"
+                          class="toggle-password"
+                          data-target="#password"
+                        >
+                          <i class="fa-regular fa-eye-slash"></i>
+                        </button>
                       </div>
                     </div>
 
-                    <div class="col-12">
+                    <div class="col-12 input-group">
                       <div class="mb-3">
                         <label for="confirmPassword" class="form-label"
                           >Confirm Password</label
@@ -399,6 +454,13 @@
                           autocomplete="off"
                           required
                         />
+                        <button
+                          type="button"
+                          class="toggle-password"
+                          data-target="#confirmPassword"
+                        >
+                          <i class="fa-regular fa-eye-slash"></i>
+                        </button>
                       </div>
                     </div>
 
@@ -456,7 +518,7 @@
                       id="submitBtn"
                       type="button"
                       class="btn btn-primary submit-btn"
-                      data-title="Create User"
+                      data-title="Create Admin"
                     >
                       Submit
                     </button>
@@ -510,7 +572,14 @@
           class="buttons_ d-flex justify-content-center align-items-center gap-2"
         >
           <button class="cancel-btn" id="cancelDelete">Cancel</button>
-          <button class="confirm-btn" id="confirmDelete">Delete</button>
+          <button class="confirm-btn" id="confirmDelete">
+            <span class="button-text">Delete</span>
+            <span
+              class="spinner-border spinner-border-sm d-none"
+              role="status"
+              aria-hidden="true"
+            ></span>
+          </button>
         </div>
       </div>
     </div>
