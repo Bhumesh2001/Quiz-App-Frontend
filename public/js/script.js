@@ -14,6 +14,7 @@ const chevronIcon = document.getElementById('chevronIcon');
 const logoPreview = document.getElementById('logoPreview');
 const logoImage = document.getElementById('logoImage');
 const saveButtons = document.querySelectorAll('.save-btn');
+const toggleButtons = document.querySelectorAll(".toggle-password");
 const buttonClickMap = new Map();
 const baseUrl = 'https://quiz-app-backend-bi9c.onrender.com';
 const frontendBaseUrl = "https://cys-app.netlify.app";
@@ -999,7 +1000,7 @@ async function deleteData(url, token = '', id) {
 };
 
 // call api
-async function renderData (baseUrl) {
+async function renderData(baseUrl) {
     try {
         showLoader();
 
@@ -1059,7 +1060,6 @@ async function renderData (baseUrl) {
 renderData(baseUrl);
 
 // toggle password icon
-const toggleButtons = document.querySelectorAll(".toggle-password");
 toggleButtons.forEach((button) => {
     button.addEventListener("click", () => {
         const input = document.querySelector(button.dataset.target);

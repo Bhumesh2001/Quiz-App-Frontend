@@ -776,13 +776,6 @@ h4 {
   font-size: 2rem;
 }
 
-/* For mobile devices (screen width up to 768px) */
-/* @media only screen and (max-width: 768px) {
-  .sidebar-container {
-    width: 200px;
-  }
-} */
-
 /* For devices with screen width between 768px and 1200px */
 @media only screen and (min-width: 320px) and (max-width: 1200px) {
   .sidebar-container {
@@ -925,6 +918,14 @@ h4 {
   position: absolute;
   top: 60%;
   right: 22px;
+  transform: translateY(-50%);
+  color: #6c757d;
+}
+
+#smtp-password {
+  position: absolute;
+  top: 74%;
+  right: 18px;
   transform: translateY(-50%);
   color: #6c757d;
 }

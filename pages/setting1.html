@@ -369,7 +369,7 @@
                                 src=""
                                 alt="Logo Preview"
                                 class="img-fluid mx-3"
-                                style="max-width: 200px;"
+                                style="max-width: 200px"
                               />
                             </div>
                           </form>
@@ -462,19 +462,29 @@
                             </div>
 
                             <!-- SMTP Password -->
-                            <div class="mb-4">
-                              <label for="smtpPassword" class="form-label"
-                                >SMTP Password</label
-                              >
-                              <input
-                                type="password"
-                                placeholder="Enter SMTP Password"
-                                class="form-control"
-                                name="smtpPassword"
-                                id="smtpPassword"
-                                draggable="false"
-                                autocomplete="off"
-                              />
+                            <div class="col-12 input-group">
+                              <div class="mb-4">
+                                <label for="smtpPassword" class="form-label"
+                                  >SMTP Password</label
+                                >
+                                <input
+                                  type="password"
+                                  placeholder="Enter SMTP Password"
+                                  class="form-control"
+                                  name="smtpPassword"
+                                  id="smtpPassword"
+                                  draggable="false"
+                                  autocomplete="off"
+                                />
+                                <button
+                                  type="button"
+                                  class="toggle-password"
+                                  id="smtp-password"
+                                  data-target="#smtpPassword"
+                                >
+                                  <i class="fa-regular fa-eye-slash"></i>
+                                </button>
+                              </div>
                             </div>
 
                             <!-- SMTP Secure -->
