@@ -128,6 +128,7 @@ body {
 .sidebar-container a.active {
   box-shadow: none;
   background-color: #f1f2f3;
+  color: #0496ff;
 }
 
 .sidebar-item span {
@@ -891,7 +892,7 @@ h4 {
 
 /* site logo */
 #logoImage {
-  width: 150px; /* Set your desired width */
+  width: 140px; /* Set your desired width */
   height: 100px; /* Set your desired height */
   object-fit: cover; /* Adjust how the image fits into the container */
   border: 3px solid #00c6ff;
@@ -953,8 +954,8 @@ h4 {
 .page-item a.page-link {
   text-decoration: none;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -981,4 +982,12 @@ h4 {
 
 page-item a.page-link:hover {
   color: #0090ff;
+}
+
+.nav-item .nav-link{
+  color: black;
+}
+
+.nav-item .nav-link.active{
+  color: #007bff;
 }

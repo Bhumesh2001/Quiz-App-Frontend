@@ -83,7 +83,7 @@
                   >
                 </li>
                 <li>
-                  <a class="dropdown-item" href="setting1.html"
+                  <a class="dropdown-item" id="setting_id" href="setting1.html"
                     ><i class="fas fa-cog"></i> Settings</a
                   >
                 </li>
@@ -320,14 +320,17 @@
                         <tbody></tbody>
                       </table>
                     </div>
-                    
+
                     <!-- Enhanced Circular Pagination -->
                     <nav
                       aria-label="Page navigation example"
-                      class="pagination-container"
+                      class="pagination-container d-none"
                       draggable="false"
                     >
-                      <ul class="pagination justify-content-center pt-3 m-0">
+                      <ul
+                        class="pagination justify-content-center pt-3 m-0"
+                        id="pagination"
+                      >
                         <!-- Previous Button -->
                         <li class="page-item disabled px-1" id="prev-btn">
                           <a
@@ -341,19 +344,7 @@
                           </a>
                         </li>
 
-                        <!-- Page Numbers -->
-                        <li class="page-item active" aria-current="page">
-                          <a draggable="false" class="page-link" href="#">1</a>
-                        </li>
-                        <li class="page-item">
-                          <a draggable="false" class="page-link" href="#">2</a>
-                        </li>
-                        <li class="page-item">
-                          <a draggable="false" class="page-link" href="#">3</a>
-                        </li>
-                        <li class="page-item">
-                          <a draggable="false" class="page-link" href="#">4</a>
-                        </li>
+                        <!-- Dynamic Page Numbers will be appended here -->
 
                         <!-- Next Button -->
                         <li class="page-item px-2" id="next-btn">

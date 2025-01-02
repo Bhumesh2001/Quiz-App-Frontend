@@ -15,11 +15,17 @@ const logoPreview = document.getElementById('logoPreview');
 const logoImage = document.getElementById('logoImage');
 const saveButtons = document.querySelectorAll('.save-btn');
 const toggleButtons = document.querySelectorAll(".toggle-password");
+const paginationContainer = document.querySelector(".pagination");
 const buttonClickMap = new Map();
 const baseUrl = 'https://quiz-app-backend-bi9c.onrender.com';
 const frontendBaseUrl = "https://cys-app.netlify.app";
+let totalPages = 4;
+const groupSize = 4; // Number of pages to show in one group
+let currentGroup = 1; // Track the current group
+let currentPage = 1; // Track the current page
 let deleteButton;
 let token;
+const keywords = ["dashboard", "setting1", "setting2"];
 
 // get token 
 token = getTokenFromCookie();
@@ -181,6 +187,52 @@ saveButtons.forEach((button) => {
         submitData(event, dataId, loderId, btnId);
     });
 });
+
+// track sidebar link click
+document.addEventListener("DOMContentLoaded", () => {
+    const sidebarLinks = document.querySelectorAll(".sidebar-link"); // All sidebar links
+    const defaultDashboardLinkId = "dashboardLink"; // Set this to the ID of your dashboard link
+
+    // Load active link from local storage
+    const activeLinkId = localStorage.getItem("activeSidebarLink");
+    if (activeLinkId) {
+        const activeLink = document.getElementById(activeLinkId);
+        if (activeLink) activeLink.classList.add("active");
+    } else {
+        // If no active link is stored, set the default (dashboard) as active
+        const defaultDashboardLink = document.getElementById(defaultDashboardLinkId);
+        if (defaultDashboardLink) defaultDashboardLink.classList.add("active");
+    };
+
+    // Add click event listener to all sidebar links
+    sidebarLinks.forEach(link => {
+        link.addEventListener("click", function (event) {
+            // Prevent default for links like "javascript:void(0)"
+            if (this.href === "javascript:void(0);") event.preventDefault();
+
+            // Remove active class from all links
+            sidebarLinks.forEach(link => link.classList.remove("active"));
+
+            // Add active class to the clicked link
+            this.classList.add("active");
+
+            // Save the active link's ID to local storage
+            localStorage.setItem("activeSidebarLink", this.id);
+        });
+    });
+});
+
+// click icon and go to dashboard
+document.querySelector('#heading__ a').addEventListener('click', () => {
+    localStorage.setItem("activeSidebarLink", 'dashboardLink');
+});
+
+// click setting and go to setting
+if (document.getElementById('setting_id')) {
+    document.getElementById('setting_id').addEventListener('click', () => {
+        localStorage.setItem("activeSidebarLink", 'settingsLink');
+    });
+};
 
 // Show Loader
 function showLoader() {
@@ -682,7 +734,8 @@ async function loadSettingsData(responses) {
                     field.value = typeof value === 'boolean' ? (value ? 'Active' : 'Inactive')
                         : (Array.from(field.options)
                             .some(option => option.value === value) ? value : field.options[0].value);
-                } else if (field.type === 'number') {
+                }
+                else if (field.type === 'number') {
                     field.value = !isNaN(value) ? Number(value) : '';
                 }
                 else if (field.type === 'file') {
@@ -696,7 +749,6 @@ async function loadSettingsData(responses) {
                 };
             });
         });
-
     } catch (error) {
         console.error('Error fetching data:', error);
     };
@@ -999,18 +1051,15 @@ async function deleteData(url, token = '', id) {
     return response;
 };
 
-// call api
-async function renderData(baseUrl) {
+// Call API and render data
+async function renderData(baseUrl, page = null) {
     try {
+        // Show loader
         showLoader();
 
-        // get data endpoints
+        // Data endpoints configuration
         const getDataEndpoints = [
-            {
-                url: `${baseUrl}/api/dashboard/stats`,
-                handler: loadDashboardCardData,
-                id: "dashboard-card-container"
-            },
+            { url: `${baseUrl}/api/dashboard/stats`, handler: loadDashboardCardData, id: "dashboard-card-container" },
             { url: `${baseUrl}/api/dashboard/new-users`, handler: loadNewUsersData, id: "user-list" },
             { url: `${baseUrl}/api/classes`, handler: loadClassData, id: "classTable" },
             { url: `${baseUrl}/api/subjects`, handler: loadSubjectData, id: "subjectContainer" },
@@ -1042,22 +1091,47 @@ async function renderData(baseUrl) {
             }
         ];
 
-        // Use Promise.all to wait for all data to load
-        await Promise.all(getDataEndpoints.map(async ({ url, handler, id }) => {
-            if (document.getElementById(id)) {
-                const data = await fetchData(url, token);
-                handler(data);
-            };
-        }));
+        // Fetch data for all endpoints
+        await Promise.all(
+            getDataEndpoints.map(async ({ url, handler, id }) => {
+                const element = document.getElementById(id);
+                if (!element) return;
 
-        // hide the loader
+                try {
+                    // Handle single or multiple URLs
+                    const urls = Array.isArray(url) ? url : [url];
+                    const responses = await fetchData(
+                        urls.map(u => (page ? `${u}?page=${page}` : u)),
+                        token
+                    );
+
+                    // Pass response(s) to the handler
+                    handler(Array.isArray(url) ? responses : responses[0]);
+
+                    // Update total pages map if applicable
+                    if (responses[0]?.totalPages) {
+                        totalPages = responses[0].totalPages;
+                    }
+
+                    // Toggle pagination visibility
+                    const paginationContainer = document.querySelector('.pagination-container');
+                    if (paginationContainer && responses[0]?.data?.length === 12) {
+                        paginationContainer.classList.remove('d-none');
+                        paginationContainer.classList.add('d-block');
+                    };
+                } catch (error) {
+                    console.error(`Error fetching data for ID: ${id}, URL: ${url}`, error);
+                };
+            })
+        );
+
+        // Hide the loader
         hideLoader();
-
     } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error in renderData:", error);
+        throw error;
     };
 };
-renderData(baseUrl);
 
 // toggle password icon
 toggleButtons.forEach((button) => {
@@ -1230,51 +1304,84 @@ window.addEventListener('load', () => {
     }
 });
 
-// pagination js
-document.addEventListener("DOMContentLoaded", () => {
-    const paginationItems = document.querySelectorAll(".page-item");
-    const prevBtn = document.getElementById("prev-btn");
-    const nextBtn = document.getElementById("next-btn");
+// pagination 
+if (keywords.some(keyword => window.location.href.includes(keyword))) {
+    hideLoader(); // Hide the loader if any keyword matches
+    renderData(baseUrl);
+} else {
+    // Function to render pagination based on the group
+    const renderPagination = (totalPages) => {
+        const startPage = (currentGroup - 1) * groupSize + 1;
+        const endPage = Math.min(currentGroup * groupSize, totalPages);
 
-    paginationItems.forEach((item, index) => {
-        item.addEventListener("click", (e) => {
-            e.preventDefault();
+        // Clear existing pagination
+        paginationContainer.innerHTML = "";
 
-            // Skip prev and next buttons
-            if (item === prevBtn || item === nextBtn) return;
+        // Add Previous Button
+        const prevDisabled = currentGroup === 1 && currentPage === 1;
+        paginationContainer.insertAdjacentHTML(
+            "beforeend",
+            `<li class="page-item ${prevDisabled ? "disabled" : ""} mx-2" id="prev-btn">
+            <a class="page-link" href="#">Prev</a>
+        </li>`
+        );
 
-            // Update active state
-            paginationItems.forEach((el) => el.classList.remove("active"));
-            item.classList.add("active");
-
-            // Manage prev/next button states
-            const currentPage = index; // 0-based index
-            prevBtn.classList.toggle("disabled", currentPage === 1);
-            nextBtn.classList.toggle(
-                "disabled",
-                currentPage === paginationItems.length - 2
+        // Add Page Numbers
+        for (let i = startPage; i <= endPage; i++) {
+            paginationContainer.insertAdjacentHTML(
+                "beforeend",
+                `<li class="page-item ${i === currentPage ? "active" : ""}">
+                <a class="page-link" href="#">${i}</a>
+            </li>`
             );
-        });
-    });
+        };
 
-    // Prev button click handler
-    prevBtn.addEventListener("click", (e) => {
+        // Add Next Button
+        const nextDisabled = currentPage === totalPages && currentGroup * groupSize >= totalPages;
+        paginationContainer.insertAdjacentHTML(
+            "beforeend",
+            `<li class="page-item ${nextDisabled ? "disabled" : ""} mx-2" id="next-btn">
+            <a class="page-link" href="#">Next</a>
+        </li>`
+        );
+    };
+
+    // Function to change the current page
+    const changePage = (newPage) => {
+        currentPage = newPage;
+
+        // Check if we need to switch groups
+        const currentGroupStart = (currentGroup - 1) * groupSize + 1;
+        const currentGroupEnd = currentGroup * groupSize;
+
+        if (currentPage < currentGroupStart) {
+            currentGroup -= 1;
+        } else if (currentPage > currentGroupEnd) {
+            currentGroup += 1;
+        };
+
+        renderPagination(totalPages);
+        renderData(baseUrl, currentPage);
+    };
+
+    // Event delegation for pagination clicks
+    paginationContainer.addEventListener("click", (e) => {
         e.preventDefault();
-        const activeItem = document.querySelector(".page-item.active");
-        const prevItem = activeItem.previousElementSibling;
-        if (prevItem && !prevItem.classList.contains("disabled")) {
-            prevItem.click();
+        const clickedItem = e.target.closest(".page-item");
+
+        if (!clickedItem || clickedItem.classList.contains("disabled")) return;
+
+        if (clickedItem.id === "prev-btn") {
+            if (currentPage > 1) changePage(currentPage - 1);
+        } else if (clickedItem.id === "next-btn") {
+            if (currentPage < totalPages) changePage(currentPage + 1);
+        } else {
+            const newPage = parseInt(clickedItem.textContent, 10);
+            changePage(newPage);
         };
     });
 
-    // Next button click handler
-    nextBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        const activeItem = document.querySelector(".page-item.active");
-        const nextItem = activeItem.nextElementSibling;
-        if (nextItem && !nextItem.classList.contains("disabled")) {
-            nextItem.click();
-        };
-    });
-
-});
+    // Initial render
+    renderPagination(totalPages);
+    renderData(baseUrl, currentPage);
+};
