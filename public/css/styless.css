@@ -265,6 +265,9 @@ body {
   font-size: 1.2rem;
   text-align: center;
   font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .quiz-card {
@@ -984,10 +987,10 @@ page-item a.page-link:hover {
   color: #0090ff;
 }
 
-.nav-item .nav-link{
+.nav-item .nav-link {
   color: black;
 }
 
-.nav-item .nav-link.active{
+.nav-item .nav-link.active {
   color: #007bff;
 }
