@@ -25,7 +25,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
         return;
     };
 
-    const apiUrl = `${baseUrl}/api/auth/login`;
+    const apiUrl = `${baseUrl}/api/auth/admin/login`;
 
     try {
         const response = await fetch(apiUrl, {
