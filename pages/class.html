@@ -303,6 +303,7 @@
                     </button>
                   </div>
 
+                  <!-- content section -->
                   <div class="content-section" id="class">
                     <!-- Classes Section -->
                     <div class="table-responsive">
@@ -428,6 +429,93 @@
                       type="button"
                       class="btn btn-primary submit-btn"
                       data-title="Create Class"
+                    >
+                      Submit
+                    </button>
+
+                    <!-- loadin button -->
+                    <button
+                      class="btn btn-primary d-none"
+                      type="button"
+                      id="loading-btn"
+                    >
+                      <span
+                        class="spinner-border spinner-border-sm"
+                        aria-hidden="true"
+                      ></span>
+                      <span class="visually-hidden" role="status"
+                        >Loading...</span
+                      >
+                    </button>
+                  </div>
+                </div>
+
+                <!-- edit class -->
+                <div class="form-container_ px-4 pb-4 d-none" id="editClass">
+                  <!-- heading part -->
+                  <div class="form-header text-center mb-2">
+                    <h1 class="mb-0" id="form-title">Edit Class</h1>
+                  </div>
+
+                  <!-- form part -->
+                  <form
+                    id="_dynamicForm"
+                    class="row g-3"
+                    enctype="multipart/form-data"
+                  >
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="name" class="form-label">Class</label
+                        ><input
+                          type="text"
+                          placeholder="Enter class"
+                          class="form-control"
+                          name="name"
+                          id="_name"
+                          autocomplete="off"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="description" class="form-label"
+                          >Description</label
+                        ><textarea
+                          placeholder="Write description"
+                          class="form-control"
+                          rows="4"
+                          name="description"
+                          id="_description"
+                          autocomplete="off"
+                        ></textarea>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="status" class="form-label">Status</label
+                        ><select
+                          class="form-select"
+                          name="status"
+                          id="_status"
+                          autocomplete="off"
+                        >
+                          <option value="active">Active</option>
+                          <option value="inactive">Inactive</option>
+                        </select>
+                      </div>
+                    </div>
+                  </form>
+
+                  <!-- button part -->
+                  <div class="text-end d-flex justify-content-end">
+                    <!-- submit button -->
+                    <button
+                      id="submitBtn"
+                      type="button"
+                      class="btn btn-primary submit-btn"
+                      data-title="Edite Class"
                     >
                       Submit
                     </button>

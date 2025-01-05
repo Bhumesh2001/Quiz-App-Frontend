@@ -568,6 +568,203 @@
                     </button>
                   </div>
                 </div>
+
+                <!-- edit question -->
+                <div class="form-container_ px-4 pb-4 d-none" id="editQuestion">
+                  <!-- heading part -->
+                  <div class="form-header text-center mb-2">
+                    <h1 class="mb-0" id="form-title">Edit Question</h1>
+                  </div>
+
+                  <!-- form part -->
+                  <form
+                    id="_dynamicForm"
+                    class="row g-3"
+                    enctype="multipart/form-data"
+                  >
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="chapterId" class="form-label">Chapter</label
+                        ><select
+                          class="form-select"
+                          name="chapterId"
+                          id="_chapterId"
+                          autocomplete="on"
+                        >
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="question_" class="form-label"
+                          >Qusetion</label
+                        ><input
+                          type="text"
+                          placeholder="Enter question"
+                          class="form-control"
+                          name="question"
+                          id="_question"
+                          autocomplete="off"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="questionType" class="form-label"
+                          >Question Type</label
+                        ><select
+                          class="form-select"
+                          name="questionType"
+                          id="_questionType"
+                          autocomplete="off"
+                        >
+                          <option value="Options" selected>Options</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <!-- option -->
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label
+                          for="option_1"
+                          class="form-label option-input"
+                          data-answer="Answer A"
+                          >Answer A</label
+                        ><input
+                          type="text"
+                          placeholder="Enter option"
+                          class="form-control"
+                          name="option_1"
+                          id="_a"
+                          autocomplete="off"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label
+                          for="option_2"
+                          class="form-label option-input"
+                          data-answer="Answer B"
+                          >Answer B</label
+                        ><input
+                          type="text"
+                          placeholder="Enter option"
+                          class="form-control"
+                          name="option_2"
+                          id="_b"
+                          autocomplete="off"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label
+                          for="option_3"
+                          class="form-label option-input"
+                          data-answer="Answer C"
+                          >Answer C</label
+                        ><input
+                          type="text"
+                          placeholder="Enter option"
+                          class="form-control"
+                          name="option_3"
+                          id="_c"
+                          autocomplete="off"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label
+                          for="option_4"
+                          class="form-label option-input"
+                          data-answer="Answer D"
+                          >Answer D</label
+                        ><input
+                          type="text"
+                          placeholder="Enter option"
+                          class="form-control"
+                          name="option_4"
+                          id="_d"
+                          autocomplete="off"
+                        />
+                      </div>
+                    </div>
+
+                    <!-- Answer Dropdown -->
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="answer" class="form-label"
+                          >Correct Answer</label
+                        >
+                        <select
+                          class="form-control"
+                          id="_answer"
+                          name="answer"
+                          required
+                        >
+                          <option value="" selected="">
+                            Select Correct Answer
+                          </option>
+                          <option value="a">Answer A</option>
+                          <option value="b">Answer B</option>
+                          <option value="c">Answer C</option>
+                          <option value="d">Answer D</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="status" class="form-label">Status</label
+                        ><select
+                          class="form-select"
+                          name="status"
+                          id="_status"
+                          autocomplete="off"
+                        >
+                          <option value="active">Active</option>
+                          <option value="inactive">Inactive</option>
+                        </select>
+                      </div>
+                    </div>
+                  </form>
+
+                  <!-- button part -->
+                  <div class="text-end d-flex justify-content-end">
+                    <!-- submit button -->
+                    <button
+                      id="submitBtn"
+                      type="button"
+                      class="btn btn-primary submit-btn"
+                      data-title="Create Question"
+                    >
+                      Submit
+                    </button>
+
+                    <!-- loadin button -->
+                    <button
+                      class="btn btn-primary d-none"
+                      type="button"
+                      id="loading-btn"
+                    >
+                      <span
+                        class="spinner-border spinner-border-sm"
+                        aria-hidden="true"
+                      ></span>
+                      <span class="visually-hidden" role="status"
+                        >Loading...</span
+                      >
+                    </button>
+                  </div>
+                </div>
               </div>
 
               <!-- footer -->

@@ -305,6 +305,7 @@
                     </button>
                   </div>
 
+                  <!-- content section -->
                   <div class="content-section" id="subject">
                     <!-- show subject -->
                     <div
@@ -382,8 +383,6 @@
                           required
                         >
                           <option value="select a class">Select a class</option>
-                          <option value="class1">Class1</option>
-                          <option value="class2">Class2</option>
                         </select>
                       </div>
                     </div>
@@ -448,6 +447,137 @@
                           required
                         />
                       </div>
+                    </div>
+                  </form>
+
+                  <!-- button part = -->
+                  <div class="text-end d-flex justify-content-end">
+                    <!-- submit button -->
+                    <button
+                      id="submitBtn"
+                      type="button"
+                      class="btn btn-primary submit-btn"
+                      data-title="Create Subject"
+                    >
+                      Submit
+                    </button>
+
+                    <!-- loadin button -->
+                    <button
+                      class="btn btn-primary d-none"
+                      type="button"
+                      id="loading-btn"
+                    >
+                      <span
+                        class="spinner-border spinner-border-sm"
+                        aria-hidden="true"
+                      ></span>
+                      <span class="visually-hidden" role="status"
+                        >Loading...</span
+                      >
+                    </button>
+                  </div>
+                </div>
+
+                <!-- edit subject -->
+                <div class="form-container_ px-4 pb-4 d-none" id="editSubject">
+                  <!-- heading part -->
+                  <div class="form-header text-center mb-2">
+                    <h1 class="mb-0" id="form-title">Edit Subject</h1>
+                  </div>
+
+                  <!-- form part -->
+                  <form
+                    id="_dynamicForm"
+                    class="row g-3"
+                    enctype="multipart/form-data"
+                  >
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="classId" class="form-label">Class</label
+                        ><select
+                          class="form-select"
+                          name="classId"
+                          id="_classId"
+                          autocomplete="off"
+                          required
+                        >
+                          <option value="select a class">Select a class</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="name" class="form-label">Subject</label
+                        ><input
+                          type="text"
+                          placeholder="Enter subject"
+                          class="form-control"
+                          name="name"
+                          id="_name"
+                          autocomplete="off"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="description" class="form-label"
+                          >Description</label
+                        ><textarea
+                          placeholder="Write description"
+                          class="form-control"
+                          rows="4"
+                          name="description"
+                          id="_description"
+                          autocomplete="off"
+                        ></textarea>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="status" class="form-label">Status</label
+                        ><select
+                          class="form-select"
+                          name="status"
+                          id="_status"
+                          autocomplete="off"
+                        >
+                          <option value="Active">Active</option>
+                          <option value="Inactive">Inactive</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="imageUrl" class="form-label"
+                          >Upload Image</label
+                        ><input
+                          type="file"
+                          placeholder=""
+                          class="form-control"
+                          name="imageUrl"
+                          id="imageUrl"
+                          autocomplete="on"
+                          accept="image/*"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <!-- Preview Image -->
+                    <div id="logoPreview" class="my-2">
+                      <img
+                        id="_imageUrl"
+                        src=""
+                        alt="image Preview"
+                        class="img-fluid"
+                        style="max-width: 200px"
+                      />
                     </div>
                   </form>
 

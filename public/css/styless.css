@@ -491,7 +491,7 @@ h4 {
 }
 .form-select,
 .form-control {
-  border-color: rgba(128, 128, 128, 0.712);
+  border: 2px solid #ccc;
 }
 
 .form-header h1 {
@@ -541,7 +541,7 @@ h4 {
 
 /* Revert styles when not focused */
 .form-select:not(:focus) {
-  border: 1px solid rgba(128, 128, 128, 0.712); /* Default border */
+  border: 2px solid #ccc;
   box-shadow: none; /* Remove shadow */
   transition: border-color 0.3s, box-shadow 0.3s;
 }
@@ -550,7 +550,7 @@ h4 {
   background: linear-gradient(90deg, #007bff, #00c6ff);
   border: none;
   border-radius: 25px;
-  padding: 10px 20px;
+  padding: 9px 18px;
   font-weight: bold;
   font-size: 15px;
   color: #fff;
@@ -599,7 +599,7 @@ h4 {
   color: #fff;
   border: none;
   border-radius: 25px;
-  padding: 10px 20px;
+  padding: 9px 18px;
   font-size: 15px;
   transition: all 0.3s ease;
   /* transition: background 0.3s ease; */
@@ -894,7 +894,7 @@ h4 {
 }
 
 /* site logo */
-#logoImage {
+#logoImage, #_imageUrl {
   width: 140px; /* Set your desired width */
   height: 100px; /* Set your desired height */
   object-fit: cover; /* Adjust how the image fits into the container */

@@ -548,6 +548,150 @@
                     </button>
                   </div>
                 </div>
+
+                <!-- edit user -->
+                <div class="form-container_ px-4 pb-4 d-none" id="editUser">
+                  <!-- heading part -->
+                  <div class="form-header text-center mb-2">
+                    <h1 class="mb-0" id="form-title">Edit User</h1>
+                  </div>
+
+                  <!-- form part -->
+                  <form
+                    id="_dynamicForm"
+                    class="row g-3"
+                    enctype="multipart/form-data"
+                  >
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="fullName" class="form-label"
+                          >Full Name</label
+                        ><input
+                          type="text"
+                          placeholder="Enter full name"
+                          class="form-control"
+                          name="fullName"
+                          id="_fullName"
+                          autocomplete="off"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="email" class="form-label">Email</label
+                        ><input
+                          type="email"
+                          placeholder="Enter email"
+                          class="form-control"
+                          name="email"
+                          id="_email"
+                          autocomplete="off"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="mobile" class="form-label">Mobile</label
+                        ><input
+                          type="number"
+                          placeholder="Enter mobile number"
+                          class="form-control"
+                          name="mobile"
+                          id="_mobile"
+                          autocomplete="off"
+                          required
+                          max="10"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="role" class="form-label">Role</label
+                        ><select
+                          class="form-select"
+                          name="role"
+                          id="_role"
+                          autocomplete="on"
+                        >
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="classId" class="form-label">Class</label
+                        ><select
+                          class="form-select"
+                          name="classId"
+                          id="_classId"
+                          autocomplete="off"
+                          required
+                        >
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="profileUrl_" class="form-label"
+                          >Profile</label
+                        ><input
+                          type="file"
+                          placeholder=""
+                          class="form-control"
+                          name="profileUrl"
+                          id="profileUrl_"
+                          autocomplete="off"
+                          accept="image/*"
+                        />
+                      </div>
+                    </div>
+
+                     <!-- Preview Image -->
+                     <div id="logoPreview" class="my-2">
+                      <img
+                        id="_profileUrl"
+                        src=""
+                        alt="image Preview"
+                        class="img-fluid"
+                        style="max-width: 200px"
+                      />
+                    </div>
+                  </form>
+
+                  <!-- button part -->
+                  <div class="text-end d-flex justify-content-end">
+                    <!-- submit button -->
+                    <button
+                      id="submitBtn"
+                      type="button"
+                      class="btn btn-primary submit-btn"
+                      data-title="Create User"
+                    >
+                      Submit
+                    </button>
+
+                    <!-- loadin button -->
+                    <button
+                      class="btn btn-primary d-none"
+                      type="button"
+                      id="loading-btn"
+                    >
+                      <span
+                        class="spinner-border spinner-border-sm"
+                        aria-hidden="true"
+                      ></span>
+                      <span class="visually-hidden" role="status"
+                        >Loading...</span
+                      >
+                    </button>
+                  </div>
+                </div>
               </div>
 
               <!-- footer -->

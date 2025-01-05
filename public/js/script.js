@@ -17,12 +17,13 @@ const saveButtons = document.querySelectorAll('.save-btn');
 const toggleButtons = document.querySelectorAll(".toggle-password");
 const paginationContainer = document.querySelector(".pagination");
 const buttonClickMap = new Map();
-const baseUrl = 'https://quiz-app-backend-bi9c.onrender.com';
+const baseUrl = 'https://cys-backend.vercel.app';
 const frontendBaseUrl = "https://cys-app.netlify.app";
 let totalPages = 4;
 const groupSize = 4; // Number of pages to show in one group
 let currentGroup = 1; // Track the current group
 let currentPage = 1; // Track the current page
+let pdfURL = '';
 let deleteButton;
 let token;
 const keywords = ["dashboard", "setting1", "setting2"];
@@ -47,6 +48,7 @@ cards.forEach(card => {
 // Loop through all back buttons and add the event listener
 backButtons.forEach(function (backButton) {
     backButton.addEventListener('click', () => {
+        const dataFormId = backButton.getAttribute('data-form-id');
         const divId = backButton.getAttribute('data-id');
         const categoryId = divId.split('_')[0];
         const formId = divId.split('_')[1];
@@ -60,6 +62,11 @@ backButtons.forEach(function (backButton) {
         document.getElementById(categoryId).classList.remove('d-none');
         document.getElementById(formId).classList.add('d-none');
         document.getElementById(formId).classList.remove('d-block');
+
+        if (document.getElementById(dataFormId)) {
+            document.getElementById(dataFormId).classList.remove('d-block');
+            document.getElementById(dataFormId).classList.add('d-none');
+        }
 
         buttonClickMap.clear(); // Resets all button click counts
     });
@@ -266,7 +273,7 @@ function getTokenFromCookie() {
 function populateDropdown(dropdown, data, placeholder) {
     if (!dropdown || !data) return;
 
-    dropdown.innerHTML = `<option value="">${placeholder}</option>`; // Set placeholder
+    dropdown.innerHTML = '';
 
     // Map data dynamically based on common keys like id and name
     data.forEach((item) => {
@@ -358,6 +365,10 @@ function loadClassData(data) {
     const table = document.getElementById('classTable');
     const url = '/api/classes';
     const link = 'class.html';
+    const createButtonClass = 'createButton';
+    const backButtonClass = 'backButton';
+    const contentId = 'class';
+    const editFormId = 'editClass';
 
     // Clear existing table rows (excluding headers)
     table.querySelector("tbody").innerHTML = "";
@@ -386,14 +397,10 @@ function loadClassData(data) {
 
         // Edit Button
         const editButton = document.createElement("button");
-        editButton.className = "btn btn-warning btn-sm me-2 fw-bold createButton";
-        editButton.dataset.editId = class_._id; // Use dataset for custom attributes
-        editButton.dataset.id = "class";
-        editButton.dataset.formId = "create";
-        editButton.dataset.title = "Edit Class";
+        editButton.className = "btn btn-warning btn-sm me-2 fw-bold";
         editButton.innerHTML = '<i class="fas fa-edit"></i>';
         editButton.addEventListener("click", () => {
-            handleEdit(class_._id); // Attach event listener for edit
+            handleEdit(class_._id, contentId, createButtonClass, backButtonClass, editFormId, url, link);
         });
         actionsCell.appendChild(editButton);
 
@@ -419,6 +426,10 @@ function loadSubjectData(data) {
     const container = document.getElementById("subjectContainer");
     const url = '/api/subjects';
     const link = 'subject.html';
+    const createButtonClass = 'createButton';
+    const backButtonClass = 'backButton';
+    const contentId = 'subject';
+    const editFormId = 'editSubject';
 
     // Clear container
     container.innerHTML = '';
@@ -431,12 +442,15 @@ function loadSubjectData(data) {
                 <div class="card-body text-center">
                     <h5 class="card-title">${subject.name}</h5>
                     <div class="d-flex justify-content-center gap-2">
-                        <button class="btn btn-warning btn-sm fw-bold createButton" 
-                                data-edit-id="${subject._id}" 
-                                id="createEditSubject${subject._id}" 
-                                data-id="subject" 
-                                data-form-id="create" 
-                                data-title="Edit Subject">
+                        <button class="btn btn-warning btn-sm fw-bold"
+                        onClick="handleEdit(
+                        '${subject._id}',
+                        '${contentId}',
+                        '${createButtonClass}',
+                        '${backButtonClass}',
+                        '${editFormId}',
+                        '${url}',
+                        '${link}')">
                             <i class="fas fa-edit"></i>
                         </button>
                         <button class="btn btn-danger btn-sm fw-bold" 
@@ -455,6 +469,10 @@ function loadChapterData(data) {
     const container = document.getElementById("chapterContainer");
     const url = '/api/chapters';
     const link = 'chapter.html';
+    const createButtonClass = 'createButton';
+    const backButtonClass = 'backButton';
+    const contentId = 'chapter';
+    const editFormId = 'editChapter';
 
     // clear previous html
     container.innerHTML = "";
@@ -466,16 +484,19 @@ function loadChapterData(data) {
                 <div class="card-body text-center">
                     <h5 class="card-title">${chapter.name}</h5>
                     <div class="d-flex justify-content-center gap-2">
-                        <button class="btn btn-warning btn-sm createButton" 
-                                data-edit-id="${chapter._id}" 
-                                id="createEditChapter${chapter._id}" 
-                                data-id="chapter" 
-                                data-form-id="create" 
-                                data-title="Edit Chapter">
+                        <button class="btn btn-warning btn-sm"
+                            onclick="handleEdit(
+                            '${chapter._id}', 
+                            '${contentId}', 
+                            '${createButtonClass}', 
+                            '${backButtonClass}', 
+                            '${editFormId}', 
+                            '${url}', 
+                            '${link}')">
                             <i class="fas fa-edit"></i>
                         </button>
                         <button class="btn btn-danger btn-sm" 
-                                onclick="showDeletePopup('${chapter._id}', '${url}', '${link}')">
+                            onclick="showDeletePopup('${chapter._id}', '${url}', '${link}')">
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </div>
@@ -491,6 +512,10 @@ function loadQuestionData(data) {
 
     const url = '/api/questions';
     const link = 'question.html';
+    const createButtonClass = 'createButton';
+    const backButtonClass = 'backButton';
+    const contentId = 'question';
+    const editFormId = 'editQuestion';
 
     tableBody.innerHTML = "";
 
@@ -503,13 +528,16 @@ function loadQuestionData(data) {
                 </span>
             </td>
             <td>
-                <button class="btn btn-warning btn-sm mb-1 createButton"
-                        title="Edit Question"
-                        data-edit-id="${question._id}"
-                        id="createEditQuestion${question._id}"
-                        data-id="question"
-                        data-form-id="create"
-                        data-title="Edit Question">
+                <button class="btn btn-warning btn-sm mb-1"
+                    onclick="handleEdit(
+                    '${question._id}', 
+                    '${contentId}', 
+                    '${createButtonClass}', 
+                    '${backButtonClass}', 
+                    '${editFormId}', 
+                    '${url}', 
+                    '${link}')"
+                >
                     <i class="fas fa-edit"></i>
                 </button>
                 <button class="btn btn-danger btn-sm mb-1"
@@ -528,6 +556,10 @@ function loadQuizData(data) {
 
     const url = '/api/quizzes/quiz';
     const link = 'quiz.html';
+    const createButtonClass = 'createButton';
+    const backButtonClass = 'backButton';
+    const contentId = 'quiz';
+    const editFormId = 'editQuiz';
 
     quizContainer.innerHTML = "";
     quizContainer.innerHTML = data.data.map(quiz => `
@@ -541,13 +573,16 @@ function loadQuizData(data) {
                 <div class="card-body quiz-card-body p-3 text-center">
                     <h5 class="card-title">${quiz.quizTitle}</h5>
                     <div class="d-flex justify-content-center gap-2">
-                        <button 
-                            class="btn btn-warning btn-sm createButton"
-                            data-edit-id="${quiz._id}"
-                            id="createEditQuiz${quiz._id}"
-                            data-id="quiz"
-                            data-form-id="create"
-                            data-title="Edit Quiz">
+                        <button class="btn btn-warning btn-sm"
+                            onclick="handleEdit(
+                            '${quiz._id}', 
+                            '${contentId}', 
+                            '${createButtonClass}', 
+                            '${backButtonClass}', 
+                            '${editFormId}', 
+                            '${url}', 
+                            '${link}')"
+                        >
                             <i class="fas fa-edit"></i>
                         </button>
                         <button 
@@ -568,6 +603,10 @@ function loadUserData(data) {
 
     const url = '/api/auth/user';
     const link = 'user.html';
+    const createButtonClass = 'createButton';
+    const backButtonClass = 'backButton';
+    const contentId = 'user';
+    const editFormId = 'editUser';
 
     // clear table body
     userTableBody.innerHTML = "";
@@ -592,13 +631,15 @@ function loadUserData(data) {
             </td>
             <td>
                 <button
-                    class="btn btn-warning btn-sm mb-1 createButton"
-                    title="Edit User"
-                    data-edit-id="${user._id}"
-                    id="createEditUser${user._id}"
-                    data-id="user"
-                    data-form-id="create"
-                    data-title="Edit User"
+                    class="btn btn-warning btn-sm mb-1"
+                    onclick="handleEdit(
+                    '${user._id}', 
+                    '${contentId}', 
+                    '${createButtonClass}', 
+                    '${backButtonClass}', 
+                    '${editFormId}', 
+                    '${url}', 
+                    '${link}')"
                 >
                     <i class="fas fa-edit"></i>
                 </button>
@@ -619,7 +660,7 @@ function loadReportData(data) {
     const reportTableBody = document.getElementById("reportTableBody");
 
     const url = '/api/reports';
-    const link = 'report.html';
+    const link = 'report.html';    
 
     // clear privious data
     reportTableBody.innerHTML = "";
@@ -755,15 +796,94 @@ async function loadSettingsData(responses) {
 };
 
 // edit
-function handleEdit(id) {
-    console.log(`Edit button clicked for ID: ${id}`);
-    // Add edit logic here
+async function handleEdit(id, contentId, createButtonClass, backButtonClass, editFormID, url, link) {
+    showLoader();
+
+    try {
+        // fetch data
+        let data = await fetchData(`${baseUrl}${url}/${id}`, token);
+
+        // check data
+        if (!data || !data.data) {
+            console.error("Data fetching failed or invalid response format:", data);
+            hideLoader();
+            return;
+        };        
+
+        if (data.data.options) {
+            data.data = { ...data.data.options, ...data.data, }
+            delete data.data.options
+        };
+
+        // Update UI
+        document.getElementById(contentId).classList.add('d-none');
+        document.getElementById(editFormID).classList.remove('d-none');
+        document.getElementById(editFormID).classList.add('d-block');
+        document.querySelector(`.${createButtonClass}`).classList.add('d-none');
+        document.querySelector(`.${backButtonClass}`).classList.remove('d-none');
+        document.querySelector(`.${backButtonClass}`).classList.add('d-block');
+        document.querySelector(`.${backButtonClass}`).setAttribute('data-form-id', editFormID);
+
+        // Populate the form
+        Object.entries(data.data).forEach(([field, value]) => {
+            if (field === '_id') return;
+
+            const element = document.getElementById(`_${field}`);
+            if (!element) {
+                console.warn(`Field with ID '${field}' not found in the DOM.`);
+                return;
+            };
+
+            if (field === "classId" || field === 'subjectId' || field === 'chapterId' || field === "role") {
+                populateDropdown(element, [value], value.name);
+            }
+            else if (field === 'pdfUrl') {
+                setPdfUrlFromDb(value.url);
+            }
+            else if (field === 'options') {
+                for (let option of value) {
+                    document.getElementById(`_${option}`).value = value[option];
+                    break
+                };
+            }
+            else if (element.tagName === 'SELECT') {
+                const normalizedValue = value.toLowerCase();
+                const matchedOption = Array.from(element.options).find(
+                    option => option.value.toLowerCase() === normalizedValue
+                );
+                matchedOption
+                    ? (element.value = matchedOption.value)
+                    : console.warn(`Value '${value}' not found in options for field '${field}'.`);
+            }
+            else if (field === 'imageUrl') {
+                element.src = value;
+            }
+            else {
+                element.value = value;
+            };
+        });
+
+    } catch (error) {
+        console.error("Error in handleEdit:", error);
+    } finally {
+        hideLoader();
+    };
 };
 
 // view
 function viewReport(id) {
     console.log(`View report with ID: ${id}`);
     // Add your logic to display or handle report viewing
+};
+
+// Function to set PDF URL from the database
+function setPdfUrlFromDb(dbPdfUrl) {
+    if (dbPdfUrl) {
+        pdfURL = dbPdfUrl;
+        const previewLink = document.getElementById('_pdfUrl');
+        previewLink.href = pdfURL;
+        previewLink.classList.remove('d-none');
+    };
 };
 
 // Function to handle server response with errors
