@@ -19,8 +19,8 @@ const paginationContainer = document.querySelector(".pagination");
 const buttonClickMap = new Map();
 const baseUrl = 'https://cys-backend.vercel.app';
 const frontendBaseUrl = "https://cys-app.netlify.app";
-let totalPages = 4;
-const groupSize = 4; // Number of pages to show in one group
+let totalPages = 3;
+const groupSize = 3; // Number of pages to show in one group
 let currentGroup = 1; // Track the current group
 let currentPage = 1; // Track the current page
 let pdfURL = '';
@@ -660,7 +660,7 @@ function loadReportData(data) {
     const reportTableBody = document.getElementById("reportTableBody");
 
     const url = '/api/reports';
-    const link = 'report.html';    
+    const link = 'report.html';
 
     // clear privious data
     reportTableBody.innerHTML = "";
@@ -697,6 +697,10 @@ function loadAdminData(data) {
 
     const url = '/api/auth/admin';
     const link = 'admin.html';
+    const createButtonClass = 'createButton';
+    const backButtonClass = 'backButton';
+    const contentId = 'admin';
+    const editFormId = 'editAdmin';
 
     tableBody.innerHTML = ''; // Clear existing rows
     let count = 1;
@@ -724,9 +728,15 @@ function loadAdminData(data) {
             </td>
             <td>
                 <button 
-                    class="btn btn-warning btn-sm mb-1 createButton" 
-                    title="Edit Admin" 
-                    data-edit-id="adminEdit${admin._id}"
+                    class="btn btn-warning btn-sm mb-1" 
+                    onclick="handleEdit(
+                    '${admin._id}', 
+                    '${contentId}', 
+                    '${createButtonClass}', 
+                    '${backButtonClass}', 
+                    '${editFormId}', 
+                    '${url}', 
+                    '${link}')"
                 >
                     <i class="fas fa-edit"></i>
                 </button>
@@ -795,7 +805,7 @@ async function loadSettingsData(responses) {
     };
 };
 
-// edit
+// function to edit data
 async function handleEdit(id, contentId, createButtonClass, backButtonClass, editFormID, url, link) {
     showLoader();
 
@@ -808,7 +818,7 @@ async function handleEdit(id, contentId, createButtonClass, backButtonClass, edi
             console.error("Data fetching failed or invalid response format:", data);
             hideLoader();
             return;
-        };        
+        };
 
         if (data.data.options) {
             data.data = { ...data.data.options, ...data.data, }
@@ -823,6 +833,7 @@ async function handleEdit(id, contentId, createButtonClass, backButtonClass, edi
         document.querySelector(`.${backButtonClass}`).classList.remove('d-none');
         document.querySelector(`.${backButtonClass}`).classList.add('d-block');
         document.querySelector(`.${backButtonClass}`).setAttribute('data-form-id', editFormID);
+        document.getElementById('editBtn').setAttribute('data-edit-id', id);
 
         // Populate the form
         Object.entries(data.data).forEach(([field, value]) => {
@@ -834,32 +845,46 @@ async function handleEdit(id, contentId, createButtonClass, backButtonClass, edi
                 return;
             };
 
-            if (field === "classId" || field === 'subjectId' || field === 'chapterId' || field === "role") {
-                populateDropdown(element, [value], value.name);
-            }
-            else if (field === 'pdfUrl') {
-                setPdfUrlFromDb(value.url);
-            }
-            else if (field === 'options') {
-                for (let option of value) {
-                    document.getElementById(`_${option}`).value = value[option];
-                    break
+            switch (field) {
+                case 'role': {
+                    const roleData = { _id: data.data._id, name: value };
+                    populateDropdown(element, [roleData], roleData.name);
+                    break;
                 };
-            }
-            else if (element.tagName === 'SELECT') {
-                const normalizedValue = value.toLowerCase();
-                const matchedOption = Array.from(element.options).find(
-                    option => option.value.toLowerCase() === normalizedValue
-                );
-                matchedOption
-                    ? (element.value = matchedOption.value)
-                    : console.warn(`Value '${value}' not found in options for field '${field}'.`);
-            }
-            else if (field === 'imageUrl') {
-                element.src = value;
-            }
-            else {
-                element.value = value;
+                case 'classId':
+                case 'subjectId':
+                case 'chapterId':
+                    populateDropdown(element, [value], value.name);
+                    break;
+                case 'pdfUrl':
+                    setPdfUrlFromDb(value.url);
+                    break;
+                case 'options':
+                    for (let option of value) {
+                        const optionElement = document.getElementById(`_${option}`);
+                        if (optionElement) {
+                            optionElement.value = value[option];
+                            break;
+                        };
+                    };
+                    break;
+                case 'imageUrl':
+                case 'profileUrl':
+                    element.src = value;
+                    break;
+                default:
+                    if (element.options) {
+                        const matchedOption = Array.from(element.options).find(
+                            option => option.value.toLowerCase() === value.toLowerCase()
+                        );
+                        if (matchedOption) {
+                            element.value = matchedOption.value;
+                        } else {
+                            console.warn(`Value '${value}' not found in options for field '${field}'.`);
+                        };
+                    } else {
+                        element.value = value;
+                    };
             };
         });
 
@@ -870,7 +895,7 @@ async function handleEdit(id, contentId, createButtonClass, backButtonClass, edi
     };
 };
 
-// view
+// fucntion to view data
 function viewReport(id) {
     console.log(`View report with ID: ${id}`);
     // Add your logic to display or handle report viewing
@@ -1076,14 +1101,13 @@ async function submitData(event, id, loderId, btnId) {
             // Organize data for "Create Question"
             for (let [key, value] of formData.entries()) {
                 if (key.startsWith("option_") && value.trim() !== "") {
-                    // Map options to a, b, c, d dynamically
-                    const optionKey = String.fromCharCode(97 + optionIndex); // 'a', 'b', 'c', ...
+                    const optionKey = String.fromCharCode(97 + optionIndex);
                     options[optionKey] = value;
                     optionIndex++;
                 } else {
                     questionData[key] = value;
-                }
-            }
+                };
+            };
 
             if (Object.keys(options).length === 0) {
                 showNotification('error', 'Please provide at least one option for the question.');
@@ -1093,7 +1117,6 @@ async function submitData(event, id, loderId, btnId) {
 
             // Construct final JSON payload
             payload = {
-                categoryId: questionData.categoryId,
                 chapterId: questionData.chapterId,
                 question: questionData.question,
                 questionType: questionData.questionType,
@@ -1103,7 +1126,6 @@ async function submitData(event, id, loderId, btnId) {
             };
         }
         else if (dataTitle === "Update App Setting" || dataTitle === "Update App Update Setting") {
-            // Convert Active/Inactive to boolean
             payload = {};
             for (let [key, value] of formData.entries()) {
                 if (value === "Active") {
@@ -1155,6 +1177,17 @@ async function postData(url, token = '', body) {
     const response = await dynamicApiRequest({
         url,
         method: "POST",
+        headers: token ? { "Authorization": `Bearer ${token}` } : {},
+        body,
+    });
+    return response;
+};
+
+// Helper function to make API requests dynamically update
+async function updateData(url, token = '', body) {
+    const response = await dynamicApiRequest({
+        url,
+        method: "PUT",
         headers: token ? { "Authorization": `Bearer ${token}` } : {},
         body,
     });
@@ -1408,6 +1441,106 @@ if (document.getElementById('submitBtn')) {
     });
 };
 
+if (document.getElementById('editBtn')) {
+    // edit btn
+    document.getElementById('editBtn').addEventListener('click', async (event) => {
+        const loderId = '_loading-btn';
+        const btnId = 'editBtn';
+        const data_edit_id = document.getElementById('editBtn').getAttribute('data-edit-id');
+
+        toggleButtonState(true, loderId, btnId);
+
+        const form = document.getElementById("_dynamicForm");
+        const formData = new FormData(form);
+        const dataTitle = event.target.getAttribute('data-title');
+
+        // Capitalize the "status" field, if it exists
+        const status = formData.get("status");
+        if (status) formData.set("status", status.charAt(0).toUpperCase() + status.slice(1).toLowerCase());
+
+        // post data endpoints
+        const editDataEndpoints = {
+            "Edit Class": `${baseUrl}/api/classes/${data_edit_id}`,
+            "Edit Subject": `${baseUrl}/api/subjects/${data_edit_id}`,
+            "Edit Chapter": `${baseUrl}/api/chapters/${data_edit_id}`,
+            "Edit Question": `${baseUrl}/api/questions/${data_edit_id}`,
+            "Edit Quiz": `${baseUrl}/api/quizzes/quiz/${data_edit_id}`,
+            "Edit User": `${baseUrl}/api/auth/user/${data_edit_id}`,
+            "Edit Admin": `${baseUrl}/api/auth/user/${data_edit_id}`,
+        };
+
+        // file links
+        const fileLinks = {
+            "Edit Class": `${frontendBaseUrl}/pages/class.html`,
+            "Edit Subject": `${frontendBaseUrl}/pages/subject.html`,
+            "Edit Chapter": `${frontendBaseUrl}/pages/chapter.html`,
+            "Edit Question": `${frontendBaseUrl}/pages/question.html`,
+            "Edit Quiz": `${frontendBaseUrl}/pages/quiz.html`,
+            "Edit User": `${frontendBaseUrl}/pages/user.html`,
+            "Edit Admin": `${frontendBaseUrl}/pages/admin.html`,
+        };
+
+        if (!editDataEndpoints[dataTitle]) {
+            console.error("Invalid data title:", dataTitle);
+            toggleButtonState(false, loderId, btnId);
+            return;
+        };
+
+        try {
+            let payload = formData; // Default payload            
+
+            if (dataTitle === "Edit Question") {
+                const options = {};
+                const questionData = {};
+                let optionIndex = 0;
+
+                // Organize data for "Create Question"
+                for (let [key, value] of formData.entries()) {
+                    if (key.startsWith("option_") && value.trim() !== "") {
+                        const optionKey = String.fromCharCode(97 + optionIndex);
+                        options[optionKey] = value;
+                        optionIndex++;
+                    } else {
+                        questionData[key] = value;
+                    };
+                };
+
+                if (Object.keys(options).length === 0) {
+                    showNotification('error', 'Please provide at least one option for the question.');
+                    toggleButtonState(false);
+                    return; // Exit if no options are provided
+                };
+
+                // Construct final JSON payload
+                payload = {
+                    chapterId: questionData.chapterId,
+                    question: questionData.question,
+                    questionType: questionData.questionType,
+                    options, // Now in object format
+                    answer: questionData.answer,
+                    status: questionData.status
+                };
+            };
+
+            // Send request
+            const response = await updateData(editDataEndpoints[dataTitle], token, payload);
+
+            if (response.success) {
+                form.reset();
+                sessionStorage.setItem('itemEdited', 'true');
+                sessionStorage.setItem('message', `${response.message}`);
+                window.location.href = fileLinks[dataTitle];
+            } else {
+                console.error(`${dataTitle} creation failed:`, response.error || "Unknown error.");
+            };
+        } catch (error) {
+            console.error("An error occurred:", error);
+        } finally {
+            toggleButtonState(false, loderId, btnId); // Reset button state
+        };
+    });
+};
+
 // load item
 window.addEventListener('load', () => {
     // Check if the item was deleted from sessionStorage
@@ -1420,6 +1553,13 @@ window.addEventListener('load', () => {
         showNotification('success', message);
 
         sessionStorage.removeItem('itemCreated');
+        sessionStorage.removeItem('message');
+    }
+    else if (sessionStorage.getItem('itemEdited') === "true") {
+        const message = sessionStorage.getItem('message');
+        showNotification('success', message);
+
+        sessionStorage.removeItem('itemEdited');
         sessionStorage.removeItem('message');
     }
 });
