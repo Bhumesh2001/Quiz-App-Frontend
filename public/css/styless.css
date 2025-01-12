@@ -494,6 +494,11 @@ h4 {
   border: 2px solid #ccc;
 }
 
+.fa-asterisk {
+  font-size: 10px; /* Adjust the size */
+  color: red;      /* Change the color to red */
+}
+
 .form-header h1 {
   font-weight: bold;
   font-size: 1.8rem; /* Default size for medium to large screens */

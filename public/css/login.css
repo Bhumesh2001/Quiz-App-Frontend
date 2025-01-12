@@ -10,6 +10,11 @@ body {
   padding: 30px;
 }
 
+.fa-asterisk {
+  font-size: 10px; /* Adjust the size */
+  color: red; /* Change the color to red */
+}
+
 h2 {
   color: #2575fc;
   font-weight: bold;

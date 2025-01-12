@@ -27,7 +27,12 @@
       <div class="login-form card shadow">
         <!-- logo -->
         <div class="d-flex justify-content-center align-items-center">
-          <img src="/assets/icons/cys_logo.jpeg" height="80px" width="80px" alt="Cys logo">
+          <img
+            src="/assets/icons/cys_logo.jpeg"
+            height="80px"
+            width="80px"
+            alt="Cys logo"
+          />
         </div>
 
         <!-- title -->
@@ -39,7 +44,9 @@
           <!-- email field -->
           <div class="mb-4">
             <i class="input-icon fas fa-envelope"></i>
-            <label for="email" class="form-label fw-medium">Email</label>
+            <label for="email" class="form-label fw-medium"
+              >Email <i class="fa fa-asterisk" aria-hidden="true"></i
+            ></label>
             <input
               type="text"
               autocomplete="off"
@@ -53,7 +60,9 @@
           <!-- password field -->
           <div class="mb-4" id="password-container">
             <i class="input-icon fas fa-lock"></i>
-            <label for="password" class="form-label fw-medium">Password</label>
+            <label for="password" class="form-label fw-medium"
+              >Password <i class="fa fa-asterisk" aria-hidden="true"></i
+            ></label>
             <input
               type="password"
               class="form-control"
@@ -66,9 +75,12 @@
             </button>
           </div>
 
+          <!-- submit btn -->
           <button type="submit" id="submit-btn" class="btn btn-primary w-100">
             <strong>Login</strong>
           </button>
+
+          <!-- loader btn -->
           <button
             type="button"
             id="spinner-btn"
@@ -79,7 +91,6 @@
             </div>
           </button>
         </form>
-
       </div>
     </div>
 
