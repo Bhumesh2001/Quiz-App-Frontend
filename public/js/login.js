@@ -1,5 +1,5 @@
 // baseUrl
-const baseUrl = 'http://localhost:3000';
+const baseUrl = 'https://cys-backend.vercel.app';
 
 document.getElementById('loginForm').addEventListener('submit', async function (event) {
     event.preventDefault();
