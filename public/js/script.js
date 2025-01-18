@@ -1364,8 +1364,9 @@ document.getElementById("logoutButton").addEventListener("click", async (e) => {
         });
         // show loader
         document.getElementById('loader').classList.add('d-none');
-
         window.location.href = `${frontendBaseUrl}/index.html`;
+        localStorage.removeItem('activeSidebarLink');
+
     } else {
         showNotification('error', response.message || 'Logout failed!')
     };
